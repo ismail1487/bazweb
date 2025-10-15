@@ -1,0 +1,67 @@
+﻿@*<link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.common.min.css" rel="stylesheet" />*@
+<link href="~/lib/kendo/Content/kendo/2020.3.1118/kendo.common.min.css" rel="stylesheet" />
+<link href="~/css/All/IcerikGenel.css" rel="stylesheet" />
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+
+<script src="~/js/Model/IcerikGenel/IcerikKutuphanesiModel.js"></script>
+<script src="~/js/Model/IcerikGenel/IcerikMedyaModel.js"></script>
+<script src="~/js/Model/IcerikGenel/IcerikHedefKitleModel.js"></script>
+<script src="~/js/Model/Select2OptionModel.js"></script>
+<script src="~/js/Model/KisiListesiModel.js"></script>
+<script src="~/js/Model/DropDownModel.js"></script>
+<script src="~/js/Services/IcerikGenel/IcerikKutuphanesiService.js"></script>
+<div class="container-fluid">
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card model-bind">
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row text-center">
+                                        <div class="col-md-12 text-center">
+                                            <h1 data-bind="text:data.IcerikBaslik"></h1>
+                                        </div>
+
+                                        <div class="col-md-12 text-center">
+                                            <h2 data-bind="text:data.IcerikOzetMetni"></h2>
+                                        </div>
+
+                                        <div class="col-md-8 offset-2">
+                                            <textarea name="IcerikMetin" data-bind="value:data.IcerikTamMetin" class="form-control form-control-sm editor">  </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<script>
+
+    $(document).ready(function () {
+        icerikKutuphanesiService.initializeforDetail();
+    })
+
+    ClassicEditor
+        .create(document.querySelector('.editor'), {
+
+        })
+        .then(editor => {
+            console.log("editor eklendi.", editor);
+            customeditor = editor;
+            customeditor.isReadOnly = true;
+        })
+        .catch(error => { console.error(error.stack); });
+</script>

@@ -1,0 +1,137 @@
+﻿
+<link href="~/css/All/IcerikGirisEkrani.css" rel="stylesheet" />
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<div class="container justify-content-center align-items-center">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="liste-baslik">@localizator["İçerik Güncelleme"].Value</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    @*İçerik başlık ve açıklama alanı*@
+    <section class="content">
+        <div class="border rounded p-3 mb-4 position-relative" style="background-color: #ffffff;">
+            <div class="row">
+                <div class="col-md-4" id="AnaKategoriContainer">
+                    <div class="form-group">
+                        <label class="Lbl">@localizator["Ana Kategori"].Value</label>
+                        <select id="AnaKategori" class="form-control" style="width: 100%;" onchange="IcerikKategorileriGetir(this.value)" data-placeholder="@localizator["Kategori Seçiniz"].Value" required>
+                        </select>
+                        <label for="AnaKategoriHata" id="AnaKategoriHata" class="validationMessage">Ana Kategori Seçiniz</label>
+                    </div>
+                </div>
+                <div class="col-md-4" id="KategoriContainer">
+                    <div class="form-group">
+                        <label class="Lbl">@localizator["Kategori"].Value</label>
+                        <select id="Kategori" class="form-control" style="width: 100%;" onchange="IcerikAltKategoriGetir(this.value)" data-placeholder="@localizator["Kategori Seçiniz"].Value" required>
+                        </select>
+                        <label for="KategoriHata" id="KategoriHata" class="validationMessage">Kategori Seçiniz</label>
+                    </div>
+                </div>
+                <div class="col-md-4" id="Alt-KategoriContainer">
+                    <div class="form-group">
+                        <label class="Lbl">@localizator["Alt Kategori"].Value</label>
+                        <select id="Alt-Kategori" class="form-control" style="width: 100%;" onchange="" data-placeholder="@localizator["Alt Kategori Seçiniz"].Value" required>
+                        </select>
+                        <label for="Alt-KategoriHata" id="Alt-KategoriHata" class="validationMessage">Alt Kategori Seçiniz</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="border rounded p-3 mb-4 position-relative" style="background-color: #ffffff;">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="Lbl">Başlık</label>
+                            <input type="text" id="Baslik_1" class="form-control" placeholder="Başlık Giriniz">
+                            <label for="Baslik" class="validationMessage" id="validationMessageBaslik_1" style="display:none" required>Başlık Giriniz</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 form-group">
+                    <label class="Lbl">Metin</label>
+                    <div class="editor-container ql-container ql-snow" id="editor_1" style="height: 150px ">
+                        <div class="ql-editor ql-blank" data-gramm="false" contenteditable="true"><p><br></p></div>
+                        <div class="ql-clipboard" contenteditable="true" tabindex="-1"></div>
+                        <div class="ql-tooltip ql-hidden">
+                            <a class="ql-preview" target="_blank" href="about:blank"></a>
+                            <input type="text" data-formula="e=mc^2" data-link="https://quilljs.com" data-video="Embed URL" required>
+                            <a class="ql-action"></a><a class="ql-remove"></a>
+                        </div>
+                    </div>
+                    <label for="anaMetin" class="validationMessage" id="validationMessageAnaMetin_1">Ana Metin Giriniz</label>
+                </div>
+            </div>
+        </div>
+    </section>
+    @*İçerik spot alanı*@
+    <div class="border rounded p-3 mb-4 position-relative" style="background-color: #ffffff;">
+        <div id="tekrarliSpot">
+        </div>
+    </div>
+    @*yayınlanma tarihi*@
+    <div class="border rounded p-3 mb-4 position-relative" style="background-color: #ffffff;">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="Lbl">Yayınlanma Tarihi</label>
+                    <input class="form-control" type="date" id="yayinlanmaTarihi" required>
+                    <label for="yayinlanmaTarihi" id="yayinlanmaTarihiHata" class="validationMessage">Yayınlanma Tarihi Seçiniz</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="Lbl">Kaldırılma Tarihi</label>
+                    <input class="form-control" type="date" id="KaldirilmaTarihi" required>
+                    <label for="KaldirilmaTarihi" id="KaldirilmaTarihiHata" class="validationMessage">Kaldırılma Tarihi Seçiniz</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*medya alanı*@
+    <div class="border rounded p-3 mb-4 position-relative" style="background-color: #ffffff;">
+        <span class="position-absolute top-0 start-0 translate-middle-y px-2" style="
+        position: absolute;
+        top: -12px;
+        left: 16px;
+        padding: 0 8px;
+        font-weight: bold;
+        font-size: 1rem;
+    ">
+            @localizator["Medyalar"].Value
+        </span>
+        <div id="tekrarliMedya">
+        </div>
+
+    </div>
+    @*taslak mı*@
+    <div class="border rounded p-3 mb-4 position-relative" style="background-color: #ffffff;">
+        <div class="row">
+            <div class="col-md-6 d-flex align-items-center">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="TaslakMiCheckbox">
+                    <label class="form-check-label Lbl" for="TaslakMiCheckbox">
+                        Taslak mı?
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*Güncelleme İşlemi*@
+    <div class="row mb-5">
+        <div class="col-md-12 col-12 text-right">
+            <button type="button" onclick="IcerikGuncelle()" id="guncelleButton" class="btn btn-primary">
+                @localizator["Güncelle"]
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/icerikgirisekrani/icerikguncelleme.js" asp-append-version="true"></script>

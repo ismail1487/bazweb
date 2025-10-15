@@ -1,0 +1,172 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+*@
+@{
+    Layout = null;
+}
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> labelLocal
+@inject ILocalizationService localizationService;
+@{
+    var dil = localizationService.GetCulture();
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @{
+#if (DEBUG)
+    }
+    <meta name="robots" content="noindex">
+    @{
+#else
+    }
+
+    @{
+#endif
+    }
+    <title>@ViewData["Title"] - BazWebApp</title>
+    <link href="~/css/All/Activation.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="~/lib/AdminLTE/dist/css/adminlte.css" rel="stylesheet" />
+    <script src="~/lib/AdminLTE/plugins/jquery/jquery.js"></script>
+    <script src="~/lib/AdminLTE/plugins/bootstrap/js/bootstrap.js"></script>
+    <script src="~/lib/AdminLTE/dist/js/adminlte.js"></script>
+    <link href="~/lib/AdminLTE/plugins/fontawesome-free/css/all.css" rel="stylesheet" />
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/aspnet-signalr/1.1.4/signalr.js"></script>*@
+    <script src="~/lib/signalr-1-1-4/signalr.js"></script>
+    <script src="~/lib/AdminLTE/plugins/toastr/toastr.min.js"></script>
+    <link type="text/css" href="~/lib/AdminLTE/plugins/toastr/toastr.css" rel="stylesheet" />
+    @if (dil == "tr-TR")
+    {
+
+        <script src="~/js/Lang/LangToastTr.js"></script>
+    }
+    else
+    {
+        <script src="~/js/Lang/LangToastEn.js"></script>
+    }
+</head>
+<body>
+    @*<header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BazWebApp</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>*@
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            <script src="~/js/ForcePasswordChangeJS.js" asp-append-version="true"></script>
+            <link href="~/css/site.css" asp-append-version="true" rel="stylesheet" />
+            <div class="hold-transition login-page">
+                <div class="col-12 row">
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 BackLeft d-none d-lg-block d-xl-block">
+                        <div>
+                            <h1 class="ProjectTittle">BAZ PROJE</h1>
+                        </div>
+
+                        <!-- svg -->
+                        <div class="ImageDivLogin">
+
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                        <!-- /.login-logo -->
+                        <div class="">
+                            <div class="">
+                                <div class="col-12 left mb-3">
+                                    <p class="Font32">Şifrenizi yenilemeniz gerekmektedir.</p>
+                                </div>
+                                <div class="col-12 left">
+                                    <div class="form-group row">
+                                        <div class="col-6 Lbl">
+                                            ESKİ PAROLA
+                                        </div>
+                                        <input type="password" class="form-control Shape" id="ProfilEskiSifre" placeholder="Eski Şifre">
+                                    </div>
+                                </div>
+                                <div class="col-12 left">
+                                    <div class="form-group row">
+                                        <div class="col-6 Lbl">
+                                            YENİ PAROLA
+                                        </div>
+                                        <input type="password" class="form-control Shape" id="ProfilYeniSifre" placeholder="Yeni Şifre">
+                                    </div>
+                                </div>
+                                <div class="col-12 left">
+                                    <div class="form-group row">
+                                        <div class="col-6 Lbl">
+                                            YENİ PAROLA TEKRAR
+                                        </div>
+                                        <input type="password" class="form-control Shape" id="ProfilYeniSifreTekrar" placeholder="Yeni Şifre Tekrar">
+                                    </div>
+                                </div>
+                                @*<div class="form-group row mb-3">
+                                        <label for="ProfilEskiSifre" class="col-sm-2 col-form-label">Eski şifre</label>
+                                        <div class="col-sm-10">
+                                            <input type="password" class="form-control" id="ProfilEskiSifre" placeholder="Eski Şifre" autocomplete="new-password">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row mb-3">
+                                        <label for="ProfilYeniSifre" class="col-sm-2 col-form-label">Yeni şifre</label>
+                                        <div class="col-sm-10">
+                                            <input type="password" class="form-control" id="ProfilYeniSifre" placeholder="Yeni Şifre">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row mb-3">
+                                        <label for="ProfilYeniSifreTekrar" class="col-sm-2 col-form-label">Yeni Şifre Tekrar</label>
+                                        <div class="col-sm-10">
+                                            <input type="password" class="form-control" id="" placeholder="Yeni Şifre Tekrar">
+                                        </div>
+                                    </div>*@
+                                <div class="form-group row mb-4">
+                                    <p id="strengthMessage" for="SifreKarmasik" class="SifreKarmasik text-center">
+                                        Şifreniz en az 1 küçük harf, 1 büyük harf, 1 sayı ve 1 özel karakter içermelidir ve en az 8 karakter uzunluğunda olmalıdır.
+                                    </p>
+                                </div>
+                                <div class="row text-center">
+                                    <div class="col-md-4 offset-lg-4  offset-sm-2 offset-md-4 text-center">
+                                        <button type="button" class="btn btn-block loggingButton" onclick="SifreYenile()">Şifre Yenile</button>
+                                    </div>
+                                    <!-- /.col -->
+                                </div>
+                            </div>
+                            <!-- /.login-card-body -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class='text-center' hidden>
+                    <p class='text-danger' id="alertDiv"></p>
+                </div>
+            </div>
+            <!-- /.login-box -->
+        </main>
+    </div>
+    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
+
+    @*<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
+
+    <script src="~/js/tools.js" asp-append-version="true"></script>
+</body>
+</html>
+<link href="~/css/All/Login.css" rel="stylesheet" />
+<link href="~/css/All/General.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@500&display=swap" rel="stylesheet">

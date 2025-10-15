@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "skipDefaultLibCheck": true,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": false,
+    "target": "es2015",
+    "allowJs": true,
+    "lib": [ "es2015", "dom", "dom.Iterable", "ESNext.String" ],
+    "outDir": "wwwroot/js",
+    "moduleResolution": "node"
+  },
+  "compileOnSave": true,
+  "include": [
+    "Scripts/typings/*",
+    "scripts/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "paths": {
+    "*": [ "*" ]
+  }
+}

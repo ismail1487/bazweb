@@ -1,0 +1,82 @@
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+    <link href="~/css/All/Kurum.css" rel="stylesheet" />
+    <script src="~/js/KurumListesi.js" asp-append-version="true"></script>
+    <div class="container-fluid">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="liste-baslik">@localizator["Kurum Listesi"].Value</h1>
+                    </div>
+                    @*<div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="/panel">@localizator["Anasayfa"].Value</a></li>
+                                <li class="breadcrumb-item active">@localizator["Kurum Listesi"].Value</li>
+                            </ol>
+                        </div>*@
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 offset-xl-5 offset-lg-5 offset-md-3 card kurumum text-center">
+                            <h6>
+                                @localizator["Kurumum"].Value
+                                <button type="button" class="btn" onclick="Goruntule(kurumId)"> <img src="/img/eye.svg" /> </button>
+                                <button type="button" class="btn" onclick="GuncelleSayfasınaGit(kurumId)"> <img src="/img/edit.svg" /> </button>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="row card">
+                        <div class="tabbable-line col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 offset-xl-5 offset-lg-5 offset-md-5">
+                            <ul class="nav nav-tabs" id="kurumTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="kurumTab-aktif-tab" data-toggle="tab" aria-selected="true">@localizator["Müşteriler"].Value</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="kurumTab-pasif-tab" data-toggle="tab" aria-selected="false">@localizator["Diğer Kurumlar"].Value</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="">
+                        <div class="card-header text-right">
+                            <button type="button" class="btn add-buttons" id="ekleHeaderbtn">@localizator["Ekle"].Value</button>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="">
+                            <div style="width: 100%;">
+                                <div class="table-responsive">
+                                    <table id="KurumListesiTable" style="width: 100% !important;" class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>@localizator["Kurum Kısa Adı"].Value</th>
+                                                <th>@localizator["Kuruluş Tarihi"].Value</th>
+                                                <th>@localizator["Ticaret Sicil No"].Value</th>
+                                                <th>@localizator["Vergi No"].Value</th>
+                                                <th>@localizator["Web Sitesi"].Value</th>
+                                                <th>@localizator["E posta"].Value</th>
+                                                <th style=' min-width: 20% !important;'>@localizator["İşlem"].Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+            <!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>

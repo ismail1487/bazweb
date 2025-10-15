@@ -1,0 +1,98 @@
+﻿@*<link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.common.min.css" rel="stylesheet" />*@
+<link href="~/lib/kendo/Content/kendo/2020.3.1118/kendo.common.min.css" rel="stylesheet" />
+<link href="~/css/All/YetkiMerkezi.css" rel="stylesheet" />
+<script src="~/js/YetkilendirmeMerkezi.js" asp-append-version="true"></script>
+
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+
+<link href="~/css/All/Authorization.css" rel="stylesheet" />
+
+<div class="container-fluid">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6 headtext">
+                    <h2>@localizator["Yetki Merkezi"].Value</h2>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-10 offset-1">
+                <div class="">
+                    
+                    <div class="tabbable-line">
+                        <ul class="nav nav-tabs" id="yetkilendirmeTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="yetkilendirmeTab-Erisim-tab" data-toggle="pill" href="#erisimYetkilendirmeTabContent" role="tab" aria-controls="erisimYetkilendirmeTabContent" aria-selected="true">@localizator["Erişim Yetkilendirme"].Value</a>
+                            </li>
+                        </ul>
+
+                        @*<h3 class="card-title"> Erişim Yetkilendirme Tanımlama</h3>*@
+                    </div>
+
+                    <div class="row">
+                        <div class="card-body">
+                            <div class="tab-content" id="yetkilendirmeTabContent">
+                                <div class="tab-pane fade active show" id="erisimYetkilendirmeTabContent" role="tabpanel" aria-labelledby="yetkilendirmeTab-Erisim-tab">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="authLbl" for="select-param-organizasyon-birimi">@localizator["Organizasyon Birimi"].Value<b>*</b></label>
+                                                <select style="line-height: 20 !important;" id="select-param-organizasyon-birimi" class="form-control select2-primary select2-container--bootstrap4">
+                                                    <option value="0">Seçiniz</option>
+                                                </select>
+                                                <label for="OrganizasyonBirimiID" class="validationMessage"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="authLbl" for="select-organizasyon-birimi">@localizator["Organizasyon Birim Tanımı"].Value<b>*</b></label>
+                                                <select style=" width: 100%" id="select-organizasyon-birimi" class="form-control select2-primary select2-container--bootstrap4" multiple="multiple">
+                                                </select>
+                                                <label for="IlgiliKurumOrganizasyonBirimIdList" class="validationMessage"></label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="authLbl">@localizator["Sayfalar"].Value<b>*</b> </label>
+                                                <select style="width: 100%" id="Sayfalar" class="form-control select2-primary" multiple="multiple">
+                                                </select>
+                                                <label for="ErisimYetkisiVerilenSayfaIdList" class="validationMessage"></label>
+                                            </div>
+                                        </div>
+                                        @*<div class="col-md-6">
+                                            <div class="form-group">
+                                            <label>Menü Başlıkları</label>
+                                            <select id="Menuler" class="form-control">
+                                            </select>
+                                            </div>
+                                            </div>*@
+                                    </div>
+                                    <div class="row  right-block-foot">
+                                        <div class="col-md-12 text-center" style="margin-top: 15px">
+                                            <div>
+                                                <button type="button" class="btn  add-buttons" id="kaydetBtn">@localizator["Kaydet"].Value</button>
+                                            </div>
+                                            <a href="/AuthCenter/AccessAuthList" class="btn cancel-button-right">@localizator["Vazgeç"].Value</a>
+                                        </div>
+                                    </div>
+                                    @*<div class="row right-block-foot">
+                                            <a type="button" href="/AuthCenter/AccessAuthList" class="btn cancel-button">Vazgeç</a>
+                                            <button type="button" id="kaydetBtn" class="btn add-buttons confirm">Kaydet</button>
+                                        </div>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.card-body -->
+</div> <!-- /.content -->

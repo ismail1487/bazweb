@@ -1,0 +1,208 @@
+﻿@using Microsoft.CodeAnalysis.Editing
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+@*<link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.common.min.css" rel="stylesheet" />*@
+<link href="~/lib/kendo/Content/kendo/2020.3.1118/kendo.common.min.css" rel="stylesheet" />
+<link href="~/css/All/IcerikAdd.css" rel="stylesheet" />
+<script src="~/js/Model/IcerikGenel/IcerikKutuphanesiModel.js"></script>
+<script src="~/js/Model/IcerikGenel/IcerikMedyaModel.js"></script>
+<script src="~/js/Model/IcerikGenel/IcerikHedefKitleModel.js"></script>
+<script src="~/js/Model/Select2OptionModel.js"></script>
+<script src="~/js/Model/KisiListesiModel.js"></script>
+<script src="~/js/Model/DropDownModel.js"></script>
+<script src="~/js/Services/IcerikGenel/IcerikKutuphanesiService.js"></script>
+<div class="container-fluid">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>@localizator["Duyuru Ekleme"].Value</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card model-bind">
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="row  row-cols-1">
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label class="Lbl">@localizator["Başlık"].Value *</label>
+                                                        <input class="form-control" type="text" data-bind="value: data.IcerikBaslik" placeholder="@localizator["Başlık Giriniz"].Value..." required>
+                                                    </div>
+                                                    <label for="IcerikBaslik" class="validationMessage"></label>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label class="Lbl">@localizator["Özet Metin"].Value</label>
+                                                        <input class="form-control" type="text" data-bind="value: data.IcerikOzetMetni" placeholder="@localizator["Özet Metni Giriniz"].Value...">
+                                                    </div>
+                                                    <label for="IcerikOzetMetni" class="validationMessage"></label>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label class="Lbl">@localizator["Taslak Mı?"].Value?</label>
+                                                        <input type="checkbox" id="checkboxSuccess1" data-bind="checked:data.IcerikTaslakMi">
+                                                        <label for="checkboxSuccess1">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="row  row-cols-1">
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label class="Lbl">@localizator["Yayınlanma Zamanı"].Value</label>
+                                                        <input name="yayinlanmaZamani" id="yayinlanmaZamani" class="form-control datetimepicker" type="text" data-bind="value:data.IcerikYayinlanmaZamani">
+                                                    </div>
+                                                    <label for="IcerikYayinlanmaZamani" class="validationMessage"></label>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label class="Lbl">@localizator["Bitiş Zamanı"].Value</label>
+                                                        <input name="bitisZamani" id="bitisZamani" class="form-control datetimepicker" type="text" data-bind="value:data.IcerikBitisZamani">
+                                                    </div>
+                                                    <label for="IcerikBitisZamani" class="validationMessage"></label>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label class="Lbl" for="exampleInputFile">@localizator["Dosya Ekle"].Value</label>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input DosyaEkle" data-id="0">
+                                                                <label class="custom-file-label" for="exampleInputFile">@localizator["Dosya Seçiniz"].Value</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="alert alert-info" id="dosyaUyari1" role="alert">
+                                                            @localizator["Dosya yüklemesi yaparsanız içeriğin Url'i Panoya kopyalanacaktır"].Value.
+                                                        </div>
+                                                        <div class="alert alert-success" role="alert" id="dosyaUyari" style="display: none">
+                                                            @localizator["Yüklediğiniz içeriğin Url'i Panoya kopyalanmıştır"].Value.
+                                                        </div>
+                                                        <input type="text" id="toCopy" data-bind="value:icerikMedya.Url" tabindex='-1' aria-hidden='true' />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="row  row-cols-1">
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label class="Lbl"> @localizator["Duyuru Gönderilecek Kişileri Seçiniz"].Value: </label>
+                                                        <select id="kisilist" style="line-height: 20 !important;" class="form-control select2-primary select2-container--bootstrap4" multiple="multiple">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label class="Lbl">@localizator["Duyuru Gönderilecek Hedef Kitleleri Seçiniz"].Value:  </label>
+                                                        <select id="hedeflist" style="line-height: 20 !important;" class="form-control select2-primary select2-container--bootstrap4" multiple="multiple">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-8 offset-2">
+                                            <label class="Lbl">@localizator["İçerik Metni"].Value</label>
+                                            <div class=" form-group">
+                                                <textarea name="IcerikMetin" data-bind="value:icerikKutuphanesi.IcerikTamMetin" class="form-control form-control-sm editor" rows="4" placeholder="İçerik metni ekleyebilirsiniz">  </textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-center">
+                                            <a href="/announcementgeneral/announcementlist" class="btn cancel-button-float">@localizator["Vazgeç"].Value</a>
+                                            <button type="button" class="btn  add-buttons-nofloat" data-bind="click:SaveIcerik">
+                                                @localizator["Kaydet"].Value
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row text-center">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+
+<script>
+    //function kopiraj() {
+    //    setTimeout(function() {
+    //        var copyText = document.getElementById("toCopy");
+    //        copyText.select();
+    //        document.execCommand("Copy");
+    //        copyText.value = "";
+    //    }, 100);
+    //}
+    $(document).ready(function () {
+        icerikKutuphanesiService.initializeforSave();
+
+    });
+
+    $('.DosyaEkle').on("change", function (e) {
+        var id = $(this);
+        icerikKutuphanesiService.UploadFile(id);
+        //kopiraj();
+    });
+
+    ClassicEditor
+        .create(document.querySelector('.editor'), {
+            toolbar: {
+                items: [
+                    'heading',
+                    '|',
+                    'bold',
+                    'italic',
+                    'link',
+                    'bulletedList',
+                    'numberedList',
+                    '|',
+                    'outdent',
+                    'indent',
+                    '|',
+                    'blockQuote',
+                    'insertTable',
+                    'imageInsert',
+                    'mediaEmbed',
+                    'undo',
+                    'redo',
+                    'fontBackgroundColor',
+                    'fontFamily',
+                    'fontColor',
+                    'fontSize'
+                ]
+            },
+            language: 'tr',
+            table: {
+                contentToolbar: [
+                    'tableColumn',
+                    'tableRow',
+                    'mergeTableCells'
+                ]
+            }
+        })
+        .then(editor => {
+            console.log("editor eklendi.", editor);
+            customeditor = editor;
+        })
+        .catch(error => { console.error(error.stack); });
+</script>

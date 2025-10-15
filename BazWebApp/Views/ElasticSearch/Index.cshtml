@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewData["Title"] = "Elastic Search Sayfası";
+}
+
+
+@model List<Baz.Model.Entity.ViewModel.ElasticSearchIndexItem>
+
+
+<link href="~/css/All/ElasticSearch.css" rel="stylesheet" />
+
+<div class="row">
+   
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-10 offset-1 mt-3">
+                @if (Model != null && Model.Count > 0)
+                {
+                    <h3 style="text-align: center">Arama Sonuçları <img class="img-fluid" id="eSearch1" src="~/img/Search1.png" /></h3>
+                    <div class="form-group frm1">
+
+                        @foreach (var kayit in Model)
+                        {
+                            <div class="row rwElastic">
+                                <div class="col-md-4 offset-4 card text-center" id="eSearch2">
+                                    <div class="row">
+                                        <div class="col-md-6">   <a href="@kayit.UrlPattern.Replace("{TabloID}", kayit.Id.Replace(kayit.ItemType + "_", ""))">
+                                            <label class="col-md-12" style="font-weight: 400 !important;">
+                                                @kayit.ViewValue
+                                            </label>
+                                        </a></div>
+                                        <div class="col-md-6"> <a class="btn add-buttons" href="@kayit.UrlPattern.Replace("{TabloID}", kayit.Id.Replace(kayit.ItemType + "_", ""))">
+                                            <img class="img-fluid" src="~/img/_log-in.svg"/>
+                                        </a></div>
+                                    </div>
+                                 
+                                   
+                                </div>
+                                <hr />
+                            </div>
+                        }
+
+                    </div>
+                }
+                else
+                {
+                    <h3>Arama Sonuçları</h3>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col-md-12" style="font-weight: 400 !important;">
+                                Aramanıza dair herhangi bir sonuç bulunamadı.
+                            </label>
+                        </div>
+                        <hr />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

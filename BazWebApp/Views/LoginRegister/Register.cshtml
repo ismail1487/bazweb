@@ -1,0 +1,289 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+@inject ILocalizationService localizationService;
+@{
+    var dil = localizationService.GetCulture();
+}
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment env;
+<link href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@500&display=swap" rel="stylesheet">
+<head>
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-KCT949V');
+    </script>
+    <script type="text/javascript">
+        var dataLayer = dataLayer || [];
+        dataLayer.push({
+            event: "pageLoad",
+            pageinfo: {
+                pageType: "page",
+                pageURL: window.location.host + window.location.pathname,
+                pageTitle: document.title
+            }
+        })
+    </script>
+    <!-- End Google Tag Manager -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @if (env.EnvironmentName == "Development")
+    {
+        <meta name="robots" content="noindex">
+    }
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="~/lib/AdminLTE/dist/css/adminlte.css" rel="stylesheet" />
+    <link href="~/lib/AdminLTE/plugins/fontawesome-free/css/all.css" rel="stylesheet" />
+    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
+    <script src="~/lib/AdminLTE/plugins/jquery/jquery.js"></script>
+    <script src="~/js/RegisterJS.js" asp-append-version="true"></script>
+    <script src="~/lib/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="~/lib/AdminLTE/plugins/bootstrap/js/bootstrap.js"></script>
+    <script src="~/lib/AdminLTE/dist/js/adminlte.js"></script>
+    <script src="~/js/tools.js" asp-append-version="true"></script>
+    <link href="~/lib/AdminLTE/plugins/fontawesome-free/css/all.css" rel="stylesheet" />
+    <script src="~/lib/AdminLTE/plugins/select2/js/select2.min.js"></script>
+    <script src="~/lib/AdminLTE/plugins/moment/moment.min.js"></script>
+    <script src="~/lib/AdminLTE/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+    <script src="~/lib/AdminLTE/plugins/toastr/toastr.min.js"></script>
+    <link type="text/css" href="~/lib/AdminLTE/plugins/toastr/toastr.css" rel="stylesheet" />
+
+    <!-- css-->
+    <link href="~/css/All/Register.css" rel="stylesheet" />
+    <link href="~/css/All/General.css" rel="stylesheet" />
+    <link href="~/css/All/SignUp.css" rel="stylesheet" />
+    @if (dil == "tr-TR")
+    {
+
+        <script src="~/js/Lang/LangToastTr.js"></script>
+    }
+    else
+    {
+        <script src="~/js/Lang/LangToastEn.js"></script>
+    }
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KCT949V"
+                height="0" width="0"
+                style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 d-none d-md-block d-lg-block d-xl-block BackLeft">
+                <div><h1 class="ProjectTittle">BAZ PROJE</h1></div>
+                <!-- svg -->
+                <div class="ImageDivRegister">
+                  
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 BackRight">
+                <div class='col-12 left'>
+                    <p class='text-danger' id="alertDivTop" style="display: none;"></p>
+                </div>
+                <div class="row">
+                    <div class="col-12 left"><h1 class="Font32">@localizator["Kaydol"].Value</h1></div>
+                    <div class="col-12 left"><p class="Welcome-Sign-Up-to-continue">@localizator["Hoş geldiniz! Devam etmek için kayıt olun"].Value.</p></div>
+                    <div class="col-12 left">
+                        <div class="form-group row">
+                            <label class="Lbl">AD</label><span style="color:red; margin-left:1%;">*</span>
+                            <input type="text" class="form-control mb-2 mr-sm-2 Shape" id="txtKisiAdi" placeholder="Adı*">
+                            <label for="KisiAdi" class="validationMessage"></label>
+                        </div>
+                    </div>
+                    <div class="col-12 left">
+                        <div class="form-group row">
+                            <label class="Lbl">SOYAD</label><span style="color:red; margin-left:1%;">*</span>
+                            <input type="text" class="form-control Shape" id="txtKisiSoyadi" placeholder="Soyadı*">
+                            <label for="KisiSoyadi" class="validationMessage"></label>
+                        </div>
+                    </div>
+                    <div class="col-12 left">
+                        <div class="form-group row">
+                            <label class="Lbl">EMAIL</label><span style="color:red; margin-left:1%;">*</span>
+                            <input type="text" class="form-control Shape" id="txtKisiKullaniciAdi" placeholder="E-Mail*">
+                            <label for="KisiKullaniciAdi" class="validationMessage"></label>
+                        </div>
+                    </div>
+                    <div class="col-12 left">
+                        <div class="form-group row">
+                            <label class="Lbl">PAROLA</label><span style="color:red; margin-left:1%;">*</span>
+                            <input type="password" class="form-control Shape" id="txtSifre" placeholder="Şifre*" autocomplete="new-password">
+                            <label for="KisiSifre" class="validationMessage" style="padding-bottom: 10%;"></label>
+                        </div>
+                    </div>
+                    <div class="col-12 left">
+                        <div class="form-group row">
+                            <label class="Lbl">PAROLA TEKRAR</label><span style="color:red; margin-left:1%;">*</span>
+                            <input type="password" class="form-control Shape" id="txtSifreTekrar" placeholder="Şifre Tekrar*">
+                            <label for="KisiSifre" class="validationMessage" style="padding-bottom: 10%;"></label>
+                        </div>
+                    </div>
+                    <div class="col-12 left">
+                        <div class="form-group row">
+                            <div class="col-12"> <label class="Lbl">KAYIT TİPİ</label><span style="color: red; margin-left: 1%;">*</span></div>
+                            <div class="col-xl-6 col-lg-9 col-md-12 col-sm-12 col-12 offset-xl-3 offset-lg-4">
+                                <input type="radio" value="2" name="KTuru" id="BTipi" checked="checked">
+                                <label for="BTipi" class="radio-label">
+                                    Bireysel
+                                </label>
+                                <input type="radio" value="1" id="KTipi" name="KTuru">
+                                <label for="KTipi" class="radio-label">
+                                    Kurumsal
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="col-12 left">
+                            <div class="form-group row">
+                                <label class="Lbl">MESLEKİ UNVAN</label>
+                                <input type="text" class="form-control Shape" id="txtMeslekiUnvan" placeholder="Mesleki Unvanı">
+                                <label for="MeslekiUnvan" class="validationMessage"></label>
+                            </div>
+                        </div>*@
+                    @*<div class="col-12  left">
+
+                            <div class="col-12">
+                                <label class="Lbl">TELEFON</label>
+                            </div>
+                            <div class="col-12 row telefonDiv ">
+                                <div class="col-11">
+                                    <input type="text" class="form-control Shape" placeholder="Telefon Numarası" id="txtTelefonNo" im-insert="true">
+                                </div>
+                                <div class="col-1" id="AlanKod">
+                                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        <a href="#">
+                                            <img id="ddlImg" src="~/lib/flag-icons/24x24/TR.png" />
+                                        </a>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-flags text-center" id="phoneicons">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>*@
+                    @*<div class="col-12">
+                            <label for="KisiTelefon1" class="validationMessage"></label>
+                        </div>*@
+
+                    <div class="col-12 left dvKurum">
+                        <div class="form-group row">
+                            <label id="lblKurum" class="Lbl">KURUM ADI</label><span id="spnKurum" style="color:red; margin-left:1%;">*</span>
+                            <input type="text" class="form-control Shape" id="txtKurumTicariUnvan" placeholder="Kurum Adı*" kurumid="0">
+                            <label for="KurumKisaUnvan" class="validationMessage"></label>
+                        </div>
+                    </div>
+                    <div class="col-12 left dvVergi">
+                        <div class="form-group row">
+                            <label id="lblVergi" class="Lbl">VERGİ NO</label><span id="spnVergi" style="color:red; margin-left:1%;">*</span>
+                            <input type="text" class="form-control Shape" id="txtVergiNo" placeholder="Vergi No*">
+                            <label for="KurumVergiNo" class="validationMessage"></label>
+                        </div>
+                    </div>
+                    @*<div class="col-12 left dvCalisan">
+                            <div class="form-group row">
+                                <label id="lblCalisan" class="Lbl">ÇALIŞAN SAYISI</label>
+                                <select class="form-control Shape" id="CalisanSayisi">
+                                    <option>Seçiniz</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 left">
+                            <div class="form-group row">
+                                <label class="Lbl">ÜLKE</label>
+                                <select class="form-control Shape" id="UlkeDDL">
+                                    <option selected="" disabled="">Select one</option>
+                                    <option>Seçiniz</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 left dvDil">
+                            <div class="form-group row">
+                                <label id="lblDil" class="Lbl">ŞİRKET DİLİ</label>
+                                <select class="form-control Shape" id="sirketDili">
+                                    <option>Seçiniz</option>
+                                </select>
+                            </div>
+                        </div>*@
+                        @*
+                    <div class="col-12 left dvLisans">
+                        <div class="form-group row">
+                            <label id="lblLisans" class="Lbl">LİSANS</label><span style="color:red; margin-left:1%;">*</span>
+                            <select class="form-control Shape" id="lisanslar">
+                                <option>Seçiniz</option>
+                            </select>
+                            <label for="LisansId" class="validationMessage"></label>
+                        </div>
+                    </div>*@
+                    @*<div class="col-12 left dvLisansZ">
+                            <div class="form-group row">
+                                <label id="lblLisansZ" class="Lbl">LİSANS ZAMANI</label><span style="color:red; margin-left:1%;">*</span>
+                                <select class="form-control Shape" id="zamanlar">
+                                    <option value="0">Seçiniz</option>
+                                </select>
+                                <label for="LisansZamanId" class="validationMessage"></label>
+                            </div>
+                        </div>
+
+                    <div class="col-12 left dvLKisiS">
+                        <div class="form-group row">
+                            <label class="Lbl">LİSANS KİŞİ SAYISI</label><span style="color:red; margin-left:1%;">*</span>
+                            <input type="number" id="LKisiS" class="form-control numeric Shape" placeholder="Sayı Giriniz">
+                            <label for="LisansKisiSayisi" class="validationMessage"></label>
+                        </div>
+                    </div>
+                    *@
+                    @*<div class="col-12 left">
+                            <div class="row">
+                                <div class="col-2 Marg1">
+                                    <input type="checkbox" id="bilgilendirme" class="Check" name="bilgilendirme">
+                                </div>
+                                <div class="col-10 Marg">
+                                    <p class="Txt13">
+                                        Beni Hatırla
+                                    </p>
+                                </div>
+                            </div>
+                        </div>*@
+                    <div class="col-12 left">
+
+                        <div class="form-group row">
+                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-1 col-1 Marg1">
+                                <input type="checkbox" id="kosul" class="Check" name="kosul">
+                            </div>
+                            <div class="col-xl-10 col-lg-10 col-md-10 col-sm-11 col-11 Marg">
+                                <p class="Txt13">
+                                    <a target="_blank" href="/LoginRegister/membershipconditions" class="ForgotUyelik">Üyelik koşulları</a> ve <a target="_blank" href="" class="ForgotUyelik">Gizlilik Sözleşmesi</a> ni kabul ediyorum.
+                                </p>
+                            </div>
+                        </div>
+                        <label for="UyelikSartiKabulEttiMi" class="validationMessage"></label>
+                    </div>
+                    <div class="col-12 left">
+                        <button type="button" class="btn btn-block signUpButton hide Dsbl" onclick="Register()" id="btnRegister">
+                            Kayıt Ol
+                        </button>
+                    </div>
+                    <div class="col-12 left">
+                        <p class="Txt15">Zaten hesabınız var mı?<a href="/" class="Log-in"> Giriş Yap</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

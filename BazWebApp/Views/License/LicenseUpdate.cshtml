@@ -1,0 +1,139 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+@*<link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.common.min.css" rel="stylesheet" />*@
+<link href="~/lib/kendo/Content/kendo/2020.3.1118/kendo.common.min.css" rel="stylesheet" />
+<link href="~/css/All/License.css" rel="stylesheet" />
+<script src="~/js/Model/LicenseModuleModel/LisansDetayKayitModel.js"></script>
+<script type="text/javascript" src="~/js/Repository/IRepository.js"></script>
+<script src="~/js/Services/LicenseModuleServices/LicenseService.js"></script>
+
+<div class="container-fluid service-body">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-md-6">
+                    <h1>@localizator["Lisans Güncelleme"].Value</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content model-bind">
+        <div class="container-fluid">
+            <div class="row text-center">
+                <div class="col-12 text-center">
+                    <div class="card model-bind">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-10 offset-1 ">
+                                    <div class="row ">
+                                        <div class="form-group col-md-6 offset-3">
+                                            <label class="Lbl">@localizator["Lisans İsmi"].Value<b style="color: red;">*</b></label>
+                                            <div class="input-group input-group-select mb-3">
+
+                                                <input name="LicenseName" type="text" class="form-control form-control-sm preventspace" data-bind="value: data.Name" />
+                                            </div>
+                                            <label for="Name" class="validationMessage"></label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6 offset-3">
+                                            <label class="Lbl">@localizator["Modüller"].Value<b style="color: red;">*</b> </label>
+                                            <select style="height: 38px; line-height: 38px; width: 100%" id="Moduller" data-placeholder="Modül Seçiniz" data-bind="value:data.ModulId" class="form-control select2-primary" multiple="multiple">
+                                            </select>
+                                            <label for="ModulId" class="validationMessage"></label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6 offset-3" id="zamanTekrarliAlan">
+                                            <label class="Lbl">@localizator["Lisans Zamanları"].Value </label>
+                                            <div class="input-group zamanTekrar mb-3" id="zamanTekrar_1">
+                                                <div class="row col-md-12 mb-3">
+                                                    <label class="col-md-5">@localizator["Geçerli Olduğu Gün"].Value:</label>
+                                                    <select style="height: 38px; line-height: 38px;" id="zamanSelect_" tabloid="0" data-placeholder="Modül Seçiniz" class="form-control col-md-4 select2-primary">
+                                                        <option value="30">@localizator["1 Ay"].Value</option>
+                                                        <option value="60">@localizator["2 Ay"].Value</option>
+                                                        <option value="90">@localizator["3 Ay"].Value</option>
+                                                        <option value="180">@localizator["6 Ay"].Value</option>
+                                                        <option value="365">@localizator["12 Ay"].Value</option>
+                                                    </select>
+                                                    <div class="zamantekrarBtnGrp col-md-3 text-center">
+                                                        <button type="button" class="btn btn-xs btn-success zamanAddButton">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button> &nbsp;
+                                                        <button type="button" class="btn btn-xs btn-danger zamanRemoveButton" style="display: none;">
+                                                            <i class="fas fa-minus-circle accent-danger"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="row col-md-12  mt-3">
+                                                    <!-- text input -->
+                                                    <label class="col-md-5 Lbl">@localizator["Kişi Sayısı"].Value</label>
+                                                    <input type="text" id="LisansPaketiKisiSayisi_" class="form-control col-md-4 numeric" placeholder="0">
+                                                    <label for="LisansPaketiKisiSayisi" class="validationMessage"></label>
+                                                </div>
+                                                <div class="row col-md-12  mt-3">
+                                                    <!-- text input -->
+                                                    <label class="col-md-5 Lbl">@localizator["Iyzico Ürün Planı Token"].Value</label>
+                                                    <input type="text" id="IyzicoUrunPlaniToken_" class="form-control col-md-4" placeholder="Token">
+                                                    <label for="IyzicoUrunPlaniToken" class="validationMessage"></label>
+                                                </div>
+                                                <div class="row col-md-12 mt-3">
+                                                    <!-- text input -->
+                                                    <div class="row col-md-8">
+
+                                                        <label class="col-md-8 Lbl">@localizator["Paket Bedeli"].Value:</label>
+                                                        <input type="text" id="paketBedeli_" class="form-control col-md-4" placeholder="0">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group clearfix paraBirimleri">
+                                                            @*<div class="icheck-primary d-inline ">
+                                                                    <input type="radio" id="TRY_" name="paraBirimi_" checked="">
+                                                                    <label for="TRY_">
+                                                                        TRY
+                                                                    </label>
+                                                                </div>
+                                                                <div class="icheck-primary d-inline">
+                                                                    <input type="radio" id="USD_" name="paraBirimi_">
+                                                                    <label for="USD_">
+                                                                        USD
+                                                                    </label>
+                                                                </div>
+                                                                <div class="icheck-primary d-inline">
+                                                                    <input type="radio" id="EUR_" name="paraBirimi_">
+                                                                    <label for="EUR_">
+                                                                        EUR
+                                                                    </label>
+                                                                </div>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <label for="LisansBedeli" class="validationMessage"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <a href="/License/List" class="btn  cancel-button-float">@localizator["Vazgeç"].Value</a>
+                                <button type="button" class="btn confirm add-buttons-nofloat " data-bind="click:Kaydet"> @localizator["Güncelle"].Value</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<script>
+    $(document).ready(function () {
+        licenseService.UpdateInitialize();
+    });
+</script>

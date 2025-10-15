@@ -1,0 +1,62 @@
+﻿<link href="~/css/All/IcerikGenel.css" rel="stylesheet" />
+<script src="~/js/Model/IcerikGenel/IcerikKutuphanesiModel.js"></script>
+<script src="~/js/Model/IcerikGenel/IcerikMedyaModel.js"></script>
+<script src="~/js/Model/IcerikGenel/IcerikHedefKitleModel.js"></script>
+<script src="~/js/Model/Select2OptionModel.js"></script>
+<script src="~/js/Model/KisiListesiModel.js"></script>
+<script src="~/js/Model/DropDownModel.js"></script>
+<script src="~/js/Services/IcerikGenel/IcerikKutuphanesiService.js"></script>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+<div class="container-fluid">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6 liste-baslik">
+                    <h1>@localizator["Duyuru Listesi"].Value</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class=" model-bind">
+                        <div class="card-header text-right">
+                            <button type="button" class="btn add-buttons" data-bind="click:toIcerikAddPage">@localizator["Ekle"].Value</button>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="">
+                            <table style="width: 100% !important;" id="IcerikListesiTable" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>@localizator["Başlık"].Value</th>
+                                        <th>@localizator["Başlangıç Tarihi"].Value</th>
+                                        <th>@localizator["Bitiş Tarihi"].Value</th>
+                                        <th>@localizator["Taslak Mı?"].Value</th>
+                                        <th style=' min-width: 20% !important;'>@localizator["İşlem"].Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody"></tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<script>
+    $(document).ready(function () {
+        icerikKutuphanesiService.initializeForList();
+    })
+</script>

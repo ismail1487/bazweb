@@ -1,0 +1,54 @@
+﻿@*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous"></script>*@
+
+<script src="~/js/KisilerArasiIliskiTanimlama.js"></script>
+<link href="~/css/All/Param.css" rel="stylesheet" />
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+
+<div class="container-fluid">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6 liste-baslik">
+                    <h2> @localizator["Kişiler Arası İlişki Tanımlama"].Value</h2>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="">
+                    <div class="card-header">
+                        <h3 class="card-title"></h3>
+                    </div>
+                    <div class="">
+                        <table style="width: 100% !important;" id="HiddenTable" hidden class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>@localizator["Bağlı Kişi"].Value</th>
+                                    <th>@localizator["İlişki Türü"].Value</th>
+                                    <th>@localizator["Bağlantılı Olduğu Kişi"].Value</th>
+                                    <th style=' min-width: 20% !important;'>@localizator["İşlem"].Value</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody"></tbody>
+                        </table>
+                        <div class="row mt-3">
+                            <div class="col-md-12" id="jsGrid"> </div>
+                            <div class="row col-md-12">
+                                <div class="col-md-4"><label for="BuKisiID" class="validationMessage"></label></div>
+                                <div class="col-md-4"><label for="IliskiTuruID" class="validationMessage"></label></div>
+                                <div class="col-md-4"><label for="BununKisiID" class="validationMessage"></label></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>

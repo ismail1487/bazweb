@@ -1,0 +1,437 @@
+﻿@*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous"></script>*@
+<link href="~/lib/select2-4-0-13/select2.min.css" rel="stylesheet" />
+<link href="~/css/All/KOrganizasyon.css" rel="stylesheet" />
+<script src="~/lib/select2-4-0-13/select2.min.js"></script>
+<script src="~/js/easyTree.js"></script>
+<link rel="stylesheet" href="//zgs225.github.io/easy-tree/dist/css/easyTree.min.css">
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+<!-- Content Header (Page header) -->
+@*<title>Kurum Organizasyon</title>*@
+<section class="content-header">
+    <!--<div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h3>Kurum Organizasyon Yapısı</h3>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/panel">Anasayfa</a></li>
+                    <li class="breadcrumb-item active">Kurum Organizasyon Yapısı</li>
+                </ol>
+            </div>
+        </div>
+    </div>-->
+    <!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <div class="card ">
+                    <div class="card-header">
+                        <h2 class="card-title">@localizator["Pozisyon Tanımları"].Value</h2>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form role="form">
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <label class="input-label-CompanyOrganizationDefinition">@localizator["Kurum Seçimi"].Value<b>*</b></label>
+                                <select id="Kurum" class="form-control" style="width: 100%;" onchange="BirimDDLDoldur($(this).val())">
+                                </select>
+                                <label for="KurumId" class="validationMessage"></label>
+                            </div>
+                            <div class="form-group">
+                                <label class="input-label-CompanyOrganizationDefinition" for="select-param-organizasyon-birimi">Organizasyon Birimi<b>*</b></label>
+                                <select style="line-height: 20 !important;" id="select-param-organizasyon-birimi" class="form-control"></select>
+                                <label for="TipId" class="validationMessage"></label>
+                            </div>
+                            <div class="form-group">
+                                <label class="input-label-CompanyOrganizationDefinition" for="exampleInputPassword1">@localizator["Tanım"].Value<b>*</b></label>
+                                <input type="text" class="form-control" id="Tanim" placeholder="Tanım">
+                                <label for="Tanim" class="validationMessage"></label>
+                            </div>
+                            <div class="form-group">
+                                <label class="input-label-CompanyOrganizationDefinition" for="select-organizasyon-birimi">@localizator["Üst Birim"].Value</label>
+                                <select style="line-height: 20 !important; width: 100%!important" id="select-organizasyon-birimi" class="form-control"></select>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer text-center" id="btns">
+                            @*<a href="#"  class="btn btn-secondary iptal" id="btnCancel">Vazgeç</a>*@
+                            <a @*href="javascript:;"*@ id="btnsave">@localizator["Kaydet"].Value</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--/.col (left) -->
+            <!-- right column -->
+            <div class="col-md-6">
+                <!-- general form elements disabled -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">@localizator["Ağaç Yapısı"].Value</h2>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="easy-tree">
+                            <ul id="firstUl">
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <!-- general form elements disabled -->
+                <!-- /.card -->
+            </div>
+            <!--/.col (right) -->
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+<script>
+    var KurumListForDDL = [];
+    var IlgiliKurumId = 0;
+
+    $(document).ready(function () {
+
+        KurumListGetir();
+        loadKurumOrg();
+        getKurumOrganizasyonSelected2();
+
+        $(document).on('click',
+            '#btnsave',
+            function () {
+                var data = {
+                    TipId: parseInt($("#select-param-organizasyon-birimi").select2().find(":selected")[0].value),
+                    Tanim: "",
+                    UstId: 0,
+                    Tanim: $("#Tanim").val(),
+                    TabloId: 0,
+                    KurumId: 0
+                };
+                if ($("#select-organizasyon-birimi").select2().find(":selected").length) {
+                    data.UstId =
+                        parseInt($("#select-organizasyon-birimi").select2().find(":selected")[0].value);
+                }
+
+                if ($("#Kurum").select2().find(":selected").length) {
+                    data.KurumId = parseInt($("#Kurum").select2().find(":selected")[0].value);
+                }
+
+                if (data.TabloId > 0) {
+                    $.ajax({
+                        data: data,
+                        url: "/panel/UpdateForKurum2",
+                        type: "POST",
+                        dataType: "json",
+                        async: false,
+                        success: function (result) {
+
+                            if (result.value) {
+                                alertim.toast(siteLang.Guncelle,
+                                    "success");
+                                offEditable();
+                                getKurumOrganizasyonSelected2();
+                                getKurumOrganizasyonTree2();
+                            } else {
+                                alertim.toast(siteLang.Hata, "error");
+                            }
+                        },
+                        error: function (e) {
+                            errorHandler(e);
+                        }
+                    })
+                }
+                else {
+                    $.ajax({
+                        data: data,
+                        url: "/panel/AddKurumOrganizasyonBirimi2",
+                        type: "POST",
+                        dataType: "json",
+                        success: function (result) {
+                            if (result.value == 0) {
+                                alertim.toast(siteLang.Hata, "error");
+                            } else {
+                                alertim.toast(siteLang.Kaydet, "success");
+                                offEditable();
+                                getKurumOrganizasyonSelected2();
+                                getKurumOrganizasyonTree2();
+                            }
+                        },
+                        error: function (e) {
+                            errorHandler(e);
+                        }
+                    });
+                }
+            });
+        $(document).on('click',
+            '#btnupdate',
+            function () {
+                var selected = getSellectedTree();
+                var data = {
+                    TipId: selected.tipId,
+                    UstId: parseInt($("#select-organizasyon-birimi").select2().find(":selected")[0].value),
+                    Tanim: $("#Tanim").val(),
+                    TabloId: selected.tabloId,
+                    KurumId: 0
+                };
+
+                if ($("#Kurum").select2().find(":selected").length) {
+                    data.KurumId = parseInt($("#Kurum").select2().find(":selected")[0].value);
+                }
+
+                $.ajax({
+                    data: data,
+                    url: "/panel/UpdateForKurum2",
+                    type: "POST",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.value) {
+                            alertim.toast(siteLang.Guncelle, "success");
+                            $(".validationMessage").html("")
+                            offEditable();
+                            getKurumOrganizasyonSelected2();
+                            getKurumOrganizasyonTree2();
+                        } else {
+                            alertim.toast(siteLang.Hata, "error");
+                        }
+                    },
+                    error: function (e) {
+                        errorHandler(e);
+                    }
+                });
+            });
+        $(document).on('click',
+            '#btnRemove',
+            function () {
+                alertim.confirm(siteLang.SilOnay,
+                    "info",
+                    function () {
+                        var item = getSellectedTree();
+                        var url = "/panel/DeleteKurumBirim/" + item.tabloId;
+                        $.ajax({
+                            url: url,
+                            type: "GET",
+                            dataType: "json",
+                            success: function (result) {
+                                alertim.toast(siteLang.Sil, "success");
+                                offEditable();
+                                getKurumOrganizasyonSelected2();
+                                getKurumOrganizasyonTree2();
+                            }
+                        });
+                    },
+                    function () {
+                        return;
+                    }
+                );
+            });
+        $(document).on('click',
+            '#btnCancel',
+            function () {
+                offEditable();
+            });
+
+        $.ajax({
+            url: "/panel/GetOrganizasyonBirim",
+            type: "GET",
+            dataType: "json",
+            
+            success: function (data) {
+                if (data.value) {
+                    var selectData = [{ id: 0, text: siteLang.Choose }];
+                    data.value.forEach(function (item) {
+                        console.log(item);
+                        selectData.push({ id: item.tabloId, text: item.tanim, tipId: item.tabloId });
+                    })
+                    $("#select-param-organizasyon-birimi").select2({ data: selectData })
+                    $("#select-param-organizasyon-birimi").on('select2:select', function (e) {
+                        console.log("Seçim yapıldı");
+                        var data = e.params.data;
+                        if (parseInt(data.id) > 0) {
+                            getKurumOrganizasyonTree2();
+                            getKurumOrganizasyonSelected2();
+                            
+                        }
+                    })
+                     
+                }
+            } /*
+            success: function (data) {
+                if (data.value) {
+                    console.log(data);
+                    var selectData = [{ id: 0, text: siteLang.Choose }];
+                    data.value.forEach(function (item) {
+                        if (item.tanim == "Pozisyon") {
+                            selectData.push({ id: item.tabloId, text: item.tanim, tipId: 2 });
+                        }
+
+                    });
+                    $("#select-param-organizasyon-birimi").select2({ data: selectData })
+                    $("#select-param-organizasyon-birimi").on('select2:select', function (e) {
+                        var data = e.params.data;
+                        if (parseInt(data.id) > 0) {
+                            getKurumOrganizasyonTree2();
+                            getKurumOrganizasyonSelected2();
+                        }
+                    })
+                   // offEditable();
+                   // getKurumOrganizasyonSelected2();
+                   // getKurumOrganizasyonTree2();
+                }
+            } */
+        })
+
+        LocationInputMask(".koordinat");
+    })
+
+    function clearValues() {
+        $('#Tanim').val("");
+        $("#select-organizasyon-birimi").empty().trigger('change');
+        $("#KoordinatX").val("");
+        $("#KoordinatY").val("");
+    }
+    function getKurumOrganizasyonSelected2() {
+        var tipID = $("#select-param-organizasyon-birimi").val() || 0;
+        var a = $("#select-organizasyon-birimi").val();
+        //var url = "/panel/GetKurumBirimList2/" + IlgiliKurumId;
+        var url = "/panel/GetKurumBirimList2/" + IlgiliKurumId+"/"+tipID;//mert 12.27;
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            success: function (result) {
+                //debugger;
+                if (result.value) {
+                    var selectData = [{ id: 0, text: siteLang.Choose }];
+                    result.value.forEach(function (item) {
+                        selectData.push({ id: item.tabloId, text: item.tanim });
+                    });
+                    $("#select-organizasyon-birimi").html('');
+                    $("#select-organizasyon-birimi").select2({ data: selectData });
+                }
+            }
+        })
+
+    }
+    function getKurumOrganizasyonSelectedForLevel(id, call) {
+        var url = "/panel/GetKurumBirimListForLevel2/" + id + "/" + IlgiliKurumId;
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            success: function (result) {
+                if (result.value) {
+                    var selectData = [{ id: 0, text: siteLang.Choose }];
+                    result.value.forEach(function (item) {
+                        selectData.push({ id: item.tabloId, text: item.tanim });
+                    });
+                    $("#select-organizasyon-birimi").html('');
+                    $("#select-organizasyon-birimi").select2({ data: selectData })
+                    call();
+                }
+            }
+        });
+    }
+    function getKurumOrganizasyonTree2() {
+        var tipID = $("#select-param-organizasyon-birimi").val() || 0;
+        var url = "/panel/GetKurumBirim2/" + IlgiliKurumId + "/" + tipID;//mert 12.27
+        console.log(url);
+        // var url = "/panel/GetKurumBirim2/" + IlgiliKurumId;
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                $("#firstUl").html("");
+                data.value.forEach(function (item) {
+                    var level = 1;
+                    $("#firstUl").append("<li data-level='1'  data-tabloid='" + item.tabloId + "'  data-tipid='" + item.tipId + "'  data-ustid='" + item.ustId + "' >" + item.tanim + "</li>");
+                    if (item.altItems.length > 0) {
+                        WriteData(item.tabloId, item.altItems);
+                    }
+                })
+                $('.easy-tree').EasyTree();
+            }
+        })
+
+    }
+    function WriteData(id, data, level) {
+        var level2 = level + 1;
+        var str = "<ul>";
+        data.forEach(function (item) {
+            str = str + "<li data-level='" + level2 + "'  data-tabloid='" + item.tabloId + "'  data-tipid='" + item.tipId + "'  data-ustid='" + item.ustId + "'data-coords='" + item.koordinat + "' >" + item.tanim + "</li>";
+        })
+        str = str + "</ul>";
+        var group = $('li[data-tabloid="' + id + '"]').append(str);
+        data.forEach(function (item) {
+            if (item.altItems.length > 0) {
+                WriteData(item.tabloId, item.altItems);
+            }
+        })
+    }
+
+    //sabit blok DDL methodları
+    function KurumListGetir() {
+        $.ajax({
+            type: "GET",
+            url: "/panel/ListKendisiIle",
+            dataType: "json",
+            async: false,
+            data: null, // < === this is where the problem was !!
+            success: function (result) {
+                if (result.isSuccess == true) {
+                    KurumListForDDL = result.value;
+                    console.log(KurumListForDDL);
+                    KurumDDLDoldur("Kurum", result.value);
+                } else {
+                    alertim.toast(siteLang.Hata, alertim.types.danger);
+                }
+            },
+            error: function (e) {
+                console.log(e);
+            }, //success: function (result) {
+        });
+    }
+
+    //Doldurma Methotları
+    function KurumDDLDoldur(alanID, data) {
+        var str = "";
+        str = "<option value='0'>" + siteLang.Choose + "</option>";
+        for (var i = 0; i < data.length; i++) {
+            str += "<option value='" + data[i].tabloID + "'>" + data[i].kurumTicariUnvani + "</option>";
+        }
+        $("#" + alanID).html(str);
+    };
+
+    function BirimDDLDoldur(id) {
+        IlgiliKurumId = id;
+        offEditable();
+        getKurumOrganizasyonSelected2();
+        getKurumOrganizasyonTree2();
+    }
+
+    function loadKurumOrg() {
+        var url = "/panel/cookieKurumID";
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: 'json',
+            async: false,
+            success: function (result) {
+                console.log(result.value);
+                if (result.value) {
+                    IlgiliKurumId = result.value;
+                    $('#Kurum [value=' + result.value + ']').attr('selected', 'true').change();
+                }
+            }
+        })
+    }
+</script>

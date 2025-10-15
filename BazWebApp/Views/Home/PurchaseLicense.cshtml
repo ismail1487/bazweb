@@ -1,0 +1,198 @@
+﻿@*<link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.common.min.css" rel="stylesheet" />*@
+<link href="~/lib/kendo/Content/kendo/2020.3.1118/kendo.common.min.css" rel="stylesheet" />
+<link href="~/css/All/PurchaseLicense.css" rel="stylesheet" />
+<script src="~/js/Model/LicenseModuleModel/LisansDetayKayitModel.js"></script>
+<script src="~/js/Model/LicenseModuleModel/KurumLisansOdemeModel.js"></script>
+<script type="text/javascript" src="~/js/Repository/IRepository.js"></script>
+<script src="~/js/Services/LicenseModuleServices/LicensePurchaseService.js"></script>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+
+<div class="container-fluid service-body">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-md-6">
+                    <h1> @localizator["Lisans Satın Al"].Value</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content model-bind">
+        <div class="container-fluid">
+            <div class="row text-center">
+                <div class="col-12 text-center">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 offset-3">
+                                    <div class="text-center my-1">
+                                        <p class="silik">
+                                            @localizator["Lisans Bilgileri"].Value
+                                        </p>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6 offset-3">
+                                            <label class="Lbl">  @localizator["Lisans Seçiniz"].Value:<b style="color: red;">*</b> </label>
+                                            <select style="height: 38px; line-height: 38px; width: 100%" id="Lisanslar" data-placeholder="  @localizator["Lisans Seçiniz"].Value" data-text-field="tanim" data-value-field="tabloID" data-bind="source:lisansList, value:data.LisansId,events:{change:LisansZamanıGetir}" data-role="dropdownlist" class="form-control select2-primary">
+                                            </select>
+                                            <label for="LisansId" class="validationMessage"></label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6 offset-3">
+                                            <label class="Lbl">  @localizator["Lisans Zamanı Seçiniz"].Value:<b style="color: red;">*</b> </label>
+                                            <select style="height: 38px; line-height: 38px; width: 100%" id="Zamanlar" data-text-field="tanim" data-value-field="tabloID" data-placeholder="@localizator["Zaman Seçiniz"].Value" data-bind="source:lisansZamanList, value:data.LisansZamanId, events:{change:ZamanIdyegoreGecerliGunAta}" data-role="dropdownlist" class="form-control select2-primary">
+                                            </select>
+                                            <label for="LisansZamanId" class="validationMessage"></label>
+                                        </div>
+                                    </div>
+                                    @*<div class="row">
+                                            <div class="form-group col-md-6 offset-3">
+                                                <label class="Lbl">Kişi Sayısı:</label>
+                                                <input type="text" id="kisiSayisi" class="form-control numeric" placeholder="Sayı Giriniz" data-bind="value: data.LisansKisiSayisi, events:{change:toplamFiyatHesapla}">
+                                                <label for="LisansKisiSayisi" class="validationMessage"></label>
+                                            </div>
+                                        </div>
+                                        <div class="text-center my-3">
+                                            <p class="nrml" id="toplamFiyat">
+                                            </p>
+                                        </div>*@
+                                </div>
+                            </div>
+                            <div class="row" id="kisiselBilgiler">
+                                @*<div class="col-md-3 offset-1">
+                                        <div class="row">
+                                            <div class="form-group col-md-6 offset-3">
+                                                <label class="Lbl">Ad Soyad:</label>
+                                                <input type="text" id="teslimatname" class="form-control" placeholder="Satın alan kişi ismi giriniz." data-bind="value: data.TeslimatAdresi.ContactName">
+                                                <label for="ContactName" class="validationMessage"></label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6 offset-3">
+                                                <label class="Lbl">Adres:</label>
+                                                <input type="text" id="teslimatAdres" class="form-control" placeholder="Adres Giriniz." data-bind="value: data.TeslimatAdresi.Address">
+                                                <label for="Address" class="validationMessage"></label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6 offset-3">
+                                                <label class="Lbl">Şehir:</label>
+                                                <input type="text" id="teslimatAdres" class="form-control" placeholder="Adres Giriniz." data-bind="value: data.TeslimatAdresi.City">
+                                                <label for="City" class="validationMessage"></label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6 offset-3">
+                                                <label class="Lbl">Ülke:</label>
+                                                <input type="text" id="teslimatAdres" class="form-control" placeholder="Adres Giriniz." data-bind="value: data.TeslimatAdresi.Country">
+                                                <label for="Country" class="validationMessage"></label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6 offset-3">
+                                                <label class="Lbl">Posta Kodu::</label>
+                                                <input type="text" id="teslimatAdres" class="form-control numeric" placeholder="Adres Giriniz." data-bind="value: data.TeslimatAdresi.ZipCode">
+                                                <label for="ZipCode" class="validationMessage"></label>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                <div class="col-md-6 offset-3">
+                                    <div class="text-center my-1">
+                                        <p class="silik">
+                                            @localizator["Kişisel Bilgiler"].Value
+                                        </p>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6 offset-3">
+                                            <label class="Lbl">  @localizator["Ad Soyad"].Value:</label>
+                                            <input type="text" id="teslimatname" class="form-control" placeholder="  @localizator["Satın alan kişi ismi giriniz"].Value." data-bind="value: data.FaturaAdresi.ContactName">
+                                            <label for="ContactName" class="validationMessage"></label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6 offset-3">
+                                            <label class="Lbl">  @localizator["Kimlik Numaranız"].Value:</label>
+                                            <input type="text" id="KisiKimlikNo" class="form-control numeric" placeholder="@localizator["Kimlik Numaranızı Giriniz"].Value." data-bind="value: data.KisiKimlikNo">
+                                            <label for="KisiKimlikNo" class="validationMessage"></label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6 offset-3">
+                                            <label class="Lbl">  @localizator["Cep Telefon Numaranız"].Value:</label>
+                                            <input type="text" id="KisiCepNo" class="form-control numeric" placeholder=" @localizator["Cep Numaranızı Giriniz"].Value." data-bind="value: data.CepTelefonNumarasi">
+                                            <label for="CepTelefonNumarasi" class="validationMessage"></label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6 offset-3">
+                                            <label class="Lbl">  @localizator["Şehir"].Value:</label>
+                                            <input type="text" id="teslimatSehir" class="form-control" placeholder="@localizator["Şehir Giriniz"].Value." data-bind="value: data.FaturaAdresi.City">
+                                            <label for="City" class="validationMessage"></label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6 offset-3">
+                                            <label class="Lbl">  @localizator["Adres"].Value:</label>
+                                            <input type="text" id="teslimatAdres" class="form-control" placeholder="@localizator["Adres Giriniz"].Value." data-bind="value: data.FaturaAdresi.Address">
+                                            <label for="Address" class="validationMessage"></label>
+                                        </div>
+                                    </div>
+                                    @*<div class="row">
+                                            <div class="form-group col-md-6 offset-3">
+                                                <label class="Lbl">Ülke:</label>
+                                                <input type="text" id="teslimatAdres" class="form-control" placeholder="Adres Giriniz." data-bind="value: data.FaturaAdresi.Country">
+                                                <label for="Country" class="validationMessage"></label>
+                                            </div>
+                                        </div>*@
+                                    @*<div class="row">
+                                            <div class="form-group col-md-6 offset-3">
+                                                <label class="Lbl">Posta Kodu::</label>
+                                                <input type="text" id="teslimatAdres" class="form-control numeric" placeholder="Adres Giriniz." data-bind="value: data.FaturaAdresi.ZipCode">
+                                                <label for="ZipCode" class="validationMessage"></label>
+                                            </div>
+                                        </div>*@
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="button" class="btn confirm add-buttons-nofloat" data-bind="click:SatinAlmaİstegiGonder" id="satisButton">  @localizator["Satın Al"].Value  </button>
+                            </div>
+                            <div class="text-center">
+                                <button type="button" class="btn confirm add-buttons-nofloat" data-bind="click:FreeLisansSatinAl" id="freeButton">  @localizator["Devam Et"].Value </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div id="iyzipay-checkout-form" class="popup"></div>
+</div>
+<!-- /.container-fluid -->
+<!-- /.content -->
+
+<script>
+    $(document).ready(function () {
+        licensePurchaseService.data.set("KurumID", $('#site-kurumId').val());
+        licensePurchaseService.data.set("IlgiliKurumId", $('#site-kurumId').val());
+        licensePurchaseService.PurchaseInitialize();
+        Numeric();
+        CepTelefonuMask('#KisiCepNo');
+        var freeMi = $('#site-freeMi').val();
+
+        //$(document).on("change", '#Lisanslar', function () {
+        //    if ($('#Lisanslar option:selected').text().toLowerCase().includes("free")) {
+        //        $('#kisiselBilgiler').hide();
+        //        $('#satisButton').hide();
+        //        $('#freeButton').show();
+        //    } else {
+        //        $('#kisiselBilgiler').show();
+        //        $('#satisButton').show();
+        //        $('#freeButton').hide();
+        //    }
+        //});
+        //$(document).on("change", '#kisiSayisi', function () { licensePurchaseService.toplamFiyatHesapla() });
+    });
+</script>

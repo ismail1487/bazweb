@@ -1,0 +1,89 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<script src="~/js/SliderKutuphanesi/SliderKutuphanesiListeleme.js" asp-append-version="true"></script>
+<link href="~/css/All/Kisi.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> @* Değiştirile Bilinir Swal(AÇılır Uyarı PopUp) *@
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+<div class="container-fluid">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="liste-baslik">@localizator["Slider Listesi"].Value</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="">
+
+                    <div class="">
+                        <div class="tab-content" id="kisiTabContent">
+                            <div class="tab-pane fade active show" id="kisiAktifTabContent" role="tabpanel" aria-labelledby="kisiTab-aktif-tab">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="">
+                                            <div class="card-header text-right">
+                                                <div class="row">
+                                                    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-3 col-3 offset-xl-8 offset-lg-8 offset-md-7">
+                                                    </div>
+                                                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-6 col-6">
+                                                    </div>
+                                                    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-3 col-3">
+                                                        <button type="button" class="btn add-buttons" onclick="EklemeSayfasi()" id="ekleHeaderbtn">@localizator["Ekle"].Value</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="">
+                                                <div class="tab-content" id="">
+                                                    <div class="tab-pane fade active show" id="icerikAktifTabContent" role="tabpanel" aria-labelledby="icerikTab-aktif-tab">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <div class="">
+
+                                                                    <!-- /.card-header -->
+                                                                    <div class="">
+                                                                        <div style="width: 100%;">
+                                                                            <div class="table-responsive">
+                                                                                <table id="SliderListesiTable" class="table table-bordered table-hover">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th>@localizator["Slider Başlık"].Value</th>
+                                                                                            <th>@localizator["Açıklama"].Value</th>
+                                                                                            <th>@localizator["Görsel Sayısı"].Value</th>
+                                                                                            <th style='min-width: 20% !important;'>@localizator["İşlem"].Value</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody id="tbody"></tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- /.card-body -->
+                                                                </div>
+                                                            </div>
+                                                            <!-- /.col -->
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

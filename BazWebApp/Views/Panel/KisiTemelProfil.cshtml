@@ -1,0 +1,329 @@
+﻿<script src="~/lib/AdminLTE/plugins/moment/moment.min.js"></script>
+<script src="~/js/dinamikAlanlar.js" asp-append-version="true"></script>
+<script src="~/js/KisiTemelProfil.js" asp-append-version="true"></script>
+<link href="~/css/All/KisiTemelProfil.css" rel="stylesheet" />
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+
+<div class="container-fluid">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h2> @localizator["Kişi Temel Profil Bilgileri"].Value</h2>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">@localizator["Organizasyon Bilgileri"].Value</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4" id="Krm">
+                                <div class="form-group">
+                                    <label class="Lbl">@localizator["Kurum"].Value: </label>
+                                    <a id="Kurum" style="width: 100%;">
+                                    </a>
+                                </div>
+                            </div>
+                            @*<div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Departman: </label>
+                                        <a id="Departman" style="width: 100%;">
+                                        </a>
+                                    </div>
+                                </div>*@
+                            <div class="col-4" id="Pzsyn">
+                                <div class="form-group">
+                                    <label class="Lbl">@localizator["Pozisyon"].Value: </label>
+                                    <a id="Pozisyon" style="width: 100%;">
+                                    </a>
+                                </div>
+                            </div>
+                            @* <div class="col" id="Rl" style="display:none">
+                                <div class="form-group">
+                                    <label class="Lbl">@localizator["Rol"].Value: </label>
+                                    <a id="Rol" style="width: 100%;">
+                                    </a>
+                                </div>
+                            </div> *@
+                            @*<div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Lokasyon: </label>
+                                        <a id="Lokasyon" style="width: 100%;">
+                                        </a>
+                                    </div>
+                                </div>*@
+                            <div class="col-4" id="Grs">
+                                <div class="form-group">
+                                    <label class="Lbl">@localizator["İşe Giriş Tarihi"].Value: </label>
+                                    <a id="IseGirisTarihi"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">@localizator["Kişisel Bilgiler"].Value</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="Lbl" for="Ad">@localizator["Adı"].Value: </label>
+                                    <a id="Ad"></a>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="Lbl" for="Soyad">@localizator["Soyadı"].Value: </label>
+                                    <a id="Soyad"></a>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="Lbl" for="Sicil">@localizator["Sicil No"].Value: </label>
+                                    <a id="Sicil"></a>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="Lbl" for="Tc">@localizator["T.C. Kimlik No"].Value: </label>
+                                    <a id="Tc"></a>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="Lbl" for="E-posta">@localizator["E-Posta"].Value: </label>
+                                    <a id="Eposta"></a>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="Lbl" for="Baba">@localizator["Baba Adı"].Value: </label>
+                                    <a id="Baba"></a>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="Lbl" for="Ana">@localizator["Anne Adı"].Value: </label>
+                                    <a id="Ana"></a>
+                                </div>
+                            </div>
+                            @* <div class="col-md-3" style="display: none;">
+                                <div class="form-group">
+                                    <label class="Lbl" for="Din">@localizator["Dini"].Value: </label>
+                                    <a id="Din" style="width: 100%;">
+                                    </a>
+                                </div>
+                            </div> *@
+                            <br />
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="Lbl" for="Medeni">@localizator["Medeni Hali"].Value: </label>
+                                    <a id="Medeni" style="width: 100%;">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="Lbl" for="Cins">@localizator["Cinsiyet"].Value: </label>
+                                    <a id="Cins" style="width: 100%;">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="Lbl">@localizator["Doğduğu Ülke"].Value: </label>
+                                    <a id="DogduguUlke" style="width: 100%;">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="Lbl">@localizator["Doğduğu Şehir"].Value: </label>
+                                    <a id="DogduguSehir" style="width: 100%;">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="Lbl" for="birthday">@localizator["Doğum Tarihi"].Value: </label>
+                                    <a id="DogumTarihi"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <h3 class="card-title">@localizator["Adres Bilgileri"].Value</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div style="width: 100%;">
+                            <div class="table-responsive">
+                                <table id="adresTable" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>@localizator["Adres Tipi"].Value</th>
+                                            <th>@localizator["Ülke"].Value</th>
+                                            <th>@localizator["Şehir"].Value</th>
+                                            <th>@localizator["Adres"].Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodyAdresTable"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="card" id="AdresTekrarliAlan">
+                        <div class="card-header">
+                            <h3 class="card-title">Adres</h3>
+                        </div>
+                    </div>*@
+                <!-- /.card-body -->
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <h3 class="card-title">@localizator["Okul Bilgileri"].Value</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div style="width: 100%;">
+                            <div class="table-responsive">
+                                <table id="okulTable" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>@localizator["Okul Tipi"].Value</th>
+                                            <th>@localizator["Okul"].Value</th>
+                                            <th>@localizator["Fakülte"].Value</th>
+                                            <th>@localizator["Mezuniyet Tarihi"].Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodyOkulTable"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="card card-secondary" id="OkulTekrarliAlan">
+                        <div class="card-header">
+                            <h3 class="card-title">Okul Bilgileri</h3>
+                        </div>
+                    </div>*@
+                <!-- /.card-body -->
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <h3 class="card-title">@localizator["Telefon Bilgileri"].Value</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div style="width: 100%;">
+                            <div class="table-responsive">
+                                <table id="telTable" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>@localizator["Telefon Tipi"].Value</th>
+                                            <th>@localizator["Telefon No"].Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="telBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="card card-secondary" id="TelefonTekrarliAlan">
+                        <div class="card-header">
+                            <h3 class="card-title">Telefon</h3>
+                        </div>
+                    </div>*@
+                <!-- /.card-body -->
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <h3 class="card-title">
+                                    @localizator["Yabancı Dil Bilgileri"].Value
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div style="width: 100%;">
+                            <div class="table-responsive">
+                                <table id="dilTable" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                @localizator["Yabancı Dil Tipi"].Value
+                                            </th>
+                                            <th>
+                                                @localizator["Yabancı Dil Seviyesi"].Value
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dilBodyTable"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="card card-secondary" id="YabanciDilTekrarliAlan">
+                        <div class="card-header">
+                            <h3 class="card-title">Yabancı Dil</h3>
+                        </div>
+                    </div>*@
+                <!-- /.card-body -->
+            </div>
+            @* <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">@localizator["Ek Bilgiler"].Value</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body" id="kisiEkBilgiler">
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div> *@
+        </div>
+    </section>
+    <!-- /.content -->
+</div>

@@ -1,0 +1,206 @@
+﻿<script src="~/js/KurumTemelGuncelle.js" asp-append-version="true"></script>
+<script src="~/js/dinamikAlanlar.js" asp-append-version="true"></script>
+<script src="~/js/kurumEkParametre.js" asp-append-version="true"></script>
+<link href="~/css/All/KurumAdd.css" rel="stylesheet" />
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+<div class="container-fluid">
+    <!-- Content Header (Page header) -->
+    <!--<section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h2>Kurum Tanımlama Sayfası</h2>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/panel">Anasayfa</a></li>
+                        <li class="breadcrumb-item active">Kurum Tanımlama Sayfası</li>
+                    </ol>
+                </div>
+            </div>
+        </div>-->
+    <!-- /.container-fluid -->
+    <!--</section>-->
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12">
+                <div class="col-12">
+                    <h5 class="left-head">@localizator["Yeni Kurum"].Value</h5>
+                    <p class="left-body">@localizator["Yeni Kurum Tanımlama"].Value</p>
+                </div>
+            </div>
+            <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12">
+                <div class="card container mt-2">
+                    <h5>@localizator["Organizasyon Bilgileri"].Value*</h5>
+                    <div class="col-12 row">
+                        <div class="col-md-12">
+                            <div class="form-group float-right">
+                                <label class="Lbl">@localizator["Kurum Logo"].Value</label>
+                                <a href="javascript:;" id="openImagKurumKayit">
+                                    <img id="KurumResimUrl" src="/img/_image.svg" class="profile-user-img img-fluid"
+                                         alt="Kurum profile picture">
+                                </a>
+                                <input class="form-control" type="file" id="KurumLogo" hidden>
+                                <a id="kurRes"><i style="color: red;" class="fas fa-minus-circle"></i></a>
+                                <label for="KurumResimUrl" class="validationMessage"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-cols-2 kisiTanimlamaDivBlocks container">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="Lbl">@localizator["Kurum Tipi Seç"].Value</label>
+                                <select style="height: 38px; line-height: 38px; width: 100%" id="KurumTipi" class="form-control select2-primary" multiple="multiple">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="Lbl"> @localizator["Kurum Müşteri Temsilcisi Seç"].Value</label>
+                                <select style="height: 38px; line-height: 38px; width: 100%" id="MusteriTemsilcileri" class="form-control select2-primary" multiple="multiple">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="Lbl">
+                                    @localizator["Kurum Kısa Adı"].Value
+                                    <b style="color: red;">*</b>
+                                </label>
+                                <input class="form-control" type="text" placeholder="@localizator["Kurum Adı"].Value" id="KurumAdi">
+                            </div>
+                            <label for="KurumAdi" class="validationMessage"></label>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="Lbl">@localizator["Kuruluş Tarihi"].Value</label>
+                                <input class="form-control" type="date" id="KurulusTarihi" placeholder="@localizator["Vergi Dairesi"].Value">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="Lbl">@localizator["Vergi Dairesi"].Value</label>
+                                @*<select id="VergiDairesi" class="form-control" style="width: 100%;">
+                                    </select>*@
+                                <input class="form-control" type="text" id="VergiDairesi" placeholder="@localizator["Vergi Dairesi"].Value">
+                            </div>
+                            <label for="VergiDairesiAdi" class="validationMessage"></label>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="Lbl">@localizator["Vergi No"].Value</label>
+                                <input class="form-control numeric" type="text" id="VergiNo" placeholder="@localizator["Vergi No"].Value">
+                            </div>
+                            <label for="VergiNo" class="validationMessage"></label>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="Lbl">@localizator["Ticaret Sicil No"].Value</label>
+                                <input class="form-control" type="text" id="TicaretSicilNo" placeholder="@localizator["Ticaret Sicil No"].Value">
+                            </div>
+                            <label for="TicaretSicilNo" class="validationMessage"></label>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="Lbl"> @localizator["Web Sitesi"].Value</label>
+                                <input class="form-control" type="text" id="WebSitesi" placeholder="@localizator["Web Sitesi"].Value">
+                            </div>
+                            <label for="WebSitesi" class="validationMessage"></label>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="Lbl">
+                                    @localizator["E-Posta Adresi"].Value
+                                    <b style="color: red;">*</b>
+                                </label>
+                                <input class="form-control" type="text" id="EpostaAdresi" placeholder="  @localizator["E-Posta Adresi"].Value">
+                            </div>
+                            <label for="EpostaAdresi" class="validationMessage"></label>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="Lbl">  @localizator["Telefon No"].Value</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="dropdown h-100">
+                                            <button class="btn h-100 btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                <a href="#">
+                                                    <img id="ddlImg" src="~/lib/flag-icons/24x24/TR.png" />
+                                                </a>
+                                            </button>
+                                            <ul class="pr-5 dropdown-menu dropdown-menu-flags text-center" id="phoneicons">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <input class="form-control" type="text" id="FaxNo" placeholder="  @localizator["Telefon No"].Value">
+                                </div>
+                            </div>
+                            <label for="FaxNo" class="validationMessage"></label>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="Lbl">  @localizator["Kurum Ülke"].Value</label>
+                                <select id="KurumUlke" class="form-control" style="width: 100%;">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="Lbl"> @localizator["Kurum Şehir"].Value</label>
+                                <select id="KurumSehir" class="form-control" style="width: 100%;">
+                                    <option value="0" hidden>@localizator["Ülke Seçiniz"].Value</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <h5>Adres</h5>
+                        <div class="tekrarliAlanBox" id="KurumAdresTekrarliAlan">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <h5>Banka</h5>
+                        <div class="tekrarliAlanBox" id="KurumBankaTekrarliAlan">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <h5>Ek Bilgiler</h5>
+                        <div class="card-body" id="kurumEkBilgiler">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-center mb-3">
+                            <button type="button" id="guncelleBtn" class="btn add-buttons">@localizator["Güncelle"].Value</button>
+                            <a href="/panel/CompanyList" class="btn cancel-button-right"> @localizator["Vazgeç"].Value</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<div class="modal fade" id="modalCropper" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Crop</h5>
+            </div>
+            <div class="modal-body">
+                <div class="img-container">
+                    <img id="imageCrop" src="" width="300">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="imageCropSave" type="button" class="btn btn-primary"> @localizator["Kaydet"].Value</button>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="file" hidden="hidden" id="updimage" />
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/cropper/4.1.0/cropper.min.js" integrity="sha512-E+gDQcIvNXE60SjCS38ysf1mGh4ObBpKcUOp0oEaHQHQAdaN2p7GelOpgEdpTuCLoIJyLkNXiqFZbyD9Ak/Ygw==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropper/4.1.0/cropper.css" integrity="sha512-iAcZ4OrGhQ7KDqtM+LMc+iuv63aJ9O7hPyWBzCXsrZYuhJ6jhdeh40+hf9o4QmZVu8QrH/cWy/JTmoKNOL4Urw==" crossorigin="anonymous" />*@
+<script src="~/lib/cropper-4-1-0/cropper.min.js"></script>
+<link href="~/lib/cropper-4-1-0/cropper.css" rel="stylesheet" />
+<script src="~/lib/AdminLTE/plugins/moment/moment.min.js"></script>

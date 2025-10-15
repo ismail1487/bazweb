@@ -1,0 +1,64 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+@*<link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.common.min.css" rel="stylesheet" />*@
+<link href="~/lib/kendo/Content/kendo/2020.3.1118/kendo.common.min.css" rel="stylesheet" />
+<link href="~/css/All/License.css" rel="stylesheet" />
+<script src="~/js/Model/LicenseModuleModel/LisansDetayKayitModel.js"></script>
+<script type="text/javascript" src="~/js/Repository/IRepository.js"></script>
+<script src="~/js/Services/LicenseModuleServices/LicenseService.js"></script>
+
+<div class="container-fluid service-body">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-md-6 liste-baslik">
+                    <h1>@localizator["Lisans Listesi"].Value</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content model-bind">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="">
+                        <div class="card-header text-right">
+                            <a href="/License/Definition" class="btn add-buttons">@localizator["Ekle"].Value</a>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="">
+                            <table id="licenseTable" style="width: 100% !important;" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>@localizator["Lisans Adı"].Value</th>
+                                        <th>@localizator["İçerdiği Modül Sayısı"].Value</th>
+                                        <th>@localizator["Tanımlı Zaman Sayısı"].Value</th>
+                                        <th style=' min-width: 20% !important;'>@localizator["İşlem"].Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody">
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+    <script>
+        $(document).ready(function () {
+            licenseService.ListInitialize();
+        });
+    </script>
+</div>

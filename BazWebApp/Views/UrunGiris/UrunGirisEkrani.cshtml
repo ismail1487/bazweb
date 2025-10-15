@@ -1,0 +1,291 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<link href="~/css/all/urunadd.css" rel="stylesheet" />
+<link href="~/css/All/IcerikGirisEkrani.css" rel="stylesheet" />
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<div class="container justify-content-center align-items-center">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="liste-baslik">@localizator["Ürün Giriş Ekranı"].Value</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    @*TabDiv*@
+    <section class="content-tab">
+        <div class="container-fluid">
+             <div class="tab">
+                <button class="tablinks Lbl active" onclick="TabShow(this, 'UrunTemelBilgiler')">@localizator["Ürün Temel Bilgiler"]</button>
+                <button class="tablinks  Lbl" onclick="TabShow(this, 'UrunParametreler')">@localizator["Ürün Parametreler"]</button>
+                <button class="tablinks  Lbl" onclick="TabShow(this, 'Icerikler')">@localizator["İçerikler"]</button>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="UrunTemelBilgiler">
+            <section class="content">
+                <div class="border rounded p-3 mb-4 position-relative" style="background-color: #ffffff;">
+                    <div class="row">
+                        <div class="col-md-4" id="AnaKategoriContainer">
+                            <div class="form-group">
+                                <label class="Lbl">@localizator["Ürün Ana Kategori"].Value</label>
+                                <select id="AnaKategori" class="form-control" style="width: 100%;" onchange="UrunKategorileriGetir(this.value)" data-placeholder="@localizator["Kategori Seçiniz"].Value" required>
+                                </select>
+                                <label for="AnaKategoriHata" id="AnaKategoriHata" class="validationMessage">Ürün Ana Kategori Seçiniz</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4" id="KategoriContainer">
+                            <div class="form-group">
+                                <label class="Lbl">@localizator["Ürün Kategori"].Value</label>
+                                <select id="Kategori" class="form-control" style="width: 100%;" onchange="UrunAltKategoriGetir(this.value)" data-placeholder="@localizator["Kategori Seçiniz"].Value" required>
+                                </select>
+                                <label for="KategoriHata" id="KategoriHata" class="validationMessage">Ürün Kategori Seçiniz</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4" id="Alt-KategoriContainer">
+                            <div class="form-group">
+                                <label class="Lbl">@localizator[" ÜrünAlt Kategori"].Value</label>
+                                <select id="Alt-Kategori" class="form-control" style="width: 100%;" onchange="" data-placeholder="@localizator["Alt Kategori Seçiniz"].Value" required>
+                                </select>
+                                <label for="Alt-KategoriHata" id="Alt-KategoriHata" class="validationMessage"> Ürün Alt Kategori Seçiniz</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="border rounded p-3 mb-4 position-relative" style="background-color: #ffffff;">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="Lbl">Ürün Adı</label>
+                                    <input type="text" id="UrunAdi_1" class="form-control" placeholder="Ürün Adı Giriniz">
+                                    <label for="Baslik" class="validationMessage" id="validationMessageBaslik_1" style="display:none" required>Başlık Giriniz</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label class="Lbl">Ürün Açıklaması</label>
+                            <div class="editor-container ql-container ql-snow" id="editor_1" style="height: 150px ">
+                                <div class="ql-editor ql-blank" data-gramm="false" contenteditable="true"><p><br></p></div>
+                                <div class="ql-clipboard" contenteditable="true" tabindex="-1"></div>
+                                <div class="ql-tooltip ql-hidden">
+                                    <a class="ql-preview" target="_blank" href="about:blank"></a>
+                                    <input type="text" data-formula="e=mc^2" data-link="https://quilljs.com" data-video="Embed URL" required>
+                                    <a class="ql-action"></a><a class="ql-remove"></a>
+                                </div>
+                            </div>
+                            <label for="anaMetin" class="validationMessage" id="validationMessageAnaMetin_1">Ana Metin Giriniz</label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            @*Urun Fiyat Alanı*@
+            <div class="border rounded p-3 mb-4 position-relative" style="background-color: #ffffff;">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="Lbl">Ürün Piyasa Fiyatı</label>
+                            <input class="form-control" type="text" id="urunFiyat" required>
+                            <label for="urunFiyat" id="fiyattext" class="validationMessage">Ürün Piyasa Fiyatı</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="Lbl">Para Birimi</label>
+                            <select id="urunParabirimi" class="form-control" style="width: 100%;" onchange="" data-placeholder="" required>
+                            </select>
+                            <label for="urunParabirimi" id="paratext" class="validationMessage">Para Birimi</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*medya alanı*@
+            <div class="border rounded p-3 mb-4 position-relative" style="background-color: #ffffff;">
+                <span class="position-absolute top-0 start-0 translate-middle-y px-2" style="
+    position: absolute;
+    top: -12px;
+    left: 16px;
+    padding: 0 8px;
+    font-weight: bold;
+    font-size: 1rem;
+">
+                    @localizator["Medyalar"].Value
+                </span>
+                <div id="tekrarliMedya">
+                </div>
+
+            </div>
+            @*taslak mı*@
+            <div class="border rounded p-3 mb-4 position-relative" style="background-color: #ffffff;">
+                <div class="row">
+                    <div class="col-md-6 d-flex align-items-center">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="TaslakMiCheckbox">
+                            <label class="form-check-label Lbl" for="TaslakMiCheckbox">
+                                Taslak mı?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*Ürün Parametreler*@
+        <div class="tab-content" id="UrunParametreler">
+            <section class="content">
+
+                <div class="border rounded p-3 mb-4 position-relative" style="background-color: #ffffff;">
+                    <div class="row">
+                        <div class="col-md-12" id="BirimContainer">
+                            <div class="form-group">
+                                <div class="row mb-3">
+                                    <div class="col-4">
+                                        <label class="Lbl">@localizator["Marka"].Value</label>
+                                        <select id="MarkaKategori" class="form-control" style="width: 100%;" onchange=" UrunModelgetir(this.value)" data-placeholder="@localizator["Marka seçiniz"].Value" required>
+                                        </select>
+                                        <label for="MarkaKategori" id="MarkaKategoriHata" class="validationMessage">Marka Seçiniz</label>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="Lbl">@localizator["Model"].Value</label>
+                                        <select id="ModelKategori" class="form-control" style="width: 100%;" onchange="UrunSeriGetir(this.value)" data-placeholder="@localizator["Model seçiniz"].Value" required>
+                                        </select>
+                                        <label for="ModelKategori" id="ModelKategoriHata" class="validationMessage">Model Seçiniz</label>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="Lbl">@localizator["Seri"].Value</label>
+                                        <select id="SeriKategori" class="form-control" style="width: 100%;" onchange="" data-placeholder="@localizator["Seri seçiniz"].Value" required>
+                                        </select>
+                                        <label for="SeriKategori" id="SeriKategoriHata" class="validationMessage">Model Seçiniz</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-8" id="BirimContainer">
+                                    <div class="container">
+                                        <!-- 1. Satır: Hız -->
+                                        <div class="row mb-3">
+                                            <div class="col-4 d-flex align-items-center">
+                                                <label class="form-label Lbl mb-0">@localizator["Hız:"].Value</label>
+                                            </div>
+                                            <div class="col-4">
+                                                <input id="HizKategori" class="form-control" placeholder="@localizator["Hız seçiniz"].Value" required>
+                                                <label for="HizKategori" id="HizKategoriHata" class="validationMessage">Boş alanları doldurunuz...</label>
+
+                                            </div>
+                                            <div class="col-4">
+                                                <select id="HizBirim" data-id="1" class="form-control" data-placeholder="@localizator["Birim seçiniz"].Value" required></select>
+                                            </div>
+                                        </div>
+
+                                        <!-- 2. Satır: Motor Hacmi -->
+                                        <div class="row mb-3">
+                                            <div class="col-4 d-flex align-items-center">
+                                                <label class="form-label Lbl mb-0">@localizator["Motor Hacim:"].Value</label>
+                                            </div>
+                                            <div class="col-4">
+                                                <input id="HacimKategori" class="form-control" placeholder="@localizator["Hacim seçiniz"].Value" required>
+                                                <label for="HacimKategori" id="HacimKategoriHata" class="validationMessage">Boş alanları doldurunuz...</label>
+
+                                            </div>
+                                            <div class="col-4">
+                                                <select id="HacimBirim" data-id="2" class="form-control" data-placeholder="@localizator["Birim seçiniz"].Value" required></select>
+                                            </div>
+                                        </div>
+
+                                        <!-- 3. Satır: Kat Edilen Mesafe -->
+                                        <div class="row mb-3">
+                                            <div class="col-4 d-flex align-items-center">
+                                                <label class="form-label Lbl mb-0">@localizator["Kat Edilen Mesafe:"].Value</label>
+                                            </div>
+                                            <div class="col-4">
+                                                <input id="OlcumKategori" class="form-control" placeholder="@localizator["Mesafe seçiniz"].Value" required>
+                                                <label for="OlcumKategori" id="OlcumKategoriHata" class="validationMessage">Boş alanları doldurunuz...</label>
+                                            </div>
+                                            <div class="col-4">
+                                                <select id="OlcumBirim" data-id="3" class="form-control" data-placeholder="@localizator["Birim seçiniz"].Value" required></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <div class="tab-content" id="Icerikler">
+        <section class="content">
+            <div class="border rounded p-3 mb-4 position-relative" style="background-color: #ffffff;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="row mb-3">
+                                <div class="col-8">
+                                    <label class="Lbl">@localizator["İçerik Kütüphanesi"].Value</label>
+                                    <select id="IcerikKutuphanesi" class="form-control" style="width: 100%;" data-placeholder="@localizator["İçerik seçiniz"].Value" required> </select>
+                                    <label for="IcerikKutuphanesi" id="IcerikKutuphanesiHata" class="validationMessage">İçerik Kütüphanesi Seçiniz</label>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <label class="Lbl">@localizator["Icerik Blok Kategorileri"].Value</label>
+                                    <select id="IcerikBlokKategori" class="form-control" style="width: 100%;" onchange="IcerikBlokAltKategoriGetir(this.value)" data-placeholder="@localizator["Kategori seçiniz"].Value" required> </select>
+                                    <label for="IcerikBlokKategori" id="IcerikBlokKategoriHata" class="validationMessage">İçerik Blok Kategorisi seçiniz</label>
+                                </div>
+                                <div class="col-6">
+                                    <label class="Lbl">@localizator["Icerik Blok Alt-Kategorileri"].Value</label>
+                                    <select id="IcerikBlokAlt-Kategori" class="form-control" style="width: 100%;" onchange="" data-placeholder="@localizator["Alt-Kategori seçiniz"].Value" required> </select>
+                                    <label for="IcerikBlokAlt-Kategori" id="IcerikBlokAlt-KategoriHata" class="validationMessage">İçerik Blok Alt-Kategorisi seçiniz</label>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-8">
+                                    <label class="Lbl">@localizator["İçerik Blok Tanim"].Value</label>
+                                    <input id="IcerikBlokTanim" class="form-control" placeholder="@localizator["içerik Tanımı giriniz"].Value" required>
+                                    <label for="IcerikBlokTanim" id="IcerikBlokTanimHata" class="validationMessage">İçerik Tanımı giriniz</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="border rounded p-3 mb-4 position-relative" style="background-color: #ffffff;">
+            <span class="position-absolute top-0 start-0 translate-middle-y px-2" style="
+    position: absolute;
+    top: -12px;
+    left: 16px;
+    padding: 0 8px;
+    font-weight: bold;
+    font-size: 1rem;
+">
+                @localizator[""].Value
+            </span>
+            <div id="tekrarliMedyaBlok">
+            </div>
+
+        </div>
+        
+
+    </div>
+
+
+    
+    @*Kaydetme İşlemi*@
+    <div class="row mb-5">
+        <div class="col-md-12 col-12 text-right">
+            <button type="button" onclick="UrunKaydet()" id="kaydetButton" class="btn btn-primary">
+                @localizator["Kaydet"]
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/urungirisekrani/urungirisekrani.js"></script>

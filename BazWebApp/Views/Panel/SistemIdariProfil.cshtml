@@ -1,0 +1,155 @@
+﻿<link href="~/css/All/SistemIdari.css" rel="stylesheet" />
+<script type="text/javascript" src="~/js/Repository/IRepository.js"></script>
+<script src="~/js/Services/IdariProfil/SistemIdariProfil.js"></script>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+
+<div class="container-fluid" id="pagedivcss">
+    <!-- Content Header (Page header) -->
+    <!--<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h2>Sistem İdari Yönetim Bilgileri</h2>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/panel">Anasayfa</a></li>
+                    <li class="breadcrumb-item active">Sistem İdari Yönetim Bilgileri</li>
+                </ol>
+            </div>
+        </div>
+    </div>-->
+    <!-- /.container-fluid -->
+    <!--</section>-->
+    <!-- Main content -->
+    <section class="content model-bind">
+        <div class="row">
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="liste-baslik">
+                            <h3 class="card-title"> @localizator["Sistem İdari Profil"].Value</h3>
+                        </div>
+                    </div>
+                </div><!-- /.container-fluid -->
+            </section>
+            <div class="col-5 container">
+                <div class="form-group">
+                    <label class="Lbl">@localizator["KURUM SEÇ"].Value</label>
+                    <select id="Kurumlar" class="form-control" style="width: 100%;">
+                    </select>
+                </div>
+            </div>
+            <!-- Temel Bilgiler -->
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <h3 class="card-title">@localizator["Kurum Temel Bilgileri"].Value</h3>
+                            </div>
+                            <div class="col-md-1"><button type="button" id="kurumDuzenle" class="btn"><img src='/img/edit.svg' /></button></div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <table id="kurumTemelBilgilerTable" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>@localizator["Kurum Logo"].Value</th>
+                                    <th>@localizator["Kurum Adı"].Value</th>
+                                    <th>@localizator["E-Posta"].Value</th>
+                                    <th>@localizator["TELEFON"].Value</th>
+                                    <th>@localizator["Ticaret Sicil No"].Value</th>
+                                    <th>@localizator["Vergi No"].Value</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyKurumTemelBilgilerTable"></tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- Kurum Lisans Bilgileri -->
+            <div class=" row col-12">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-11">
+                                    <h3 class="card-title">@localizator["Kurum Lisans Bilgileri"].Value</h3>
+                                </div>
+                                <div class="col-md-1"><button type="button" id="kurumLisansDuzenle" class="btn"><img src='/img/edit.svg' /></button></div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table id="kurumLisansBilgiTable" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>@localizator["Lisans Adı"].Value</th>
+                                        <th>@localizator["Lisans Son Kullanma Tarihi"].Value</th>
+                                        <th>@localizator["Lisans Kişi Sayısı"].Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-11">
+                                    <h3 class="card-title">@localizator["Kurum Banka Bilgileri"].Value</h3>
+                                </div>
+                                <div class="col-md-1"><button type="button" id="kurumBankaDuzenle" class="btn"><img src='/img/edit.svg' /></button></div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table id="bankaBilgilerTable" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>@localizator["Banka"].Value</th>
+                                        <th>@localizator["Şube"].Value</th>
+                                        <th>@localizator["Hesap Numarası"].Value</th>
+                                        <th>@localizator["IBAN"].Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Kurumdaki Kişilerin Lisans Bilgileri -->
+            <div class="col-md-12 ">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <h3 class="card-title">@localizator["Kurumdaki Kişilerin Lisans Bilgileri"].Value</h3>
+                            </div>
+                            <div class="col-md-1"><button type="button" style="margin-bottom: 10px;" id="kurumKisiLisansDuzenle" class="btn"><img src='/img/edit.svg' /></button></div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table id="kurumKisiLisansBilgileriTable" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>@localizator["Adı Soyadı"].Value</th>
+                                    <th>@localizator["Mail"].Value</th>
+                                    <th>@localizator["Abonelik Adı"].Value</th>
+                                    <th>@localizator["Abonelik Başlangıç Tarihi"].Value</th>
+                                    <th>@localizator["Abonelik Başlangıç Tarihi"].Value</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

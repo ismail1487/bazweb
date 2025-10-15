@@ -1,0 +1,424 @@
+﻿@*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous"></script>*@
+<link href="~/lib/select2-4-0-13/select2.min.css" rel="stylesheet" />
+<script src="~/lib/select2-4-0-13/select2.min.js"></script>
+<script src="~/js/easyTree.js"></script>
+<link rel="stylesheet" href="//zgs225.github.io/easy-tree/dist/css/easyTree.min.css">
+<style type="text/css">
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        color: #444;
+        line-height: 20px !important;
+    }
+    /* .easy-tree li.li_selected>span, .easy-tree li.li_selected>span>a {
+            background: transparent;
+            color: #0000ff;
+        }*/
+    .easy-tree li.parent_li > span:hover, .easy-tree li.parent_li > span:hover + ul li span {
+        background: transparent !important;
+        color: #fff;
+    }
+
+    #btnRemove {
+        margin-left: 10px
+    }
+
+    .easy-tree {
+        min-height: 20px;
+        margin-bottom: 20px;
+        background-color: #17a2b8 !important;
+        color: #000000 !important;
+        border: 0;
+        border-top: 0;
+        padding-bottom: 15px;
+    }
+
+    .iptal {
+        float: left;
+    }
+
+    #btnCancel {
+        float: left;
+    }
+
+    .container-fluid {
+        font-family: 'Encode Sans', sans-serif;
+    }
+
+    .easy-tree li > span {
+        border: 1px solid #e1e4e9 !important;
+        border-radius: 3px;
+        display: inline-block;
+        padding: 5px;
+        text-decoration: none;
+    }
+
+        .easy-tree li > span > a {
+            color: #516180 !important;
+            text-decoration: none;
+        }
+
+    .card-header {
+        border: none !important;
+        font-size: 18px;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.56;
+        letter-spacing: normal;
+        text-align: left;
+        color: #18203f;
+    }
+
+    .input-label-CompanyOrganizationDefinition {
+        font-size: 12px;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.33;
+        letter-spacing: normal;
+        text-align: left;
+        color: #516180;
+    }
+
+    .add-buttons {
+        width: 8vw !important;
+    }
+</style>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h3>Kurum Organizasyon Yapısı</h3>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Pozisyon Tanımları</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form role="form">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="input-label-CompanyOrganizationDefinition" for="select-param-organizasyon-birimi">ORGANİZASYON BİRİMİ<b>*</b></label>
+                                <select style="line-height: 20 !important;" id="select-param-organizasyon-birimi" class="form-control"></select>
+                                <label for="TipId" class="validationMessage"></label>
+                            </div>
+                            <div class="form-group">
+                                <label class="input-label-CompanyOrganizationDefinition" for="exampleInputPassword1">TANIM<b>*</b></label>
+                                <input type="text" class="form-control" id="Tanim" placeholder="Tanım">
+                                <label for="Tanim" class="validationMessage"></label>
+                            </div>
+                            <div class="form-group">
+                                <label class="input-label-CompanyOrganizationDefinition" for="select-param-organizasyon-birimi">ÜST BİRİM</label>
+                                <select style="line-height: 20 !important;" id="select-organizasyon-birimi" class="form-control"></select>
+                            </div>
+                            <div class="form-group" style="display:none;" id="LokasyonKoordinat">
+                                <label class="input-label-CompanyOrganizationDefinition" for="LokasyonKoordinat">KOORDİNAT GİRİNİZ</label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control koordinat" id="KoordinatX" placeholder="X:">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control koordinat" id="KoordinatY" placeholder="Y:">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer text-center" id="btns">
+                            @*<a href="#"  class="btn btn-secondary iptal" id="btnCancel">Vazgeç</a>*@
+                            <a href="javascript:;" id="btnsave" class="btn add-buttons">Kaydet</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--/.col (left) -->
+            <!-- right column -->
+            <div class="col-md-6">
+                <!-- general form elements disabled -->
+                <div class="card card-warning">
+                    <div class="card-header">
+                        <h3 class="card-title">Ağaç Yapısı</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="easy-tree">
+                            <ul id="firstUl">
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <!-- general form elements disabled -->
+                <!-- /.card -->
+            </div>
+            <!--/.col (right) -->
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+<script>
+    $(document).ready(function () {
+        $(document).on('click', '#btnsave', function () {
+            //if (parseInt($("#select-param-organizasyon-birimi").select2().find(":selected")[0].value) == 4) {
+            //    data[""]
+            //}
+            var data = {
+                TipId: parseInt($("#select-param-organizasyon-birimi").select2().find(":selected")[0].value), Tanim: "",
+                UstId: 0,
+                /*UstId: parseInt($("#select-organizasyon-birimi").select2().find(":selected")[0].value),*/
+                Tanim: $("#Tanim").val(),
+                TabloId: 0
+            };
+            if ($("#select-organizasyon-birimi").select2().find(":selected").length) {
+                data.UstId =
+                    parseInt($("#select-organizasyon-birimi").select2().find(":selected")[0].value);
+            }
+
+            if (data.TipId == 4) {
+                data["Koordinat"] = $('#KoordinatX').val() + "," + $('#KoordinatY').val();
+            }
+
+            if (data.TabloId > 0) {
+                $.ajax({
+                    data: data,
+                    url: "/panel/UpdateForKurum",
+                    type: "POST",
+                    dataType: "json",
+                    success: function (result) {
+
+                        if (result.value) {
+                            alertim.toast(siteLang.Guncelle, "success", function () {
+                                $(".validationMessage").html("")
+                                getKurumOrganizasyonSelected();
+                                getKurumOrganizasyonTree();
+                                offEditable();
+                            });
+                        }
+                        else {
+                            alertim.toast(siteLang.Hata, "error");
+                        }
+                    },
+                    error: function (e) {
+                        errorHandler(e);
+                    }
+                })
+            } else {
+                $.ajax({
+                    data: data,
+                    url: "/panel/AddKurumOrganizasyonBirimi",
+                    type: "POST",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.value == 0) {
+                            alertim.toast(siteLang.Hata, "error");
+                        }
+                        alertim.toast(siteLang.Kaydet, "success", function () {
+                            $(".validationMessage").html("")
+                            offEditable();
+                            getKurumOrganizasyonSelected();
+                            getKurumOrganizasyonTree();
+                        });
+                    },
+                    error: function (e) {
+                        errorHandler(e);
+                    }
+                })
+            }
+        })
+        $(document).on('click', '#btnupdate', function () {
+            var selected = getSellectedTree();
+            var data = {
+                TipId: selected.tipId,
+                UstId: parseInt($("#select-organizasyon-birimi").select2().find(":selected")[0].value),
+                Tanim: $("#Tanim").val(),
+                TabloId: selected.tabloId
+            };
+            if (data.TipId == 4) {
+                data["Koordinat"] = $('#KoordinatX').val() + "," + $('#KoordinatY').val();
+            }
+            $.ajax({
+                data: data,
+                url: "/panel/UpdateForKurum",
+                type: "POST",
+                dataType: "json",
+                success: function (result) {
+                    if (result.value) {
+                        alertim.toast(siteLang.Guncelle, "success");
+                        $(".validationMessage").html("")
+                        offEditable();
+                        getKurumOrganizasyonSelected();
+                        getKurumOrganizasyonTree();
+                    }
+                    else {
+                        alertim.toast(siteLang.Hata, "error");
+                    }
+                },
+                error: function (e) {
+                    errorHandler(e);
+                }
+            })
+        })
+        $(document).on('click', '#btnRemove', function () {
+            alertim.confirm(siteLang.SilOnay, "info",
+                function () {
+                    var item = getSellectedTree()
+                    var url = "/panel/DeleteKurumBirim/" + item.tabloId;
+                    $.ajax({
+                        url: url,
+                        type: "GET",
+                        dataType: "json",
+                        success: function (result) {
+                            alertim.toast(siteLang.Sil, "success");
+                            offEditable();
+                            getKurumOrganizasyonSelected();
+                            getKurumOrganizasyonTree();
+                        }
+                    })
+                },
+                function () {
+                    return;
+                }
+            )
+        })
+        $(document).on('click', '#btnCancel', function () {
+            offEditable();
+        })
+        $(document).on('change', '#select-param-organizasyon-birimi', function () {
+            offEditable();
+        })
+        $('#select-param-organizasyon-birimi').on('select2:select', function (e) {
+            var data = e.params.data;
+            if (parseInt(data) == 4) {
+                $("#LokasyonKoordinat").show();
+            }
+            else {
+                $("#LokasyonKoordinat").hide();
+            }
+        });
+        $.ajax({
+            url: "/panel/GetOrganizasyonBirim",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                if (data.value) {
+                    var selectData = [{ id: 0, text: "Seçiniz" }];
+                    data.value.forEach(function (item) {
+                        selectData.push({ id: item.tabloId, text: item.tanim, tipId: 4 });
+                    })
+                    $("#select-param-organizasyon-birimi").select2({ data: selectData })
+                    $("#select-param-organizasyon-birimi").on('select2:select', function (e) {
+                        var data = e.params.data;
+                        if (parseInt(data.id) > 0) {
+                            getKurumOrganizasyonTree();
+                            getKurumOrganizasyonSelected();
+                        }
+                    })
+                }
+            }
+        })
+
+        LocationInputMask(".koordinat");
+    })
+
+    function clearValues() {
+        $("#select-param-organizasyon-birimi").empty().trigger('change');
+        $('#Tanim').val("");
+        $("#select-organizasyon-birimi").empty().trigger('change');
+        $("#KoordinatX").val("");
+        $("#KoordinatY").val("");
+    }
+    function getKurumOrganizasyonSelected() {
+        var id = parseInt($("#select-param-organizasyon-birimi").select2().find(":selected")[0].value);
+        if (id > 0) {
+            if (id == 4) {
+                //koordinat inputu göster.
+                $("#LokasyonKoordinat").show();
+            }
+            var url = "/panel/GetKurumBirimList/" + id;
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json",
+                success: function (result) {
+                    //debugger;
+                    if (result.value) {
+                        var selectData = [{ id: 0, text: "Seçiniz" }];
+                        result.value.forEach(function (item) {
+                            selectData.push({ id: item.tabloId, text: item.tanim });
+                        });
+                        $("#select-organizasyon-birimi").html('');
+                        $("#select-organizasyon-birimi").select2({ data: selectData });
+                    }
+                }
+            })
+        }
+    }
+    function getKurumOrganizasyonSelectedForLevel(id, call) {
+        var url = "/panel/GetKurumBirimListForLevel/" + id;
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            success: function (result) {
+                if (result.value) {
+                    var selectData = [{ id: 0, text: "Seçiniz" }];
+                    result.value.forEach(function (item) {
+                        selectData.push({ id: item.tabloId, text: item.tanim });
+                    });
+                    $("#select-organizasyon-birimi").html('');
+                    $("#select-organizasyon-birimi").select2({ data: selectData })
+                    call();
+                }
+            }
+        })
+    }
+    function getKurumOrganizasyonTree() {
+        var id = parseInt($("#select-param-organizasyon-birimi").select2().find(":selected")[0].value);
+        if (id > 0) {
+            var url = "/panel/GetKurumBirim/" + id;
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    $("#firstUl").html("");
+                    data.value.forEach(function (item) {
+                        var level = 1;
+                        $("#firstUl").append("<li data-level='1'  data-tabloid='" + item.tabloId + "'  data-tipid='" + item.tipId + "'  data-ustid='" + item.ustId + "' data-coords='" + item.koordinat + "' >" + item.tanim + "</li>");
+                        if (item.altItems.length > 0) {
+                            WriteData(item.tabloId, item.altItems);
+                        }
+                    })
+                    $('.easy-tree').EasyTree();
+                }
+            })
+        }
+    }
+    function WriteData(id, data, level) {
+        var level2 = level + 1;
+        var str = "<ul>";
+        data.forEach(function (item) {
+            str = str + "<li data-level='" + level2 + "'  data-tabloid='" + item.tabloId + "'  data-tipid='" + item.tipId + "'  data-ustid='" + item.ustId + "'data-coords='" + item.koordinat + "' >" + item.tanim + "</li>";
+        })
+        str = str + "</ul>";
+        var group = $('li[data-tabloid="' + id + '"]').append(str);
+        data.forEach(function (item) {
+            if (item.altItems.length > 0) {
+                WriteData(item.tabloId, item.altItems);
+            }
+        })
+    }
+</script>

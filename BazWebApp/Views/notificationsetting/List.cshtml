@@ -1,0 +1,47 @@
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+@*<link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.common.min.css" rel="stylesheet" />*@
+<link href="~/lib/kendo/Content/kendo/2020.3.1118/kendo.common.min.css" rel="stylesheet" />
+<link href="~/css/All/notificationsetting.css" rel="stylesheet" />
+@*<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>*@
+<link href="~/lib/jsgrid-1.5.3/jsgrid.css" rel="stylesheet" />
+<link href="~/lib/jsgrid-1.5.3/jsgrid-theme.css" rel="stylesheet" />
+<script src="~/lib/jsgrid-1.5.3/jsgrid.js"></script>
+
+<script type="text/javascript" src="~/js/Model/HatirlatmaGenelAyarModel.js"></script>
+<script type="text/javascript" src="~/js/Repository/IRepository.js"></script>
+<script type="text/javascript" src="~/js/Services/HatirlatmaGenelAyarlarService.js"></script>
+<section class="content service-body">
+    <div class="container-fluid">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>@localizator["Hatırlatma Genel Ayarları Listesi"].Value</h1>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="model-bind">
+                    <div class="card-header text-right">
+                        <button type="button" class="btn add-buttons mb-4" data-bind="click:gotoadd">@localizator["Ekle"].Value</button>
+                    </div>
+                </div>
+                <table id="dataTable" style="width: 100% !important;" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>@localizator["Hatırlatma Başlama Zaman Tipi"].Value </th>
+                            <th>@localizator["Hatırlatma Başlama Zaman Tipi Değeri"].Value</th>
+                            <th>@localizator["Hatırlatma Maksimum Sayısı"].Value</th>
+                            <th style='min-width: 20% !important;'>@localizator["İşlemler"].Value</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

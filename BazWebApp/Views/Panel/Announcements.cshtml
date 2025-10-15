@@ -1,0 +1,89 @@
+﻿@{
+    ViewData["Title"] = "BazWebApp";
+}
+
+@using Baz.Model.Entity.ViewModel;
+
+<link href="~/css/All/Announcements.css" rel="stylesheet" />
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+<div class="container-fluid model-bind">
+    <div class="col-md-12 model-bind duyuru-col">
+        <div class="card duyr">
+            <div class="card-header duyuru-header">
+                <h5>@localizator["Duyurular"].Value</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group mr-3" id="DuyuruList">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "/announcementgeneral/showannouncement",
+            dataType: "json",
+            data: null,
+            success: function (result) {
+                if (result.isSuccess == true) {
+                    var dataIc = [{
+                        tabloID: 0,
+                        icerikBaslik: "",
+                        icerikYayinlanmaZamani: null,
+                        icerikBitisZamani: null,
+                        icerikOzetMetni: ""
+                    }];
+                    var data = result.value;
+                    var html = "";
+                    for (var i = 0; i < data.length; i++) {
+                        html += duyuruMesage(data[i]);
+                    }
+                    $("#DuyuruList").html(html);
+                } else {
+                    alertim.toast(siteLang.Hata, alertim.types.danger);
+                }
+            },
+            error: function (e) {
+                console.log(e);
+            }, //success: function (result) {
+        });
+    });
+    function duyuruMesage(obj) {
+        var date = new Date(obj.icerikYayinlanmaZamani);
+        var s = Pretty(date);
+        var m = `<a href="/announcementgeneral/announcementdetail/${obj.tabloID}" target="_blank" class="list-group-item list-group-item-action flex-column align-items-start duyuru-list">
+    <div class="d-flex w-100 justify-content-between">
+    <h5 class="mb-1 text-center">${obj.icerikBaslik}</h5>
+    <small>${s}</small>
+    </div>
+    <p class="mb-1">${obj.icerikOzetMetni}</p>
+    </a>
+`
+        return m;
+    };
+
+    function Pretty(date) {
+        try {
+            var diff = (((new Date()).getTime() - date.getTime()) / 1000),
+                day_diff = Math.floor(diff / 86400);
+            var stringtime;
+
+            if (isNaN(day_diff) || day_diff < 0)
+                return stringtime;
+
+            return day_diff == 0 &&
+                (
+                    diff < 60 && "Şimdi" ||
+                    diff < 3600 && Math.floor(diff / 60) + " dakika önce" ||
+                    diff < 86400 && Math.floor(diff / 3600) + " saat önce"
+                ) ||
+                day_diff == 1 && "Dün" ||
+                day_diff < 7 && day_diff + " gün önce" ||
+                Math.ceil(day_diff / 7) + " hafta önce";
+        } catch (e) {
+            return "";
+        }
+    }
+</script>

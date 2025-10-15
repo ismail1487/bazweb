@@ -1,0 +1,118 @@
+﻿
+<link href="~/css/All/IcerikGirisEkrani.css" rel="stylesheet" />
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<div class="container justify-content-center align-items-center">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="liste-baslik">@localizator["Rezerve Kaynak Ekleme"].Value</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    @*İçerik başlık ve açıklama alanı*@
+    <section class="content">
+        <div class="border rounded p-3 mb-4 position-relative" style="background-color: #ffffff;">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="Lbl">@localizator["Kaynak Tipi"].Value</label>
+                        <select id="kaynakTipi" class="form-control" style="width: 100%;" data-placeholder="@localizator["kaynakTipi Seçiniz"].Value" required>
+                        </select>
+                        <label for="kaynakTipi" id="kaynakTipiHata" class="validationMessage">Ana Kategori Seçiniz</label>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label class="Lbl">@localizator["Kaynak Tanımı"].Value</label>
+                        <input type="text" id="kaynakTanim" class="form-control" placeholder="Başlık Giriniz">
+                        <label for="kaynakTanim" class="validationMessage" id="kaynakTanimHata" style="display:none" required>Tanim Giriniz</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label class="Lbl">@localizator["Kaynak Açıklama"].Value</label>
+                        <textarea class="form-control" id="kaynakAciklama" placeholder="Açıklama Giriniz"></textarea>
+                        <label for="kaynakAciklama" class="validationMessage" id="kaynakAciklamaHata" style="display:none" required>Açıklama Giriniz</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @*kaymak medya alanı*@
+    <div class="border rounded p-3 mb-4 position-relative" style="background-color: #ffffff;">
+        <div id="tekrarliMedya">
+        </div>
+    </div>
+    @*yayınlanma tarihi*@
+    <div class="border rounded p-3 mb-4 position-relative" style="background-color: #ffffff;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="Lbl" id="RezerveGunTipi">@localizator["Geçerli Günler:"]</label>
+                    <div class="form-check form-check-inline ml-2">
+                        <input class="form-check-input" type="radio" name="secenek" id="HaftaIci" value="1">
+                        <label class="form-check-label" for="secenek1">@localizator["Hafta İçi"]</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="secenek" id="HaftaSonu" value="2">
+                        <label class="form-check-label" for="secenek2">@localizator["Hafta Sonu"]</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="secenek" id="TamHafta" value="3">
+                        <label class="form-check-label" for="secenek3">@localizator["Hafta Boyunca"]</label>
+                    </div>
+                    <label for="RezerveGunTipi" id="RezerveGunTipiHata" class="validationMessage">Lütfen değer seçiniz</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="Lbl">Rezerve Başlangıç Saati</label>
+                    <input class="form-control" type="time" id="rezerveSaatBaslangic" required>
+                    <label for="rezerveSaatBaslangic" id="rezerveSaatBaslangicHata" class="validationMessage">Yayınlanma Tarihi Seçiniz</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="Lbl">Rezerve Bitiş Saati</label>
+                    <input class="form-control" type="time" id="rezerveSaatBitis" required>
+                    <label for="rezerveSaatBitis" id="rezerveSaatBitisHata" class="validaationMessage">Kaldırılma Tarihi Seçiniz</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*Kaynak Tekrarlı İstisna*@
+    <div class="border rounded p-3 mb-4 position-relative" style="background-color: #ffffff;">
+        <div id="tekrarliIstisna">
+        </div>
+    </div>
+    @*Kaynak Kapasite*@
+    <div class="border rounded p-3 mb-4 position-relative" style="background-color: #ffffff;">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="Lbl">@localizator["Kapasite"].Value </label>
+                    <input class="form-control" type="number" id="kaynakKapasite" required>
+                    <label for="kaynakKapasite" id="kaynakKapasiteHata" class="validaationMessage">Kapasite Seçiniz</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*Kaydetme İşlemi*@
+    <div class="row mb-5">
+        <div class="col-md-12 col-12 text-right">
+            <button type="button" onclick="KaynakKaydet()" id="kaydetButton" class="btn btn-primary">
+                @localizator["Kaydet"]
+            </button>
+        </div>
+    </div>
+</div>
+<script src="~/js/KaynakRezerveEkrani/KaynakRezerveGiris.js" asp-append-version="true"></script>
+

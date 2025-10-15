@@ -1,0 +1,848 @@
+﻿
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.Extensions.Configuration;
+@using Baz.Model.Entity.ViewModel
+@using System.Globalization;
+@using System.Threading;
+@inject IOptions<RequestLocalizationOptions> LocalizationOptions
+@inject IMenuService menuService
+@inject IDilService dilService
+@inject IBazCookieService cookieService
+@inject Microsoft.Extensions.Configuration.IConfiguration cnf
+@inject IKisiService kisiServis
+@inject ILoginRegisterService loginService;
+@inject ILocalizationService localizationService;
+@inject Baz.SharedSession.ISharedSession sass;
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+@inject IKurumMesajlasmaModuluIzinIslemleriService kurumMesajlasmaModuluIzinIslemleriService;
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment env;
+
+@{
+    var urlMEdya = cnf.GetValue<string>("MedyaKutuphanesiLive");
+    var urlWeb = cnf.GetValue<string>("WebAppLive");
+    var urlSocket = cnf.GetValue<string>("SocketLive");
+}
+
+@{
+    bool freeMi = true;
+}
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture;
+    var cultures = LocalizationOptions.Value.SupportedUICultures.ToList();
+}
+
+@{
+    var KisiID = 0;
+    var KurumID = "";
+    var KurumName = "";
+    var Name = "";
+    var dilListe = dilService.List().Value;
+    var menuListe = menuService.GetMenu("GENEL").Value;
+    var MesajBlokPozisyonlar = kurumMesajlasmaModuluIzinIslemleriService.IzinVerilmeyenPozisyonlarIdList()?.Value;
+    var cookie = cookieService.GetCookie().GetAwaiter().GetResult();
+    var adminMi = false;
+    var SessionId = "";
+
+
+
+
+
+
+
+
+    //var onl = kisiServis.OnlineKisi();
+    var dil = localizationService.GetCulture();
+    var session = new KullaniciSession();
+    var mapsApiKey = ""; // bu servis devredışı kureselParametrelerService.GoogleMapsAPIKeyGetir("GoogleApiKey"); //.Value.ParametreMetinDegeri;
+    var medyaUrl = "";
+    var menuTopList = menuListe.Where(x => x.Url != "javascript:;" && x.UstId == 0 && x.Url != "/Panel/SettingsPanel").ToList();
+    if (cookie != null)
+    {
+
+
+        SessionId = cookie.SessionId;
+        KurumID = cookie.KurumId;
+        KurumName=cookie.KurumName;
+        Name = cookie.Name;
+        KisiID = Convert.ToInt32(cookie.KisiId);
+        session = sass.Get<Baz.Model.Entity.ViewModel.KullaniciSession>(cookie.SessionId).GetAwaiter().GetResult();
+        adminMi = cookie.AdminMi;
+        
+        //var resimUrl = kisiServis.SingleOrDefault(Convert.ToInt32(KisiID)).Value.KisiResimUrl;
+        medyaUrl = "/img/person-list.svg";
+        /*
+        if (resimUrl == null)
+        {
+            medyaUrl = "/img/person-list.svg";
+        }
+        else
+        {
+            medyaUrl = urlMEdya + resimUrl;
+        } */
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-KCT949V');
+    </script>
+    <script type="text/javascript">
+        var dataLayer = dataLayer || [];
+        dataLayer.push({
+            event: "pageLoad",
+            pageinfo: {
+                pageType: "page",
+                pageURL: window.location.host + window.location.pathname,
+                pageTitle: document.title
+            }
+        })
+    </script>
+    <!-- End Google Tag Manager -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    @if (env.EnvironmentName == "Development")
+    {
+        <meta name="robots" content="noindex">
+    }
+
+    <meta name="google-site-verification" content="qaoJyG5v9GiFcPjvAfyxkdwXDNHNF9NIe_uPvwv0kuE" />
+    <link href="~/lib/fontawesome-5-15-1/css/fontawesome.css" rel="stylesheet" />
+    <title>@ViewData["Title"]</title>
+    @{
+        var culture = Context.Features.Get<Microsoft.AspNetCore.Localization.IRequestCultureFeature>().RequestCulture.UICulture;
+    }
+    <script src="~/js/siteLang.js"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="~/lib/AdminLTE/dist/css/adminlte.css" rel="stylesheet" />
+    <link href="~/lib/AdminLTE/plugins/fontawesome-free/css/all.css" rel="stylesheet" />
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/lib/AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css"  asp-append-version="true">
+    <link rel="stylesheet" href="~/lib/AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css"  asp-append-version="true">
+    <link rel="stylesheet" href="~/lib/AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css"  asp-append-version="true">
+    <link href="~/lib/AdminLTE/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" rel="stylesheet"  asp-append-version="true" />
+    <link href="~/css/Loading.css" rel="stylesheet"   asp-append-version="true"/>
+    <script src="~/lib/signalr-1-1-4/signalr.js"  asp-append-version="true"></script>
+    <script src="~/lib/AdminLTE/plugins/jquery/jquery.js"  asp-append-version="true"></script>
+    <script src="~/lib/AdminLTE/plugins/popper/umd/popper.js"  asp-append-version="true"></script>
+    <script src="~/lib/AdminLTE/plugins/bootstrap/js/bootstrap.js"  asp-append-version="true"></script>
+    <script src="~/lib/AdminLTE/dist/js/adminlte.js"  asp-append-version="true"></script>
+    <script src="~/lib/AdminLTE/plugins/datatables/jquery.dataTables.min.js"  asp-append-version="true"></script>
+    <script src="~/lib/AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"  asp-append-version="true"></script>
+    <script src="~/lib/AdminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js"  asp-append-version="true"></script>
+    <script src="~/lib/AdminLTE/plugins/jszip/jszip.min.js"  asp-append-version="true"></script>
+    <script src="~/lib/AdminLTE/plugins/datatables-buttons/js/buttons.html5.min.js"  asp-append-version="true"></script>
+    <script src="~/lib/AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.min.js"  asp-append-version="true"></script>
+    <script src="~/lib/AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"  asp-append-version="true"></script>
+    <script src="~/lib/datatables-1-10-20/turkish-string.js"  asp-append-version="true"></script>
+    <script src="~/lib/AdminLTE/plugins/select2/js/select2.js"  asp-append-version="true"></script>
+    <script src="~/lib/AdminLTE/plugins/moment/moment.min.js"  asp-append-version="true"></script>
+    <script src="~/lib/AdminLTE/plugins/jquery-ui/jquery-ui.js"  asp-append-version="true"></script>
+    <script src="~/lib/AdminLTE/plugins/toastr/toastr.min.js"  asp-append-version="true"></script>
+    <script src="~/lib/AdminLTE/plugins/overlayScrollbars/js/jquery.overlayScrollbars.js"  asp-append-version="true"></script>
+    <script src="~/lib/ckeditor/ckbuild/ckeditor.js"  asp-append-version="true"></script>
+    <script src="~/lib/ckeditor/ckbuild/translations/en.js"  asp-append-version="true"></script>
+    <link href="~/lib/AdminLTE/plugins/select2-bootstrap4-theme/select2-bootstrap4.css" rel="stylesheet"  asp-append-version="true" />
+    <link href="~/css/select2.css" rel="stylesheet"  asp-append-version="true" />
+    <link href="~/lib/AdminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css" rel="stylesheet"  asp-append-version="true"/>
+    <script src="~/lib/AdminLTE/plugins/moment/locale/tr.js"  asp-append-version="true"></script>
+    <script src="~/js/tools.js" asp-append-version="true"></script>
+    <script src="~/lib/AdminLTE/plugins/inputmask/min/jquery.inputmask.bundle.min.js"  asp-append-version="true"></script>
+    <script src="~/lib/AdminLTE/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"  asp-append-version="true"></script>
+    <script src="~/lib/calendarIntegrations/ics.js"  asp-append-version="true"></script>
+    <script src="~/lib/calendarIntegrations/ics.deps.min.js"  asp-append-version="true"></script>
+
+    <!--DatetimePicker-->
+    <script src="~/lib/datetimepicker-master/jquery.datetimepicker.js"  asp-append-version="true"></script>
+    <link href="~/lib/datetimepicker-master/jquery.datetimepicker.css" rel="stylesheet"   asp-append-version="true"/>
+
+    <script type="text/javascript" src="~/lib/kendo/Scripts/kendo/2020.3.1118/kendo.core.min.js"  asp-append-version="true"></script>
+    <script type="text/javascript" src="~/lib/kendo/Scripts/kendo/2020.3.1118/kendo.ui.core.min.js"  asp-append-version="true"></script>
+    <script type="text/javascript" src="~/lib/kendo/Scripts/kendo/2020.3.1118/kendo.view.min.js"  asp-append-version="true"></script>
+    <!--JsGrid-->
+    <link type="text/css" rel="stylesheet" href="~/lib/jsgrid-1.5.3/jsgrid.min.css"   asp-append-version="true"/>
+    <link type="text/css" rel="stylesheet" href="~/lib/jsgrid-1.5.3/jsgrid-theme.min.css"  asp-append-version="true" />
+    <link type="text/css" href="~/lib/AdminLTE/plugins/toastr/toastr.css" rel="stylesheet"   asp-append-version="true"/>
+    <link type="text/css" href="~/lib/AdminLTE/plugins/overlayScrollbars/css/OverlayScrollbars.css" rel="stylesheet"   asp-append-version="true"/>
+    <script type="text/javascript" src="~/lib/jsgrid-1.5.3/jsgrid.min.js"  asp-append-version="true"></script>
+    <!-- Yeni Tasarım Css ve Javascript -->
+    @*<link href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@500&display=swap" rel="stylesheet">*@
+    <link href="~/css/All/General.css" rel="stylesheet"   asp-append-version="true"/>
+    <link href="~/css/All/Layout.css" rel="stylesheet"  asp-append-version="true" />
+    @if (dil == "tr-TR")
+    {
+
+        <script src="~/js/Lang/LangToastTr.js"  asp-append-version="true"></script>
+    }
+    else
+    {
+        <script src="~/js/Lang/LangToastEn.js"  asp-append-version="true"></script>
+    }
+
+    <!-- Chart.js -->
+    <script src="~/lib/Chart-3-3-0/chart.min.js"  asp-append-version="true"></script>
+    <script type="application/javascript/module" src="~/lib/Chart-3-3-0/helpers.esm.min.js"  asp-append-version="true"></script>
+    <link href="~/lib/kendo/Content/kendo/2020.3.1118/kendo.common.min.css" rel="stylesheet"  asp-append-version="true"/>
+    <script type="text/javascript" src="~/js/Repository/IRepository.js" asp-append-version="true"></script>
+    
+    @if (mapsApiKey != null)
+    {
+        //var key = "https://maps.googleapis.com/maps/api/js?key=" + @mapsApiKey.Value.ParametreMetinDegeri;
+        //var key = "https://maps.googleapis.com/maps/api/js?key=" + @mapsApiKey;
+        //<script src="@key"></script>
+
+        //<script src="~/js/Services/ThirdParty/GoogleMapService.js"></script>
+    }
+    @*<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">*@
+    @RenderSection("MetaForNoCache", false)
+</head>
+<body class="hold-transition sidebar-mini sidebar-collapse layout-fixed" data-id="@KisiID">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KCT949V"
+                height="0" width="0"
+                style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div id="loader">
+        <div class="lds-roller">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    @*<body class="hold-transition sidebar-mini layout-fixed" data-id="@KisiID -">*@
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light header-container">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav custom-search-nav">
+            <li class="nav-item menu-collapse-holder my-auto" style="display:none;">
+                <a class="nav-link menu-collapse-icon-holder" data-widget="pushmenu" href="#" role="button">
+                    <img src="/img/menu-collapse-icon.svg" class="left-icon">
+                </a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block ml-1 header-title">
+                @*<a href="/panel/profile" class="nav-link text-danger">@localizator["Profil"].Value</a>*@
+                <div class="header-title-text" style="display: none">
+                    Dashboard 
+                </div>
+                <div class="header-title-searchbar">
+                    <img src="/img/header-searchicon.svg" class="header-searchicon">
+                    <div class="header-searchtext-holder" style="display:none;">
+                        <a class="header-searchtext" href="javascript;:">@localizator["Ara"].Value</a>
+                    </div>
+                    <form asp-controller="ElasticSearch" asp-action="CustomSearch" method="post" class="header-searcharea-holder">
+                        <input type="text" name="query" class="form-control header-searcharea-input" id="search-input" placeholder="@localizator["Ara"].Value">
+                        <input type="submit" class="col-md-3 my-3 btn btn-secondary" value="Arama" id="srch-submit" hidden />
+                    </form>
+                </div>
+            </li>
+        </ul>
+        <!-- SEARCH FORM -->
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto" id="nav2">
+            @if (!freeMi)
+            {
+                <li class="nav-item dropdown storage-holder">
+
+                    <a class="nav-link btn-notification notification-icon-cover" data-toggle="dropdown" href="#">
+                        <img src="~/img/bookmark.svg" class="left-icon" />
+                        <span class="badge badge-danger navbar-badge notification-count-holder"><span class="notification-count-text" id="licenseStatus">✓</span></span>
+                    </a>
+                    
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="max-height: 300px; overflow: auto; padding: 10px;">
+                        <div class="progress-group" id="lisansSureDiv">
+                            <p class="silik" id="lisansTuru">
+                                @localizator["Lisansınızın bitimine kalan süre"].Value
+                            </p>
+                            <p class="mx-4 my-2">
+                                <span id="zaman" class="nrml"></span>
+                            </p>
+                            @if (adminMi)
+                            {
+                                <div class="col-md-12 text-right">
+                                    <a class="btn btn-sm add-buttons col-md-5" style="color: white;" href="/Panel/purchaselicense">@localizator["Satın Al"].Value</a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </li>
+            }
+            <!--Messages Dropdown Menu -->
+            @if (MesajBlokPozisyonlar != null)
+            {
+                if (!session.KullaniciYetkiKimligiListesi.Any(a => MesajBlokPozisyonlar.Contains(a)))
+                {
+                    <li class="nav-item dropdown  notification-holder">
+                        <a class="nav-link btn-notification notification-icon-cover" data-toggle="dropdown" href="#">
+                            <img src="/img/message-circle2.svg" class="left-icon">
+                            <span class="badge badge-danger navbar-badge notification-count-holder" id="chatUnreadDivCount" style="display: none">
+                                <span class="notification-count-text" id="chatUnreadMessagesCount">0</span>
+                            </span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="max-height: 300px; overflow: auto;">
+                            <div id="chatUnreadMessages">
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown  notification-holder" id="chatDiv">
+                        <a class="nav-link btn-notification notification-icon-cover" data-toggle="dropdown" href="#">
+                            <img src="/img/person.svg" class="left-icon">
+                            <span class="badge badge-danger navbar-badge notification-count-holder" id="usercountDiv" style="display: none">
+                                <span class="notification-count-text" id="chatUsersCount">0</span>
+                            </span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="max-height: 300px; overflow: auto;">
+                            <div class="dropdown-item">
+                                <label>@localizator["Kişi Ara"].Value</label>
+                                <input type="text" class="form-control search-user" placeholder="@localizator["Ara"].Value" />
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div id="chatUsers">
+                            </div>
+                        </div>
+                    </li>
+                }
+            }
+
+            <li class="nav-item dropdown notification-holder">
+                <a class="nav-link btn-notification notification-icon-cover" data-toggle="dropdown" href="#">
+                    <img src="~/img/notification-icon.svg" class="left-icon">
+                </a>
+                <span class="badge badge-warning navbar-badge notification-count-holder" id="notifiCountSpan" style="display: none">
+                    <span class="notification-count-text notificount">0</span>
+                </span>
+
+
+                <div class="dropdown-menu dropdown-menu-right notifi notif-scroll notification-select-holder" style=" max-height: 40vh !important; overflow: auto scroll !important; min-height: 40vh !important;" id="notificationDropdown">
+                    @*<span class="dropdown-item dropdown-header">0 Bildirim</span>
+                        <div class="dropdown-divider"></div>*@
+                    <div class="notification-select-item-header">
+                        <span class="notification-select-title-left">@localizator["Bildirimler"].Value</span>
+                        @*<span class="notification-select-title-right">@localizator["Daha Fazla"].Value</span>*@
+                    </div>
+                    <hr style="width:90%;background-color:black;">
+                    <div class="notifications-div">
+                    </div>
+                    @*<a href="#" class="dropdown-item notification-select-item notific-item" notifId="' + item.id + '">
+                            <p style="margin-left: 0.8vw; margin-right: 0.8vw; word-break: break-word; " notifId="' + item.id + '">
+                                <span class="notification-select-item-message">' + item.message + ' <img src="img/notification-select-item-file-icon.svg" class="notification-select-item-file-icon"></span>
+                            <p class="notification-select-item-time" style="margin-left: 0.8vw; margin-right: 0.8vw;" title="' +  date.pretty() + '"> ' +CsharpStringDateToStringDateTime(item.date) + '</p>
+                        </a>*@
+                </div>
+            </li>
+            <li class="nav-item dropdown notification-holder">
+                <a class="nav-link btn-notification notification-icon-cover" data-toggle="dropdown" href="#">
+                    <i class="fa fa-user text-success" aria-hidden="true"></i>
+                </a>
+                <span class="badge badge-warning navbar-badge notification-count-holder" id="onlineUserCountSpan" style="display: block">
+                    <span class="notification-count-text onlineusercount">0</span>
+                </span>
+                <div class="dropdown-menu dropdown-menu-right notifi notif-scroll notification-select-holder" style=" max-height: 40vh !important; overflow: auto scroll !important; min-height: 40vh !important;" id="onlineUsersDropdown">
+                    <div class="notification-select-item-header">
+                        <span class="notification-select-title-left">Online Users</span>
+                    </div>
+                    <hr style="width:90%;background-color:black;">
+                    <div class="onlineusers-div">
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item dropdown language-holder">
+                <a class="nav-link btn-notification language-icon-cover" data-toggle="dropdown" href="#">
+                    <img src="~/img/lang-icon.svg" class="left-icon">
+                    <img src="~/img/lang-ddl-icon.svg" class="right-icon">
+                </a>
+                @*<span class="badge badge-warning navbar-badge notification-count-holder"><span class="notification-count-text notificount">0</span></span>*@
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right language-select-holder">
+                    <!-- Notifications Dropdown Menu -->
+                    @if (dilListe != null)
+                    {
+                        foreach (var item in dilListe)
+                        {
+                            <a class="dropdown-item lang language-select-holder-item" data-code="@item.ParamKod" href="javascript:;">
+                                <span class="float-right language-select-item-text">@item.ParamTanim</span>
+                            </a>
+                        }
+                    }
+                    
+                </div>
+            </li>
+            <li class="nav-item dropdown header-user-panel">
+                <a class="nav-link header-user-panel" data-toggle="dropdown" href="#">
+                    <div class="header-user-avatar-cover">
+                        <img src="@medyaUrl" class="header-user-avatar">
+                    </div>
+                    <div class="header-user-title-cover">
+                        @*header-user-title-name header-user-title-company*@
+                        <p class="header-user-title-company">@KurumName</p>
+                        <p class="header-user-title-name">@Name</p>
+                    </div>
+                    <div class="header-user-down-icon-cover">
+                        @*header-user-down-button*@
+                        <img src="/img/header-user-down-button.svg" class="header-user-down-button">
+                    </div>
+                    @*<img src="~/img/lang-icon.svg" class="left-icon">
+                        <img src="~/img/lang-ddl-icon.svg" class="right-icon">*@
+                </a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg header-user-detail-holder">
+                    <!-- Notifications Dropdown Menu -->
+                    <a class="dropdown-item language-select-holder-item" href="/panel/profile">
+                        <span class="float-right  header-user-select-item-text">@localizator["Profil"].Value</span>
+                    </a>
+                    <a class="dropdown-item language-select-holder-item" href="javascript:;" id="logout-btn">
+                        <span class="float-right  header-user-select-item-text">@localizator["Çıkış"].Value</span>
+                    </a>
+                </div>
+            </li>
+
+            @*<li class="nav-item d-none d-sm-inline-block mx-4 mt-1">
+                    <p class="alert-default-warning">@localizator["Online Kişi Sayısı"].Value: <a id="onl">@onl.Value</a></p>
+                </li>*@
+
+            @*<li class="nav-item d-none d-sm-inline-block mx-4 mt-1">
+
+                    <p class="alert-default-warning">@localizator["Son Giriş"].Value:<span> @loginService.SonGiris().Value</span></p>
+                </li>*@
+
+            <!--<li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="far fa-comment-dots"></i>
+                    <span class="badge badge-danger navbar-badge" id="chatUnreadMessagesCount">0</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="max-height: 300px; overflow: auto;">
+                    <div id="chatUnreadMessages">
+                    </div>
+                </div>
+            </li>-->
+            <!-- Messages Dropdown Menu -->
+            <!--<li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="far fa-user"></i>
+                    <span class="badge badge-danger navbar-badge" id="chatUsersCount">0</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="max-height: 300px; overflow: auto;">
+                    <div class="dropdown-item">
+                        <label>Kişi Ara</label>
+                        <input type="text" class="form-control search-user" placeholder="Ara..." />
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div id="chatUsers">
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item ml-3 mr-2">
+                <button class="btn btn-outline-danger btn-xs" onclick="Logout()" type="button">@localizator["Çıkış"].Value</button>
+            </li>-->
+        </ul>
+    </nav>
+
+    <!-- /.navbar -->
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-no-expand sidebar-dark-primary elevation-4 sidebar-menu" @*style=" height: 200vh;"*@>
+        <!-- Brand Logo -->
+        <a href="/panel" class="brand-link logo-switch sidebar-logo-container">
+            <img src="/img/home.svg" class=" logo-xs brand-logo-md">
+            <img src="/img/home.svg" class="logo-xl brand-logo-xl">
+        </a>
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Sidebar user (optional) -->
+            @*<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="info">
+                        <p style="color: white">@localizator["Hoş geldiniz"].Value</p>
+                    </div>
+                    <div class="info">
+                        <a href="#" class="d-block">@cookie.Name</a>
+                    </div>
+                </div>*@
+            <!-- Sidebar Menu -->
+            <nav class="mt-2"> 
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    
+                    @foreach (var item2 in menuTopList)
+                    {
+                        <li class="nav-item sidebar-menu-container">
+                            <a href="@item2.Url" class="nav-link sidebar-menu-container-a">
+                                @if (item2.Tanim == "Raporlama" || item2.Tanim == "Reporting")
+                                {
+                                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAACGElEQVRoge2aO07DQBCGvQjxaIlAggMgGg5AKJCoqDhCTgBXoON1CI4SBAkSFFQ8BPQ8BKKgi2j4KDIRxlkv9uKxF+S/iT2zmpnPK+9MokRRrbBkXE4Axdy3URStGmOeigg2UkQQTy1EUXQIzKpnQqQVV3SjDlMCyGXsc6boPEMJteIC08CF+s5og8i1PkwZIHKvC1MWiNj0YMoEEbsOTNkg4isepgoQ8RcLUxWIrMkFk2nWMsY41+WV58O5MsYspjn/EoizjlH/cvyV98FkAa9y+i1UNUho8gIBuuipWxqIsor/eq3VEDXqCHFHvFSDhKb61FJUfWr9C9UgoanKU6ubiDkG7AOPwAOwC4yJ+zixdhw4BU6yFmx9yQoC6SRi7lnW7IhvDXiPrd0S/8WvQDQkuwCwBDTl+kF8MzGoeaAHfAArWYOXCfItl+V+EjBAW1wH3sE19ROI2FpifgWmvYNrKvZeNIFlub6P+RvAi9hbXsEtdo1Ta92yZjvmPxBbG8j385QySMcSdxN4Au6BbeT4BVbov9w9YD4XhAukTNHvL9dSypZvkBBABj3jDpjwDVIpCJaegXsCSA1UGQgpPQPHBOAKViXIoGe8AI2YPXUCcAWrBASYAp4lfSvh+1ZTphotW6ipN2BO8g56xhGJnpEsPHkfAsiG5HT2jNh66wQQjPj6W4e1Z/DDBBCMgHPgDBh3rBmaAD4BLpXzo+ViceQAAAAASUVORK5CYII=" class="sidebar-menu-container-icon" />
+                                }
+                                else if (item2.Tanim == "Duyurular" || item2.Tanim == "Announcements")
+                                {
+                                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAADL0lEQVRoge2ZO2gUURSG/2NUjAoqxmgUK0HEUhKwE7Q0gSBYaOWjsAi+ChvxgeKjUATB1iIIiqCi0VIjWCkogmIhKhYGYnzhC1Ew+SxmJ9nV2Tt37s7uJJivmWXOueecf2fumTt3pEkmSQVoAo4AQ8ATYE7RNQUBnKaSA0XXlBlgPf/yuOi6MgG0AoMJQn4DM4quzwvAgL4EETGrXOOnNKpQD/ZK6nLYl7sGjwshwDpJJ1PcFrmMhQsBVku6Lml6imuby1ioEKBb0m1Jsz3cx98VAZqBE5KuSprlOWxeHUvKBjAF6AZeObpTNfpdsac2SMAiSZsk9UhaFhjGefvlKgRolbRQ0lJFk7ND0hpJK3IIn00I0KWop3ekDS4jnmtDmUrLhnMuVQgBjkvaX8diaqHZZbT4B9Ap6WZgkviKjASO9+GTmc1PK0CKbqfxTJPLWC6kvc6F1EqTJAFTgR6gYlqUC/Gd2EVRXvg5SZfLxRS+1spAfGtROm6QtCU2TkQh5Q1lW/xjIgmxhHOjq4SJJGS4dCyveUAJJ783pJxwkoRcUsLJhw0pJ5xYSHyL3VHUvSRVCjnTqIoCiSc5kvZJ6jSzn7GxYgIBRyUdDEjSiCXKFzObm1aAJMnMDknqVHTZvtaxqBCGXcaklhYM0KLofaRNY+8jayWtzCHXoJktrjFGbZR2EHcHvuLGvAxN3p4hidcGAtEu+0bgTYCQp6FCDBjwTNKSMfYc4HxGIQ9cMas+2c0MSbc8a8u0wWxmX8xsu6Q98u90P1zGtCXKXc8kQTvlZnZW0cKPNF+ldNE0Ifc8a6ra39Mws15Jhz1c37mMTiFmNijJp1tkmiMJHJPUl+LzwWX0Wf3e9/BZ4OFTldJ83CHpo8Mt/IqUeOThE7p7OIqZvZW0y+Hy2jU+LyEdHj6pmNlFRZ8YknheU3BgNtE3PBcjwNaaEo3lWwJ8/iv+N2BaHsGfeTywfpHynS9Dvo2lPyfmWh5xBfR6CAG4kUvCKOdm4AXwPq8/SMBOTyGurlNXfDcf+uX39C1sM8MrsZk9k3TFw9V3bVYcwEzgFNESfPjvWwq4AFTdLZ/kf+MP/5tQLRADf0UAAAAASUVORK5CYII=" class="sidebar-menu-container-icon" />
+                                }
+                                else if (item2.Tanim == "Dashboard" || item2.Tanim == "Dashboard")
+                                {
+                                    //dashboard
+                                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAAEaUlEQVRoge2a3YtVVRiHn5XiqJVmjQploCXmJ01EEFh20YcaIREFltBtUJjhX2BREAhFZZEQ3URIhEGohdaNjEFJXtiFih9BjUqWZmrZ2Iw+Xaw9znbP3nvO2WefGS984MBmr3et9Xv3+nrXWgeucXUR6ipInQI8BCwG5gN3AtOA6xOTf4ATwM/APmAXsDOE8FddGiqjdqir1O1qv83Tr36tPqd2jIYDE9S16rEK4os4qr6ijh8pJ5arh5sQ2Jv8GuWQurSdDoxXP2hC0ABz1LkV8m2w7u6mTld/rCDGVBlV2K1Oq8uJmcbmzuNV9e0aHHlLfa0g7aA6s1Unppc40adOVIPaXSJymXFcFdGdlDFRvVjiTLWWMY6J4brTusS2axi7Ii6pXUkZ64ax3W2VMWNjA/tfdb56RwuOzFIXJGUNx3tFenNXdnU58FWDPvcDl4BxTX+tSF+iY2yD9ktDCDuyL4c4kjTfT8CcisLazWFgUQihN/3yuhzDlxjqxG/tUlWB2cALpRbG2CkbdqxP0p5ReyqOhVbYr17IvOsxM/CzLfI0cGvm3UL1hhDC58BCRqZ1TgMbgBXA3wwdfzOApwpzG6PYPHrUZ9V71dNt+vIX1W+Sesar96vHS+zzJyN1itVC8Vb5xRghzExped7hp+M+dVKeI0+2WXCaXnWLcdyNTWkYo77ZRDlPDORNz90PlHXamtgLfAx8GkI4lU5QJwObgOVNlLcE2ApXOjKvRZFFnAE+Az4JIezKM1BnA18St8jNMDevsIM1d58Lxh3fhDIl6qPqnxXrOJBX4MmMUa96JPmdr1DJy8N9TnWNcdCWcT6lI7vT/COv0OyiMyeVNsPmZ7RbShwYp37UQBl96m2pfNmd5uUwpSxQu0ftT57nkR/OlJEbRBr3FZtpbHIZA9zt4CreNWwOh3atVlmbU0eXcd2oi8tdK90ip4DC7lCBN4w73U3EUH8V8DqDB3Z1cHLg4XIYr24DHq+xkpFgSwhhBVzZ7/eNkphW2D/wkHbku1EQ0irdAw/prnUTsc+NKcjUD5wFbm6rtEFOAZMpnln7gM4QwllItUhyKv5tQaYdwALgduB4bVKLOZrUtSCpO1fTgBNDMJ6KZ/kwlb5IPVvj9FnEGXVRqt6NOTYr09qzi9xm4FjmXafxyGY9sAe4sZFP2iKTgD3qenUW0JlJ7wG+KC3BGOhd7azO6i46DtoL3FX5e7aXQ8TjoAvpl0Pip8RgzUipahKBF7NOQEEgGELYDrzfblUVeDeEkDuzFl6GJl2sG7ivXaqa5AdgSQjhv7zE0ltdtZN4+zra4+UIsDiEcKLIoHSPEUI4CSwjDrDR4iDwcJkTDaNOM95PjDTfq1Nb/xZXOtOhvmO80xgJNtrOu3f1Mes/cUlzQH2kbQ5knOkwnoDUeTr/q7raUfoHRIfx0Hmbwx/r5NGnblVXqlVvvIB6/1QzifinmgeJpy6zgakMBpnngN+JN077iWvUzhDCubo0XONq4n8OB/Zrl9Wn/wAAAABJRU5ErkJggg==" class="sidebar-menu-container-icon" />
+                                }
+                                else
+                                {
+                                    <img src="/img/sidebar-menu-star-icon.svg" class="sidebar-menu-container-icon">
+                                }
+                                <p class="sidebar-menu-container-text">
+                                    @item2.Tanim
+                                </p>
+
+                            </a>
+                        </li>
+                        
+
+                    }
+                    @foreach (var item in menuListe)
+                    {
+
+                        if (item.UstId == 0)
+                        {
+                            if (item.Url == "javascript:;" && menuListe.Any(x => x.UstId == item.Id))
+                            {
+                                <li class="nav-item has-treeview sidebar-menu-container">
+                                    <a class="nav-link sidebar-menu-container-a ustItems">
+                                        @if (item.Tanim == "Anasayfa" || item.Tanim == "HomePage")
+                                        {
+                                            //anasayfa
+                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAAA20lEQVRIie2VMQrCMBSGv4o4CS6eoBfwDk56AY/gFbyCZ/AQbs4OougpBHXs6lLROvgKNdS0TdIKmg/+5fGSL7y0BDzlCIGdJGxKOgQiIJFEUkvZSn3jUjoF4ow0zQ2YSU+2bk0HWOQI1ag9VvSBdQlpXowZAEdDqbF4AlwtpInsUZqA14dyt5QmwAOYA60iaRdYOhCqWQE9nfhQgzTNPitSRxAXjcSCt72DD01Ofn6dp/DS6+Jr4rbBGifX83+j9mIvblx80ayp+uifqxxoLAtsX6QTMKoi9vwOTwk3qeyGFp8/AAAAAElFTkSuQmCC" class="sidebar-menu-container-icon">
+                                        }
+                                        else if (item.Tanim == "Kurum" || item.Tanim == "Company")
+                                        {
+                                            //kurum
+
+                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAABmJLR0QA/wD/AP+gvaeTAAAB7klEQVR4nO3bUU7DMAwGYBtxip1gHAK4zjjZrgFCOwNwAKSdYuZhjbSNNkv7O3VT/d/LVBpSzzNJPRURIiIiIiIaTXMnzWwrIl8zxTLVk6p+R108m0ARETP7FZHNDLFMcRSRjapadCCDzGxvZ7voWBIz23Ux7aNjeSgY89G9vtYMZKQUy0d21BKY2daufV6cOwQcX9r6v+NxSirwR85rTXK53pwCjpNjF1sb0kfOOK6VVCBlMIEgJhD0iE4wtB6pqnqPWSJWIAiuwCRVSm6H9BpTct5RttdmBebdvddsNoFakYi8dZd5v/dFRbMJrMy/1x7qAGxAjTG3cSyh1269AtvptZfSg9aOY+z8rVdgOCYQxASCVtEL154/hxUIckvgxV189TFR8/dhBYKYQBATCHL7PrDk7t1rTNT8fViBILgCS3Y0rzFR8+ewAkFMIIgJBLEXZi8ci70wiBUIYgJBTCCIvTCIFQhiLwxiBYKYQBATCGq6Fzazg4icVPXZ8fgqnntrZ+sVWPPpLF8lz+sNjfMak/u5t9LrtF6B4ZhAkFsrFwn9k0ZuslfVC0dYRQUmfZVk54fITVVfes7N92HNtftNiWNqbLnf4y48k9Un0G7+F8Tb6hMo/7sNV8Xb9xLWvwhr74WJiIiIiIiIxvoDUsSWNZaagmwAAAAASUVORK5CYII=" class="sidebar-menu-container-icon" />
+                                        }
+                                        else if (item.Tanim == "Planlama" || item.Tanim == "Planning")
+                                        {
+                                            //kurum
+
+                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAACjUlEQVRoge2ZsWsUQRTGfy8JxMJoUCGFwVpURMRKCCKIjYWFCHY2ioW9WFiLFoJ/gY3FgaAWVjZaeEQkESsbFRsLRRFCxEKFfBa5wN3e7e28mdm9E+8HV8zum33ft29mZ28WJsQh6ZWkl3XFN4Y65I6fSZPVk3AROA0cBxY7v73A/DCRzhzd8W0zW9pqmEtt/4V3ApeBi8AhT18zM4+RQfFmlqQfSSbpiqRvCqDQN3loDTrmHlqS5oAWcMbbt0Mb8Awpb3w1knZIWgmpQllFMumIr4ikaeAhcCwmsbePlylH7DXgVF1CUgma9ZL2AB+BuagkqU+Xfj0qXje0IjeINNEUlXdK0jzwBZiNTtJ154p309suOxZSkbMpJpoi5Kl1LmfC4nzxtkuvO+ykpFlgDdgWJrMkyRhM9v0kmhgkontd8bbLqDLiehEcJVVz5GDuhHXNkdKKSJph84n1TzBsaF0FDuROWNccGVg2SbuAd8DuNNmdJA0siGVz5GYuE0UaW0ckHQFWgWm/zJIkDawjgypyl4wmuhPXSc9kl3QeOFF30ky86G70lFzSa+Boo3LCWTKzdtnJopEfwPbaJflZAxbM7HdZQHEdeVqvnmgeDzMB/UYuAY/Ivf2STiuql6TDkh5I2qjc66mfN5KSdxTvjNjEhqSTIVqrXuPfJt2JdO6b2fOQwCojHzKIiWUduB4aXGXkfZqWJG6b2efQ4JDtoHWa39P6Bewzs6+hHUK2g0YxvJ54TMD4Gnnm7RBiZDVCSCruj58hRlrAH7+WJIIn+RaVRszsE3ArSk48370dQj8rTAH32PzoWTu5/1H2IemCpGVJP+t8L4nRlsV5bPIyYiri+fQ21kyMTJjwn/AXVAsRy8DjcBMAAAAASUVORK5CYII=" class="sidebar-menu-container-icon" />
+                                        }
+
+                                        else if (item.Tanim == "Kişi" || item.Tanim == "Personal")
+                                        {
+                                            //kurum
+
+                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAACgElEQVR4nO2aPWsUURiFz8gaQ/CjippCxSYiWvkRLbVQC5U0tmm0EEHUIn9BFP+D6A+IpLGNhlSChoAIQUVSGLAQQ4ISjZA8Ft7gZZy5e3dmszdh3wcWdphz7znvy+zcmdmRDMMwDMPoVjJ/AyBqUJZlzVWdp0r+bRsXZ2tgDUgdIDWN0M7N+lsvoyxv6NzQ9UeANSB1gNRYA1IHMLoRYBiYBH64z0vgaupclQAuAhNeMRPAhYD+IeXcb5dPRwDuAGsFhawBtwv0w4Hi17lS16cjAIeAlUAhv4CDuTGTEQ14UdenFeqsApcl9QT273Aan5MR855qg080dRrQH6HZm9veGTFmVxt8oqnTgJUKmt8RY/KaKj7R1GnAuwjN29z2XMSYT23w2XiA7cDHwMnpPdDIjXkUcRJ8UNenYwBDwFJBqEXgdIF+AFgIFPMN2FfXp6MAR4AxF2bRfR8M6C8BPwuKWSZ8AdWSz6YGOA6Mu6NhAXgGHEudyzCM7qPyY2+gX9JRSYcl7Zb0JcuysQJdj/7eA5x1+kFJByTt0b/L3u+SliR9lvRB0qykV5Kmsyz77+oRuCZpvxs3J2k2y7KvVWuJwq3hI8BTYD63hK0CQ562F7gBPHfLW1WW3RzXgV5v/jPO02feZRsBBtpZeAN4UmDoM+Xp+4A3NYou4zXQ5/lMBbSrwGPacYUI3IoIN+rp79WvtZS7ns9ohP5ms/piboZi7rWnve/nIvRVOV/iWUbT54wxDTjRZD+SZlrQ18Gfe8Z5x+oNwzCMPMG3xLbaGyJlhOrq+n+HrQGpA6TGGpA6QGqCt4v5s+c6m3V1KMsbouuPAGtA6gCGYRiGYRip+APYT55EuKzIpAAAAABJRU5ErkJggg==" class="sidebar-menu-container-icon" />
+                                        }
+                                        else if (item.Tanim == "Yönetim" || item.Tanim == "Administration")
+                                        {
+                                            //yönetim
+                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAADC0lEQVRoge2aS2jUUBSGz7UWa7Wi9UG1VuhCUXzQ4gsEF0UX0oIIgrqxIF26qGtxU3WlGwVx62uhtQqCFnWtglREQbD4oEpdCIqtzkC1Lz8Xc8bGIblJk0wyxflhuMPMf8/5vyRMbpIRKes/EFAJHAIeAl/09QA4CFSmnS+QgBbgNd56B+xJO6engHrgpkf4FUAH0O/4rBuoTzv3XwEVwDEg47ULCrydDm9G51akySDAJuCp5TD6B8Qxbzlw1WF5AWxJA2AJcB4Y94NwA3HUaQU+qm1S4eqSAGgATgHZIAB+IFqzBjgHjKk9A5wEVsYZvBpYA7QDvcDEdACCgDh6rQXuOqZNAPeAw5qhOizEkzChw4I4+u4ArgOjLqUee80zloLTCmCTMcazj6V/nYgcEJHdIrJBRBpttUoWpFD5PF61ZkVtUCoqg5SayiClJhvIr8RS+MhxMhzz8thAhuONE0m1Oma9DDMFZJGOMx4kv0c+eRlsIO/jzRJJjToOeBlsIC/jzRJJm3V862WYKSD5q8c+L4Nt0bhQRIZsnqCKsmgEZotIRkTmiEitMeZHmCLP9DpgZ9ggWicOPbf18Duz39FxfxSQmNQbeiawXrfGIBDl8IhD20ODaIg3UQvFADGAz4YMsmjs1rEjLEgMumyMiXbFSu5m2ijwE1gWskYUjQOr/Hr47hFjzGcRuSEiVSJyNAxIRN0yxgzGUglo0q3zFZgXYn4UbYsFwhHmvhbuShAk/E+uJcw6crc1R4BG/xmRQSaB5thBNNAFbdKTAMilokBooMXAkDbaV0SQb8DSooFoqHZHs4YigRwpKoQj2DVt+Ijc6tTPPx3dToIhH6yG3ENNgIsB/EH1Aaj1qxergGamngWe9vEGURbYmFT+woAt5JYuAMctPj+NAm1JZncLuZepZ4lXgCoXj03jQClc74gAbcCwBusDthZ8bzucWtPK7SpgNfBKA/4GeoBdwAIPiH6gKe3crgLmA2dxf/6X1whwBpibdl5fkfs7R5ceZlngu74/QSn9baOsIuoPUIU/nW22Bl8AAAAASUVORK5CYII=" class="sidebar-menu-container-icon" />
+                                        }
+                                        else
+                                        {
+
+                                            <img src="/img/sidebar-menu-star-icon.svg" class="sidebar-menu-container-icon">
+                                        }
+                                        @*else if (item.Tanim == "Yönetim" || item.Tanim == "SettingsPanel")
+                                            {
+                                                //settingspanel
+                                                <img src="/img/settingspanel-icon-passive.svg" class="sidebar-menu-container-icon">
+                                            }*@
+                                        @*<i class="nav-icon fas fa-th"></i>*@
+                                        <p class="sidebar-menu-container-text">
+                                            @item.Tanim
+                                            @*<i class="fas fa-angle-left right"></i>*@
+                                        </p>
+                                    </a>
+
+                                    @foreach (var altItem in menuListe)
+                                    {
+                                        if (altItem.UstId == item.Id)
+                                        {
+                                            <ul class="nav nav-treeview" style="display: none;">
+                                                <li class="nav-item sidebar-menu-container">
+                                                    <a href="@altItem.Url" class="nav-link sidebar-menu-container-a">
+
+                                                        <img src="/img/sidebar-menu-star-icon.svg" class="sidebar-menu-container-icon">
+
+                                                        @* <i class="far fa-circle nav-icon sidebar-menu-container-icon" style="vertical-align: super;"></i>*@
+                                                        <p class="sidebar-menu-container-text" @*style="white-space: initial; width: 180px;"*@>
+                                                            @altItem.Tanim
+                                                        </p>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        }
+                                    }
+                                </li>
+                            }
+                            else if (item.Url == "/Panel/SettingsPanel")
+                            {
+                                <li class="nav-item sidebar-menu-container">
+                                    <a href="@item.Url" class="nav-link sidebar-menu-container-a">
+                                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAAFhElEQVRoge2aS2xUZRTHz9iXsQOKtWqoUBSKthVpYmoVjQtMXGh0oRFiMAaCK91AJJEAugGjIG2xdeVjU59LVz5KlGpSTAxWIlWrAQktgY2J0BZa+5ifi+9c78fMdx9z55aayNncmXse/3Pu3O9855xvRK7Q/4CAvcAshTQNbJtv/2ITMOIIwqOB+fYvFgELgRwwAZRZ9xfo/UmgPG3cq9I2KCJNIpIRkaFMJjPr3cxkMmMiMiwiVSKyIm3Q2IEA9cBWoDZCtFGvvzp4P+l1VQRWLbAFWBLXv1iBAA0i0i8iHSIyCDwaIt6k118cvEG93hmCtVZEjopIp4j0A8vj+BhJwArgtC7Uc3rNAR1AVZ5sBfC1yjzhsPW08j6314/yKoF9VrY7r9fhkoPJC6JPF+x2YErvHQWagNuAt4A/rexUsA6AOyz+WeANYDGwEjii96eBHZo0vi05GOCWvCCqLV4r8LvyJhQcYAY4BDwbYvc54Dv9VcFksXH9fBxos2SzecHUJQlkkxq4CFzv4GeB91RmDHgduKkI+/VAtwYC0AMsdMjVqA8AG5MEUg38pgb2h8itBmqKBvD16+xfwcFvVx+G7LeiWJC7MethFpNNLisBDyr2dFiwcY29ok/ktOsVmysCrgNOKfauNAyWA4fV4Icp+BgX92PF7CcvVZditMFacC2pGA3He8BKIrHSbtwSJSMilSIyKiKnYjjSDHQCg5pax/VzJ9AcA29YRKZFpExExmL6GE3AO/qEdkfIVWpKnSGYZoAuoDLC1tsqvyetIK7GlAtTwA0RQRxU8AngAHAPJo1XA23Am/j7xsGwYDC7Pbrgi6/SgWuB+zA7cDv+zvplhF63yg0DgdUtZt/xGq+uCJsDKteLqcM26cMp2Dhtpb0Ed3Y54KkQ3WZ9ZSbCgsgLZlJ1mkLkng96P/WBveZS8qrOC5gCrgdTID4OLI1wrFN1O6OCsHS6VKcjQq4BeBLYCXwE/KgPDGDWpeBR0e8j8LPqthah06Y6xxLglXnOuphuRjzDY6qeLUInqzqjCTEv8Tetnj3JA/CwEz28IGP/ErAggZ0RvQYuXAd5ssPFgrl8tMcyM/r9PHBSzKBgUK8DmUzmRIjtXnVsg4h8H9OfDZZumNO3i0iLiNwlptdfJSLLLJ8LFLZh8ra3YdkUN/1OAqujIgBagL+JTr8vOHxBcQaAF8NAyjF9+HrgVeArVf4iwjkvnY6EBaNBeC30gQib3ob4GbAbWAc0kmTAhylRzmFKlMBOEDNB8UqUSQ3sXs1OWUy10K2/BCpbEWKvtBIlwGisAg5Tb3URXjROY+qwwCDyMEML1WIDaVDnRoFFMeSbMXOvY5g9Zkw/txOyJiz9JfoGXARuTCcKY7gJvyyIrKVSwFujWOPAyrSMVmHqG4B3UzEaD/d9xfyBiN4lrkGvIDxOss0yKW4Wfwi4r1RjD2P2kNLHMcnwW3Wt5IBHkhqpBc7oE3kpAiywc4yBUwesCeHvUB/OEH2k4TSwVQ38hXuUuQh/ZDOOacxuLsL+Mszg26skPnFlRMww2zsF2JIkkKX4HeM3XDrEXovp0MA0YvYQuw94JsTuZgqH2F4bMAI8ZMlWKzaKF/vgJx90uRVMH2agvB+/mzysMrdiNkLvWCEH1DvsNeDTWUwfvlhteEPAWcx+U6OYXhAln5HYwXhDuilgF4WHNRUW+GMOW+uU1+vQLQNexj978bBGSg7CAqkHTqrhE8D9IbIdKleQIIA9ygssOzDJY8gKIt2DU0x22QhcEyG3WZ3ocfA+Vd76CBvVmNFP8Qc7aRGmygU44uD9obxGl+5/ivD/MHABq/xmjv8wMCeE3zi5aE7+wjEX/3wQEflARHKO+zMictnOWK7QfNI/L3UC7G+11egAAAAASUVORK5CYII=" class="sidebar-menu-container-icon" />
+
+                                        <p class="sidebar-menu-container-text">
+                                            @item.Tanim
+                                        </p>
+                                    </a>
+                                </li>
+                            }
+                        }
+                    }
+                </ul>
+            </nav>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        @RenderBody()
+        <input type="hidden" id="site-lang" value="@dil" />
+        <input type="hidden" id="site-id" value="@SessionId" />
+        <input type="hidden" id="site-name" value="@Name" />
+        <input type="hidden" id="site-kisiId" value="@KisiID" />
+        <input type="hidden" id="site-kurumId" value="@KurumID" />
+        <input type="hidden" id="site-freeMi" value="@freeMi" />
+        <!-- Url getirme -->
+        <input type="hidden" id="site-urlMedya" value="@urlMEdya" />
+        <input type="hidden" id="site-urlWeb" value="@urlWeb" />
+        <input type="hidden" id="site-urlSocket" value="@urlSocket" />
+    </div>
+    <div id="chat-container">
+    </div>
+    <audio id="notificationSound" src="/sounds/notification.mp3" muted autoplay></audio>
+    <!-- /.content-wrapper -->
+    @*<footer class="main-footer">
+            <div class="float-right d-none d-sm-block">
+            </div>
+            <strong>Copyright &copy; 2020 <a href="#">DigiForce</a>.</strong> All rights
+            reserved.
+        </footer>*@
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
+
+    @*<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @*<script src="~/js/Chat.js"></script>*@
+    @*await RenderSectionAsync("Scripts", required: false) *@
+    <script type="text/javascript"  asp-append-version="true">
+
+        $(document).ready(function () {
+            console.log("Doc Read Begin");
+            NumberExceptZero();
+            //KisiVarOlanLisansAbonelik();
+
+            $('body').Layout('fixLayoutHeight');
+            $('body').Layout('scrollbarTheme', "os-theme-light");
+            $('.lang').click(function () {
+                var code = $(this).data('code');
+                $.ajax({
+                    data: { culture: code },
+                    url: "/panel/SetCulture",
+                    type: "POST",
+                    dataType: "json",
+                    success: function (e) {
+                        location.reload();
+                    }
+                });
+            });
+            var isFirefox = typeof InstallTrigger !== 'undefined';
+            if (isFirefox) {
+                $('.datetimepicker').datetimepicker({
+                    format: 'YYYY-MM-DDTHH:mm',
+                    formatTime: 'HH:mm',
+                    formatDate: 'YYYY-MM-DD'
+                });
+                //$.datetimepicker.setLocale('tr');
+                $.datetimepicker.setDateFormatter({
+                    parseDate: function (date, format) {
+                        var d = moment(date, format);
+                        return d.isValid() ? d.toDate() : false;
+                    },
+
+                    formatDate: function (date, format) {
+                        return moment(date).format(format);
+                    },
+
+                    //Optional if using mask input
+                    formatMask: function (format) {
+                        return format
+                            .replace(/Y{4}/g, '9999')
+                            .replace(/Y{2}/g, '99')
+                            .replace(/M{2}/g, '19')
+                            .replace(/D{2}/g, '39')
+                            .replace(/H{2}/g, '29')
+                            .replace(/m{2}/g, '59')
+                            .replace(/s{2}/g, '59');
+                    }
+                });
+            } else {
+                $('.datetimepicker').attr('type', 'datetime-local');
+            }
+
+            $("#search-input").keypress(function (e) {
+                keycode = e.keyCode || e.charCode || e.which //for cross browser
+                if (keycode == 13)    //keyCode for enter key
+                {
+                    $("#srch-submit").click();
+                    return false;
+                }
+            });
+            $('#logout-btn').on("click", function () {
+                Logout();
+            });
+            $('select:not(".select2-hidden-accessible,[data-role]")').select2();
+            if (GetURLParameter().toLowerCase() === "panel") {
+                $('.header-title-text').show();
+            } else {
+                $('.header-title-text').hide();
+            }
+            //if ($("#page-title").length) {
+            //    $(".header-title-text").text($("#page-title").text())
+            //}
+            $("aside")
+                .mouseover(function () {
+                    if ($("body").hasClass("sidebar-collapse")) {
+                        $("body").attr('class', 'sidebar-mini layout-fixed');
+
+                        $(".brand-logo-xs").hide();
+                        $(".brand-logo-xl").show();
+                    }
+                });
+            $(".content-wrapper")
+                .mouseover(function () {
+                    $("body").attr('class', 'sidebar-mini layout-fixed sidebar-collapse');
+                    $(".brand-logo-xs").show();
+                    $(".brand-logo-xl").hide();
+                });
+
+            var pageWidth = $(window).width();
+
+            SidebarLogoControl(pageWidth);
+            window.addEventListener('resize', function (event) {
+                SidebarLogoControl(pageWidth);
+            }, true);
+
+            $(".sidebar-menu-container").on("click", function (event) {
+                var item1 = $(event.target).closest("a");
+                var x = $(item1).attr("href");
+                if (x !== "javascript:;" && x !== undefined) {
+                    sessionStorage.setItem("state", x);
+                }
+            });
+
+            var current = sessionStorage.getItem("state");
+            if (current == undefined) {
+                return;
+            }
+            var item = $(".nav-sidebar").find("[href='" + current + "']");
+            tree = $(item).closest(".has-treeview");
+            if (tree.length > 0) {
+                var ul = $(item).closest("ul");
+                var p = $(item).find(".sidebar-menu-container-text");
+                var icon = $(item).find(".sidebar-menu-container-icon");
+                var p2 = $(tree).find(".sidebar-menu-container-text").first();
+                var icon2 = $(tree).find(".sidebar-menu-container-icon").first();
+                $(icon).attr("class", "sidebar-menu-container-icon stateactiveicon");
+                $(icon2).attr("class", "sidebar-menu-container-icon stateactiveicon");
+                $(p).attr("class", "sidebar-menu-container-text stateactivetext");
+                $(p2).attr("class", "sidebar-menu-container-text stateactivetext");
+            } else {
+                var item = $(".nav-sidebar").find("[href='" + current + "']");
+                var icon = $(item).find("img");
+                $(icon).attr("class", "sidebar-menu-container-icon stateactiveicon");
+                var text = $(item).find("p");
+                $(text).attr("class", "sidebar-menu-container-text stateactivetext");
+            }
+
+            //$(ul).css("display", "block");
+            setTimeout(function () {
+                if (current != undefined) {
+                    $(tree).find('a').first()[0].click();
+                }
+            }, 500);
+
+            $('.modal-content').resizable({
+                minHeight: 100,
+                minWidth: 100
+            });
+            $('.modal-dialog').draggable();
+            console.log("Doc Read End");
+        });
+        var tree;
+
+        function SidebarLogoControl(pw) {
+            if (pw >= 320 && pw <= 767) {
+                $(".brand-logo-xs").show();
+                $(".brand-logo-xl").hide();
+            } else if (pw >= 768 && pw <= 1023) {
+                $(".brand-logo-xl").hide();
+                $(".brand-logo-xs").removeClass("logo-xs");
+                $(".brand-logo-xs").addClass("logo-xl");
+            } else if (pw >= 1023) {
+                $(".brand-logo-xl").hide();
+                $(".brand-logo-xs").addClass("logo-xs");
+                $(".brand-logo-xs").removeClass("logo-xl");
+            }
+        }
+
+        $("form :input[type=text]").keypress(function (e) {
+            keycode = e.keyCode || e.charCode || e.which //for cross browser
+            if (event.which == '13') {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
+<style>
+    .stateactiveicon {
+        filter: invert(0%) sepia(999%) saturate(0%) hue-rotate( 198deg ) brightness(9000%) contrast(900%);
+    }
+
+    .stateactivetext {
+        color: #fff;
+    }
+
+    #chatUnreadMessages {
+        padding: 12px;
+    }
+
+    .ustItems {
+        cursor: pointer;
+    }
+
+    .notification-select-item {
+        height: 100% !important;
+    }
+
+        .notification-select-item:hover {
+            background-color: #e6d1d1;
+        }
+
+    .validationMessage {
+        display: none;
+        height: 100%;
+    }
+
+    table.dataTable th,
+    table.dataTable td {
+        white-space: nowrap;
+    }
+</style>

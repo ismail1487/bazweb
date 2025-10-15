@@ -1,0 +1,41 @@
+﻿<!-- Content Wrapper. Contains page content -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="~/css/All/500.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Content Header (Page header) -->
+        @{
+            var cookie = new CookieModel();
+        }
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="col-12" style="text-align:center;">
+                    <img src="~/img/500.png" />
+                    <div class="">
+                        <div class="error-content container">
+
+                            <h1 class="headError">500</h1>
+                            <h3> @ViewBag.ErrorMessage</h3>
+                            <p>
+                                Bu sorunun çözümü için hemen çalışmaya başlıyoruz.
+                                İsterseniz panele dönüp başka bir sayfayı deneyebilirsiniz.
+                            </p>
+                            <a href="/panel" class="btn add-buttons-nofloat">Anasayfaya Dön</a>
+                        </div>
+                    </div>
+
+                    <!-- /.error-page -->
+                </div>
+                <!-- /.content -->
+            </div>
+        </div>
+    </div>
+    <!-- /.content-wrapper -->
+</body>
+</html>

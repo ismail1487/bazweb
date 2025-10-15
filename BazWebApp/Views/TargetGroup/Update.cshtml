@@ -1,0 +1,123 @@
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+@*<link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.common.min.css" rel="stylesheet" />*@
+<link href="~/lib/kendo/Content/kendo/2020.3.1118/kendo.common.min.css" rel="stylesheet" />
+<link href="~/css/All/TargetGroup.css" rel="stylesheet" />
+<script type="text/javascript" src="~/js/Repository/IRepository.js"></script>
+<script type="text/javascript" src="~/js/Services/TargetGroupService.js"></script>
+
+<div class="container-fluid">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h2>@localizator["Hedef Kitle Güncelleme Sayfası"].Value</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Main content -->
+    <section class="content binder">
+        <div class="row">
+            <div class="col-md-12 mt-5">
+                <div class="row row-cols-1">
+                    <div class="col-md-12 row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="Lbl" for="Ad">@localizator["HEDEF KİTLE TİPİ"].Value</label>
+                                <select class="form-control form-control-sm field-select2" data-bind="source:targerGroupTypes, value:HedefKitleTipi, events:{select:selectTargetGroupType}" data-role="dropdownlist" disabled="true">
+                                </select>
+                            </div>
+                            <label for="Hedef Kitle Tipi" class="validationMessage"></label>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="Lbl" for="Ad">@localizator["HEDEF KİTLE TANIMI"].Value *</label>
+                                <input type="text" id="Ad" class="form-control" data-bind="value:Tanim" style="height: 30px">
+                            </div>
+                            <label for="Tanim" class="validationMessage"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="tree" data-template="row-template" data-bind="source: filter">
+                </ul>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12 text-center mb-3">
+                <button type="button" data-bind="click: create" class="btn add-buttons">@localizator["Güncelle"].Value</button>
+                <a href="/targetgroup/list" class="btn cancel-button-right">@localizator["Vazgeç"].Value</a>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+    function renderNotesTemplate(data) {
+        return kendo.Template.compile($('#notes-template').html())(data);
+    }
+</script>
+
+<script id="row-template" type="text/x-kendo-template">
+     #var inputDisplay; var selectDisplay;#
+       #if(data.InputType=="none"){#
+    #inputDisplay="none"; selectDisplay="none";#
+    #}else{ if(data.InputType=="text" || data.InputType=="number" || data.InputType=="date"){#
+    #inputDisplay="show"; selectDisplay="none";#
+    #}else{#
+    #inputDisplay="none"; selectDisplay="show";#
+    #}#
+    #}#
+
+    #if(FilterType=='group'){#
+    <li>
+    <div class="btn-group">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="btn targetGroupButtons active">
+                                    <input type="radio" value="AND" data-bind="checked: LocigalOperator" autocomplete="off">VE
+                                </label>
+                                <label class="btn targetGroupButtons">
+                                    <input type="radio" value="OR" data-bind="checked: LocigalOperator" autocomplete="off">VEYA
+                                </label>
+                            </div>
+                            <a  href="javascript:;" class="btn btn-default cancel-button-target" style="margin-right:5px;" data-bind="click:addExpression">+</a>
+                        </div></li>
+    #}else{#
+        <li>
+            <div class="card">
+    <div class="card-body">
+    <div class="btn-group" style="width: 100%;" data-bind="attr:{id:uid+'row'}">
+    <div class="input-group input-group-select mb-3" data-bind="attr:{data-id:uid+'parameter'}">
+
+                                    <select class="form-control form-control-sm field-select2 experssionInput" data-text-field="name" data-value-field="name" data-bind="source:fields, value:MemberName, events: { select: SelectParametre }" data-role="dropdownlist">
+                                    </select>
+                                </div>
+                                <div data-bind="attr:{data-id:uid+'operator'}" class="input-group input-group-select mb-3 operator">
+
+                                <select  class="form-control form-control-sm field-select2 experssionInput" data-text-field="text" data-value-field="value"  data-bind="source:getData, value:Operator, events:{open:change}" data-role="dropdownlist">
+                                </select>
+                            </div>
+
+                               <div style="display:#=inputDisplay#" data-bind="attr:{data-id:uid+'input'}" class="input-group input-group-select mb-3 operator">
+
+                                <input type="text" class="form-control form-control-sm experssionInput" data-bind="value: Value,attr:{type:InputType}" />
+                                <div class="input-group-append">
+                                    <button type="button" class="btn removeExButton removefilter" data-bind="attr:{id:uid}" onClick="removeRow(this)"><i class="fas fa-minus deleteTarget" style="line-height: normal;"></i></button>
+                                </div>
+                            </div>
+
+                            <div style="display:#=selectDisplay#"  data-bind="attr:{data-id:uid+'select'}" class="input-group input-group-select mb-3 operator">
+
+                                <select  class="form-control form-control-sm field-select2 experssionInput " data-text-field="key" data-value-field="value"  data-bind="source:getParamData, value:Value" data-role="dropdownlist">
+                                </select>
+                                <div class="input-group-append">
+                                    <button type="button" class="btn removeExButton removefilter" data-bind="attr:{id:uid}" onClick="removeRow(this)"><i class="fas fa-minus deleteTarget" style="line-height: normal;"></i></button>
+                                </div>
+                            </div>
+                    </div>
+                    </div>
+                    </div>
+    </li>
+    #}#
+</script>

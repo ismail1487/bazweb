@@ -1,0 +1,169 @@
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12 container">
+            <div class="tabbable-line col-md-11 container">
+                <ul class="nav nav-tabs mb-3" id="" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="" data-toggle="tab" href="#settingsPanel" role="tab" aria-controls="" aria-selected="true">@localizator["Ayarlar"].Value</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="" data-toggle="tab" href="#managementPanel" role="tab" aria-controls="" aria-selected="false">@localizator["Yönetim Paneli"].Value</a>
+                    </li>
+                </ul>
+            </div>
+            @*<div class="row">*@
+            @*<div class="card-body">*@
+            <div class="tab-content col-md-11 container" id="settingsTabContent">
+                <div class="tab-pane fade active show" id="settingsPanel" role="tabpanel" aria-labelledby="">
+                    <div class="wrap">
+                        <div class="grid-container">
+                            <div class="panel-card">
+                                <div class="row"><img class="panel-card-icon" src="/img/person.svg" /> </div>
+                                <div class="row"><a href="/panel/profile"><label class="card-label">@localizator["Profil"].Value</label></a></div>
+                                <div class="row">
+                                    <p class="card-text">
+                                    </p>
+                                </div>
+                            </div> 
+                            @*
+                            <div class="panel-card">
+                                <div class="row"><img class="panel-card-icon" src="/img/bell.svg" /> </div>
+                                <div class="row"><a href="/notificationsetting/List"><label class="card-label">@localizator["Hatırlatma Ayarları"].Value</label></a></div>
+                                <div class="row">
+                                    <p class="card-text">
+                                    </p>
+                                </div>
+                            </div>
+                            *@
+                            <div class="panel-card">
+                                <div class="row"><img class="panel-card-icon" src="/img/globe-2.svg" /> </div>
+                                <div class="row"><a href="/Geography/List"><label class="card-label">@localizator["Coğrafi Tanımlar"].Value</label></a></div>
+                                <div class="row">
+                                    <p class="card-text">
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="panel-card">
+                                <div class="row"><img class="panel-card-icon" src="/img/layout.svg" /> </div>
+                                <div class="row"><a href="/panel/CompanyOrganizationDefinition"><label class="card-label">@localizator["Organizasyon Ağacı"].Value</label></a></div>
+                                <div class="row">
+                                    <p class="card-text">
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="row"><img class="panel-card-icon" src="/img/lock.svg" /> </div>
+                                <div class="row"><a href="/AuthCenter/AccessAuthList"><label class="card-label">@localizator["Erişim Yetkilendirme"].Value</label></a></div>
+                                <div class="row">
+                                    <p class="card-text">
+                                    </p>
+                                </div>
+                            </div>
+                            @*<div class="">
+                                    <div class="row"><img class="panel-card-icon" src="/img/code.svg" /> </div>
+                                    <div class="row"><a href="#"><label class="card-label">Json Builder</label></a></div>
+                                    <div class="row">
+                                        <p class="card-text">
+                                        </p>
+                                    </div>
+                                </div>*@
+                            @*<div class="">
+                                    <div class="row"><img class="panel-card-icon" src="/img/shield.svg" /> </div>
+                                    <div class="row"><a href="#"><label class="card-label"></label></a></div>
+                                    <div class="row">
+                                        <p class="card-text">
+                                            Lorem ipsum dolar sit amet, consecte
+                                            adipiscing elit
+                                        </p>
+                                    </div>
+                                </div>*@
+                            @*<div class="">
+                                    <div class="row"><img class="panel-card-icon" src="/img/options-2.svg" /> </div>
+                                    <div class="row"><a href="/globalparameter/systemglobalparameterdefinition"><label class="card-label">Küresel Sistem Parametreleri</label></a></div>
+                                    <div class="row">
+                                        <p class="card-text">
+                                            Küresel sistem parametre listesi
+                                        </p>
+                                    </div>
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade model-bind" id="managementPanel" role="tabpanel" aria-labelledby="">
+                    <div class="wrap">
+                        <div class="grid-container">
+                            @*<div class="panel-card">
+                                    <div class="row"><img class="panel-card-icon" src="/img/calendar.svg" /> </div>
+                                    <div class="row"><a href="/Calendar"><label class="card-label">Takvim</label></a></div>
+                                    <div class="row">
+                                        <p class="card-text">
+                                            Kişi takvim
+                                        </p>
+                                    </div>
+                                </div>
+                            <div class="panel-card">
+                                <div class="row"><img class="panel-card-icon" src="/img/bell.svg" /> </div>
+                                <div class="row"><a href="/announcementgeneral/announcementlist"><label class="card-label">@localizator["Duyuru Merkezi"].Value</label></a></div>
+                                <div class="row">
+                                    <p class="card-text">
+                                    </p>
+                                </div>
+                            </div>
+                            *@@*<div class="panel-card">
+                                    <div class="row"><img class="panel-card-icon" src="/img/clipboard.svg" /> </div>
+                                    <div class="row"><a href="/Action/DefinitionList"><label class="card-label">Organizasyon Ağacı</label></a></div>
+                                    <div class="row">
+                                        <p class="card-text">
+                                            Lorem ipsum dolar sit amet, consecte
+                                            adipiscing elit
+                                        </p>
+                                    </div>
+                                </div>
+                            <div class="panel-card">
+                                <div class="row"><img class="panel-card-icon" src="/img/file-text.svg" /> </div>
+                                <div class="row"><a href="/Templates/ListForSystem"><label class="card-label">@localizator["Kurumsal İçerik Şablonları"].Value</label></a></div>
+                                <div class="row">
+                                    <p class="card-text">
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="panel-card">
+                                <div class="row"><img class="panel-card-icon" src="/img/people.svg" /> </div>
+                                <div class="row"><a href="/Team/TeamList"><label class="card-label">@localizator["Ekipler"].Value</label></a></div>
+                                <div class="row">
+                                    <p class="card-text">
+                                    </p>
+                                </div>
+                            </div> *@
+                            @*<div class="panel-card">
+                                    <div class="row"><img class="panel-card-icon" src="/img/flip-2.svg" /> </div>
+                                    <div class="row"><a href="/smtp/systemsmtplist"><label class="card-label">SMTP ayarları</label></a></div>
+                                    <div class="row">
+                                        <p class="card-text">
+                                            SMTP ayarları listesi
+                                        </p>
+                                    </div>
+                                </div>*@
+                            <div class="panel-card">
+                                <div class="row"><img class="panel-card-icon" src="/img/message-square.svg" /> </div>
+                                <div class="row"><a href="/Panel/CompanyMessageModulePermissions"><label class="card-label">@localizator["Mesajlaşma Modülü İzin Ayarları"].Value</label></a></div>
+                                <div class="row">
+                                    @*<p class="card-text">
+                                            Kulllanıcıların sahip oldukları pozisyonlara göre sistem içi mesajlaşma modülüne erişimlerinin yönetileceği sayfadır.
+                                        </p>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*</div>*@
+    @*</div>*@
+</div>
+<!-- /.card-body -->
+<link href="~/css/All/SettingsPanel.css" rel="stylesheet" />

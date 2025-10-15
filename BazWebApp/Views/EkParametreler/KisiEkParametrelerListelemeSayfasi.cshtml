@@ -1,0 +1,58 @@
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+<link href="~/css/All/KisiEkParametreler.css" rel="stylesheet" />
+<script src="~/js/KisiEkParametrelerTanimlama.js"></script>
+<div class="container-fluid">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6 liste-baslik">
+                    <h1> @localizator["Parametre Adı"].Value</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="">
+                        <div class="card-header text-right">
+                            <button type="button" class="btn add-buttons" id="ekleHeaderbtn"> @localizator["Ekle"].Value</button>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="">
+                            <table style="width: 100% !important;" id="KEkParamListesiTable" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>@localizator["Parametre Adı"].Value</th>
+                                        <th>@localizator["Parametre Tipi"].Value</th>
+                                        <th>@localizator["Parametre Gösterim Tipi"].Value</th>
+                                        <th style=' min-width: 20% !important;'>@localizator["İşlem"].Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody"></tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>@localizator["Parametre Adı"].Value</th>
+                                        <th>@localizator["Parametre Tipi"].Value</th>
+                                        <th>@localizator["Parametre Gösterim Tipi"].Value</th>
+                                        <th style=' min-width: 20% !important;'>@localizator["İşlem"].Value</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>

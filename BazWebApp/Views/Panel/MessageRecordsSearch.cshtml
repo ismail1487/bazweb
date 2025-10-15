@@ -1,0 +1,57 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<script src="~/js/Repository/IRepository.js"></script>
+<script src="~/js/Model/MessageRecordsSearchModel.js"></script>
+<script src="~/js/Services/MessageRecordsSearchService.js"></script>
+<link href="~/css/All/General.css" rel="stylesheet" />
+<link href="~/css/All/MessageRecord.css" rel="stylesheet" />
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+
+<div class="container-fluid model-bind">
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-12 mt-5">
+                <h1 class="display-4 my-2 text-center">@localizator["Mesaj Kayıtlarında Arama"].Value</h1>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-7 offset-3 my-4">
+                    <div class="input-group input-group-sm">
+                        <input class="form-control col-md-9 txt mt-0" type="text" placeholder=" @localizator["Arama"].Value" id="query">
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-sm add-buttons btn-flat" data-bind="click:Search">
+                                <img src="/img/header-searchicon.svg" style="filter: invert(100%) sepia(91%) saturate(38%) hue-rotate( 254deg ) brightness(110%) contrast(110%);">
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+           
+            <div class="col-md-8 offset-md-2">
+                <div class="card message-col">
+                    <div class="card-header" style="border-bottom:none;">
+                        <h5> @localizator["Uygulama Mesajları"].Value</h5>
+                    </div>
+                    <div class="card-body" id="uygulamaMesaj">
+                        <div class="row col-md-12">
+                            <div class="col-md-12">
+                                <div class="txt-nomargin">@localizator["Sonuç görüntülemek için lütfen arama yapınız."].Value</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<script>
+    $(document).ready(function () {
+        messageRecordsSearchService.initialize();
+    });
+</script>

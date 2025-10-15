@@ -1,0 +1,2238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="404" xml:space="preserve">
+    <value>Aradığınız sayfayı bulamadık.</value>
+  </data>
+  <data name="404-1" xml:space="preserve">
+    <value>İsterseniz panele dönüp başka bir sayfayı deneyebilirsiniz.</value>
+  </data>
+  <data name="505" xml:space="preserve">
+    <value>Bu sorunun çözümü için hemen çalışmaya başlıyoruz.</value>
+  </data>
+  <data name="505-1" xml:space="preserve">
+    <value>İsterseniz panele dönüp başka bir sayfayı deneyebilirsiniz.</value>
+  </data>
+  <data name="ABD" xml:space="preserve">
+    <value>ABD</value>
+  </data>
+  <data name="Abonelik Adı" xml:space="preserve">
+    <value>Abonelik Adı</value>
+  </data>
+  <data name="Abonelik Başlangıç Tarihi" xml:space="preserve">
+    <value>Abonelik Başlangıç Tarihi</value>
+  </data>
+  <data name="Abonelik Bitiş Tarihi" xml:space="preserve">
+    <value>Abonelik Bitiş Tarihi</value>
+  </data>
+  <data name="Ad" xml:space="preserve">
+    <value>Ad</value>
+  </data>
+  <data name="Ad Soyad" xml:space="preserve">
+    <value>Ad Soyad</value>
+  </data>
+  <data name="Adres" xml:space="preserve">
+    <value>Adres</value>
+  </data>
+  <data name="Adres Bilgileri" xml:space="preserve">
+    <value>Adres Bilgileri</value>
+  </data>
+  <data name="Adres Giriniz" xml:space="preserve">
+    <value>Adres Giriniz</value>
+  </data>
+  <data name="Adres Tipi" xml:space="preserve">
+    <value>Adres Tipi</value>
+  </data>
+  <data name="Adı" xml:space="preserve">
+    <value>Adı</value>
+  </data>
+  <data name="Adı Soyadı" xml:space="preserve">
+    <value>Adı Soyadı</value>
+  </data>
+  <data name="Ajanda" xml:space="preserve">
+    <value>Ajanda</value>
+  </data>
+  <data name="Aksiyon" xml:space="preserve">
+    <value>Aksiyon</value>
+  </data>
+  <data name="Aksiyon Adı" xml:space="preserve">
+    <value>Aksiyon Adı</value>
+  </data>
+  <data name="Aksiyon Açıklama" xml:space="preserve">
+    <value>Aksiyon Açıklama</value>
+  </data>
+  <data name="Aksiyon Grup Güncelleme" xml:space="preserve">
+    <value>Aksiyon Grup Güncelleme</value>
+  </data>
+  <data name="Aksiyon Grup Tanımı" xml:space="preserve">
+    <value>Aksiyon Grup Tanımı</value>
+  </data>
+  <data name="Aksiyon Gruplama" xml:space="preserve">
+    <value>Aksiyon Gruplama</value>
+  </data>
+  <data name="Aksiyon Grupları Listesi" xml:space="preserve">
+    <value>Aksiyon Grupları Listesi</value>
+  </data>
+  <data name="Aksiyon Güncelleme Sayfası" xml:space="preserve">
+    <value>Aksiyon Güncelleme Sayfası</value>
+  </data>
+  <data name="Aksiyon Listesi" xml:space="preserve">
+    <value>Aksiyon Listesi</value>
+  </data>
+  <data name="Aksiyon Onay Tanım" xml:space="preserve">
+    <value>Aksiyon Onay Tanım</value>
+  </data>
+  <data name="Aksiyon Planlama Dönemi" xml:space="preserve">
+    <value>Aksiyon Planlama Dönemi</value>
+  </data>
+  <data name="Aksiyon Planlama Kayıt Tarihi" xml:space="preserve">
+    <value>Aksiyon Planlama Kayıt Tarihi</value>
+  </data>
+  <data name="Aksiyon Planı Başlığı" xml:space="preserve">
+    <value>Aksiyon Planı Başlığı</value>
+  </data>
+  <data name="Aksiyon Planı Not" xml:space="preserve">
+    <value>Aksiyon Planı Not</value>
+  </data>
+  <data name="Aksiyon Renk Kodu" xml:space="preserve">
+    <value>Aksiyon Renk Kodu</value>
+  </data>
+  <data name="Aksiyon Sonrası İçin Bildirim Detayları" xml:space="preserve">
+    <value>Aksiyon Sonrası İçin Bildirim Detayları</value>
+  </data>
+  <data name="Aksiyon Sonrası İçin Doküman Ekle" xml:space="preserve">
+    <value>Aksiyon Sonrası İçin Doküman Ekle</value>
+  </data>
+  <data name="Aksiyon Tanımlama Sayfası" xml:space="preserve">
+    <value>Aksiyon Tanımlama Sayfası</value>
+  </data>
+  <data name="Aksiyon Tanımı" xml:space="preserve">
+    <value>Aksiyon Tanımı</value>
+  </data>
+  <data name="Aksiyon Tipi" xml:space="preserve">
+    <value>Aksiyon Tipi</value>
+  </data>
+  <data name="Aksiyon Türler" xml:space="preserve">
+    <value>Aksiyon Türler</value>
+  </data>
+  <data name="Aksiyon Türleri" xml:space="preserve">
+    <value>Aksiyon Türleri</value>
+  </data>
+  <data name="Aksiyon Türü" xml:space="preserve">
+    <value>Aksiyon Türü</value>
+  </data>
+  <data name="Aksiyon Yetkilendirme" xml:space="preserve">
+    <value>Aksiyon Yetkilendirme</value>
+  </data>
+  <data name="Aksiyon Yetkiler Listesi" xml:space="preserve">
+    <value>Aksiyon Yetkiler Listesi</value>
+  </data>
+  <data name="Aksiyon Öncesi İçin Bildirim Detayları" xml:space="preserve">
+    <value>Aksiyon Öncesi İçin Bildirim Detayları</value>
+  </data>
+  <data name="Aksiyon Öncesi İçin Doküman Ekle" xml:space="preserve">
+    <value>Aksiyon Öncesi İçin Doküman Ekle</value>
+  </data>
+  <data name="Aksiyon Öncesi/Sonrası Bildirimleri" xml:space="preserve">
+    <value>Aksiyon Öncesi/Sonrası Bildirimleri</value>
+  </data>
+  <data name="Aktif" xml:space="preserve">
+    <value>Aktif</value>
+  </data>
+  <data name="Aktif Görüşmeler" xml:space="preserve">
+    <value>Aktif Görüşmeler</value>
+  </data>
+  <data name="Aktif Katılımcılar" xml:space="preserve">
+    <value>Aktif Katılımcılar</value>
+  </data>
+  <data name="Aktif Kişi Listesi" xml:space="preserve">
+    <value>Aktif Kişi Listesi</value>
+  </data>
+  <data name="Aktif Konferans Listesi" xml:space="preserve">
+    <value>Aktif Konferans Listesi</value>
+  </data>
+  <data name="Aktif Kullanıcılar" xml:space="preserve">
+    <value>Aktif Kullanıcılar</value>
+  </data>
+  <data name="Almanya" xml:space="preserve">
+    <value>Almanya</value>
+  </data>
+  <data name="Alıcı" xml:space="preserve">
+    <value>Alıcı</value>
+  </data>
+  <data name="Anasayfa" xml:space="preserve">
+    <value>Anasayfa</value>
+  </data>
+  <data name="Anasayfaya Dön" xml:space="preserve">
+    <value>Anasayfaya Dön</value>
+  </data>
+  <data name="Anlık Toplantı Oluştur" xml:space="preserve">
+    <value>Anlık Toplantı Oluştur</value>
+  </data>
+  <data name="Anlık Toplantı Tanım" xml:space="preserve">
+    <value>Anlık Toplantı Adı </value>
+  </data>
+  <data name="Anne Adı" xml:space="preserve">
+    <value>Anne Adı</value>
+  </data>
+  <data name="Anonim/Limited/Şahıs" xml:space="preserve">
+    <value>Anonim/Limited/Şahıs</value>
+  </data>
+  <data name="API Endpoint Adı" xml:space="preserve">
+    <value>API Endpoint Adı</value>
+  </data>
+  <data name="API İSMİ" xml:space="preserve">
+    <value>API İSMİ</value>
+  </data>
+  <data name="Ara" xml:space="preserve">
+    <value>Ara</value>
+  </data>
+  <data name="Arama" xml:space="preserve">
+    <value>Arama</value>
+  </data>
+  <data name="Aramanıza dair sonuç bulunamamıştır." xml:space="preserve">
+    <value>Aramanıza dair sonuç bulunamamıştır.</value>
+  </data>
+  <data name="Atanmış Lisans Sayısı" xml:space="preserve">
+    <value>Atanmış Lisans Sayısı</value>
+  </data>
+  <data name="Ay" xml:space="preserve">
+    <value>Ay</value>
+  </data>
+  <data name="Ayarlar" xml:space="preserve">
+    <value>Ayarlar</value>
+  </data>
+  <data name="Ayarlar1" xml:space="preserve">
+    <value>Ayarlar</value>
+  </data>
+  <data name="Açıklama" xml:space="preserve">
+    <value>Açıklama</value>
+  </data>
+  <data name="Ağaç Yapısı" xml:space="preserve">
+    <value>Ağaç Yapısı</value>
+  </data>
+  <data name="Baba Adı" xml:space="preserve">
+    <value>Baba Adı</value>
+  </data>
+  <data name="Banka" xml:space="preserve">
+    <value>Banka</value>
+  </data>
+  <data name="Banka Bilgileri" xml:space="preserve">
+    <value>Banka Bilgileri</value>
+  </data>
+  <data name="Bağlantı Dizisi" xml:space="preserve">
+    <value>Bağlantı Dizisi</value>
+  </data>
+  <data name="Bağlantılı Olduğu Kişi" xml:space="preserve">
+    <value>Bağlantılı Olduğu Kişi</value>
+  </data>
+  <data name="Bağlantılı Olduğu Kurum" xml:space="preserve">
+    <value>Bağlantılı Olduğu Kurum</value>
+  </data>
+  <data name="Bağlı Kişi" xml:space="preserve">
+    <value>Bağlı Kişi</value>
+  </data>
+  <data name="Bağlı Kurum" xml:space="preserve">
+    <value>Bağlı Kurum</value>
+  </data>
+  <data name="Bağlı Olduğu Kurum" xml:space="preserve">
+    <value>Bağlı Olduğu Kurum</value>
+  </data>
+  <data name="Bağlı Olduğu Parametre" xml:space="preserve">
+    <value>Bağlı Olduğu Parametre</value>
+  </data>
+  <data name="Başlama Zaman Değeri" xml:space="preserve">
+    <value>Başlama Zaman Değeri</value>
+  </data>
+  <data name="Başlama Zaman Tipi" xml:space="preserve">
+    <value>Başlama Zaman Tipi</value>
+  </data>
+  <data name="BAŞLANGIÇ TARİHİ" xml:space="preserve">
+    <value>BAŞLANGIÇ TARİHİ</value>
+  </data>
+  <data name="Başlangıç Tarihi" xml:space="preserve">
+    <value>Başlangıç Tarihi</value>
+  </data>
+  <data name="Başlangıç Zamanı" xml:space="preserve">
+    <value>Başlangıç Zamanı</value>
+  </data>
+  <data name="Başlangıç-Bitiş Tarihi" xml:space="preserve">
+    <value>Başlangıç-Bitiş Tarihi</value>
+  </data>
+  <data name="Başlangıç-Bitiş Zamanı" xml:space="preserve">
+    <value>Başlangıç-Bitiş Zamanı</value>
+  </data>
+  <data name="Başlat" xml:space="preserve">
+    <value>Başlat</value>
+  </data>
+  <data name="Başlık" xml:space="preserve">
+    <value>Başlık</value>
+  </data>
+  <data name="Başlık Giriniz" xml:space="preserve">
+    <value>Başlık Giriniz</value>
+  </data>
+  <data name="Beni Hatırla" xml:space="preserve">
+    <value>Beni Hatırla</value>
+  </data>
+  <data name="Benimle Paylaşılan Takvimlerim" xml:space="preserve">
+    <value>Benimle Paylaşılan Takvimlerim</value>
+  </data>
+  <data name="Bildirim Gönder" xml:space="preserve">
+    <value>Bildirim Gönder</value>
+  </data>
+  <data name="Bildirim Gönderilecek Kişiler" xml:space="preserve">
+    <value>Bildirim Gönderilecek Kişiler</value>
+  </data>
+  <data name="Bildirim Metni" xml:space="preserve">
+    <value>Bildirim Metni</value>
+  </data>
+  <data name="Bildirimler" xml:space="preserve">
+    <value>Bildirimler</value>
+  </data>
+  <data name="Bir hesabın yok mu?" xml:space="preserve">
+    <value>Bir hesabın yok mu?</value>
+  </data>
+  <data name="Bireysel" xml:space="preserve">
+    <value>Bireysel</value>
+  </data>
+  <data name="Bireysel Gör" xml:space="preserve">
+    <value>Bireysel Gör</value>
+  </data>
+  <data name="Bireysel Görüşmeler" xml:space="preserve">
+    <value>Bireysel Görüşmeler</value>
+  </data>
+  <data name="Bireysel Plan Onay Tanımları" xml:space="preserve">
+    <value>Bireysel Plan Onay Tanımları</value>
+  </data>
+  <data name="Bireysel Plan Onay Tanımları Listesi" xml:space="preserve">
+    <value>Bireysel Plan Onay Tanımları Listesi</value>
+  </data>
+  <data name="Bireysel Plan Onay İşlemleri Listesi" xml:space="preserve">
+    <value>Bireysel Plan Onay İşlemleri Listesi</value>
+  </data>
+  <data name="Bireysel Plan Tanımları Listesi" xml:space="preserve">
+    <value>Bireysel Plan Tanımları Listesi</value>
+  </data>
+  <data name="Bireysel Plan Tanımı" xml:space="preserve">
+    <value>Bireysel Plan Tanımı</value>
+  </data>
+  <data name="Bireysel Planlarım" xml:space="preserve">
+    <value>Bireysel Planlarım</value>
+  </data>
+  <data name="Bireysel/Merkezi" xml:space="preserve">
+    <value>Bireysel/Merkezi</value>
+  </data>
+  <data name="Birim Tanımı Adı" xml:space="preserve">
+    <value>Birim Tanımı Adı</value>
+  </data>
+  <data name="Bitiş Tarihi" xml:space="preserve">
+    <value>Bitiş Tarihi</value>
+  </data>
+  <data name="Bitiş Zamanı" xml:space="preserve">
+    <value>Bitiş Zamanı</value>
+  </data>
+  <data name="Bugün" xml:space="preserve">
+    <value>Bugün</value>
+  </data>
+  <data name="BİTİŞ TARİHİ" xml:space="preserve">
+    <value>BİTİŞ TARİHİ</value>
+  </data>
+  <data name="Cep Numaranızı Giriniz" xml:space="preserve">
+    <value>Cep Numaranızı Giriniz</value>
+  </data>
+  <data name="Cep Telefon Numaranız" xml:space="preserve">
+    <value>Cep Telefon Numaranız</value>
+  </data>
+  <data name="Chat Kayıtları" xml:space="preserve">
+    <value>Chat Kayıtları</value>
+  </data>
+  <data name="Cinsiyet" xml:space="preserve">
+    <value>Cinsiyet</value>
+  </data>
+  <data name="Cmt" xml:space="preserve">
+    <value>Cmt</value>
+  </data>
+  <data name="Coğrafi Tanımlar" xml:space="preserve">
+    <value>Coğrafi Tanımlar</value>
+  </data>
+  <data name="Coğrafya Açıklama" xml:space="preserve">
+    <value>Coğrafya Açıklama</value>
+  </data>
+  <data name="Coğrafya Güncelleme" xml:space="preserve">
+    <value>Coğrafya Güncelleme</value>
+  </data>
+  <data name="Coğrafya Tanımlama" xml:space="preserve">
+    <value>Coğrafya Tanımlama</value>
+  </data>
+  <data name="Coğrafya Tanımlar Listesi" xml:space="preserve">
+    <value>Coğrafya Tanımlar Listesi</value>
+  </data>
+  <data name="Coğrafya Tanımı" xml:space="preserve">
+    <value>Coğrafya Tanımı</value>
+  </data>
+  <data name="Cum" xml:space="preserve">
+    <value>Cum</value>
+  </data>
+  <data name="Daha Fazla" xml:space="preserve">
+    <value>Daha Fazla</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="Davet" xml:space="preserve">
+    <value>Davet</value>
+  </data>
+  <data name="Davet Edilecek Kişileri Seçiniz" xml:space="preserve">
+    <value>Davet Edilecek Kişileri Seçiniz</value>
+  </data>
+  <data name="Davet Gönder" xml:space="preserve">
+    <value>Davet Gönder</value>
+  </data>
+  <data name="Davet Tipi" xml:space="preserve">
+    <value>Davet Tipi</value>
+  </data>
+  <data name="Dağıtım Yapılan Ülkeler" xml:space="preserve">
+    <value>Dağıtım Yapılan Ülkeler</value>
+  </data>
+  <data name="Depolama Alanı" xml:space="preserve">
+    <value>Depolama Alanı</value>
+  </data>
+  <data name="Depolama Alanı (MB)" xml:space="preserve">
+    <value>Depolama Alanı (MB)</value>
+  </data>
+  <data name="Depolama Kapasitesi" xml:space="preserve">
+    <value>Depolama Kapasitesi</value>
+  </data>
+  <data name="Depolama Yetkisi" xml:space="preserve">
+    <value>Depolama Yetkisi</value>
+  </data>
+  <data name="Değer" xml:space="preserve">
+    <value>Değer</value>
+  </data>
+  <data name="Değiştir" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="DEĞİŞKENLER" xml:space="preserve">
+    <value>DEĞİŞKENLER</value>
+  </data>
+  <data name="Dilim Araliklari Süresi" xml:space="preserve">
+    <value>Dilim Araliklari Süresi</value>
+  </data>
+  <data name="Dilim Aralıkları (Dakika)" xml:space="preserve">
+    <value>Dilim Aralıkları (Dakika)</value>
+  </data>
+  <data name="Dilimlendirme Başlangıç Tarihi" xml:space="preserve">
+    <value>Dilimlendirme Başlangıç Tarihi</value>
+  </data>
+  <data name="Dilimlendirme Bitiş Tarihi" xml:space="preserve">
+    <value>Dilimlendirme Bitiş Tarihi</value>
+  </data>
+  <data name="Dini" xml:space="preserve">
+    <value>Dini</value>
+  </data>
+  <data name="Diğer" xml:space="preserve">
+    <value>Diğer</value>
+  </data>
+  <data name="Diğer Kurumlar" xml:space="preserve">
+    <value>Diğer Kurumlar</value>
+  </data>
+  <data name="Diğer Çalışanlar" xml:space="preserve">
+    <value>Diğer Çalışanlar</value>
+  </data>
+  <data name="Dosya" xml:space="preserve">
+    <value>Dosya</value>
+  </data>
+  <data name="Dosya Ekle" xml:space="preserve">
+    <value>Dosya Ekle</value>
+  </data>
+  <data name="Dosya Seçiniz" xml:space="preserve">
+    <value>Dosya Seçiniz</value>
+  </data>
+  <data name="Doğduğu Ülke" xml:space="preserve">
+    <value>Doğduğu Ülke</value>
+  </data>
+  <data name="Doğduğu Şehir" xml:space="preserve">
+    <value>Doğduğu Şehir</value>
+  </data>
+  <data name="Doğum Tarihi" xml:space="preserve">
+    <value>Doğum Tarihi</value>
+  </data>
+  <data name="Duyuru Ekleme" xml:space="preserve">
+    <value>Duyuru Ekleme</value>
+  </data>
+  <data name="Duyuru Gönderilecek Hedef Kitleleri Seçiniz:" xml:space="preserve">
+    <value>Duyuru Gönderilecek Hedef Kitleleri Seçiniz:</value>
+  </data>
+  <data name="Duyuru Gönderilecek Kişileri Seçiniz" xml:space="preserve">
+    <value>Duyuru Gönderilecek Kişileri Seçiniz</value>
+  </data>
+  <data name="Duyuru Görüntüleyenler Listesi" xml:space="preserve">
+    <value>Duyuru Görüntüleyenler Listesi</value>
+  </data>
+  <data name="Duyuru Güncelleme" xml:space="preserve">
+    <value>Duyuru Güncelleme</value>
+  </data>
+  <data name="Duyuru Listesi" xml:space="preserve">
+    <value>Duyuru Listesi</value>
+  </data>
+  <data name="Duyuru Merkezi" xml:space="preserve">
+    <value>Duyuru Merkezi</value>
+  </data>
+  <data name="Duyurular" xml:space="preserve">
+    <value>Duyurular</value>
+  </data>
+  <data name="Dökümanlar" xml:space="preserve">
+    <value>Dökümanlar</value>
+  </data>
+  <data name="Dönem Adı" xml:space="preserve">
+    <value>Dönem Adı</value>
+  </data>
+  <data name="Dönem Açıklama" xml:space="preserve">
+    <value>Dönem Açıklama</value>
+  </data>
+  <data name="Dönem Başlangıç" xml:space="preserve">
+    <value>Dönem Başlangıç</value>
+  </data>
+  <data name="Dönem Başlangıç Tarihi" xml:space="preserve">
+    <value>Dönem Başlangıç Tarihi</value>
+  </data>
+  <data name="Dönem Başlangıç Tarihi Seçiniz" xml:space="preserve">
+    <value>Dönem Başlangıç Tarihi Seçiniz</value>
+  </data>
+  <data name="Dönem Başlangıç Tarihi1" xml:space="preserve">
+    <value>Dönem Başlangıç Tarihi1</value>
+  </data>
+  <data name="Dönem Başlangıç Zamanı" xml:space="preserve">
+    <value>Dönem Başlangıç Zamanı</value>
+  </data>
+  <data name="Dönem Bitiş" xml:space="preserve">
+    <value>Dönem Bitiş</value>
+  </data>
+  <data name="Dönem Bitiş Tarihi" xml:space="preserve">
+    <value>Dönem Bitiş Tarihi</value>
+  </data>
+  <data name="Dönem Bitiş Tarihi Seçiniz" xml:space="preserve">
+    <value>Dönem Bitiş Tarihi Seçiniz</value>
+  </data>
+  <data name="Dönem Bitiş Zamanı" xml:space="preserve">
+    <value>Dönem Bitiş Zamanı</value>
+  </data>
+  <data name="Dönem Gösterim Renk Kodu" xml:space="preserve">
+    <value>Dönem Gösterim Renk Kodu</value>
+  </data>
+  <data name="Düzenle" xml:space="preserve">
+    <value>Düzenle</value>
+  </data>
+  <data name="Dışa Aktar" xml:space="preserve">
+    <value>Dışa Aktar</value>
+  </data>
+  <data name="Dışa Açık Mı" xml:space="preserve">
+    <value>Dışa Açık Mı</value>
+  </data>
+  <data name="Dışa Açık Toplantı Oluştur" xml:space="preserve">
+    <value>Dışa Açık Toplantı Oluştur</value>
+  </data>
+  <data name="E posta" xml:space="preserve">
+    <value>E posta</value>
+  </data>
+  <data name="E Posta Şablon İçerik Metni" xml:space="preserve">
+    <value>E Posta Şablon İçerik Metni</value>
+  </data>
+  <data name="E Posta Şablon İçerik Metnİ" xml:space="preserve">
+    <value>E Posta Şablon İçerik Metnİ</value>
+  </data>
+  <data name="E posta şablonu" xml:space="preserve">
+    <value>E posta şablonu</value>
+  </data>
+  <data name="E-Mail" xml:space="preserve">
+    <value>E-Mail</value>
+  </data>
+  <data name="E-Posta" xml:space="preserve">
+    <value>E-Posta</value>
+  </data>
+  <data name="E-Posta Adresi" xml:space="preserve">
+    <value>E-Posta Adresi</value>
+  </data>
+  <data name="Ek Bilgiler" xml:space="preserve">
+    <value>Ek Bilgiler</value>
+  </data>
+  <data name="Ekip" xml:space="preserve">
+    <value>Ekip</value>
+  </data>
+  <data name="Ekip - Üye Listesi" xml:space="preserve">
+    <value>Ekip - Üye Listesi</value>
+  </data>
+  <data name="Ekip Açıklama" xml:space="preserve">
+    <value>Ekip Açıklama</value>
+  </data>
+  <data name="Ekip Birim Tanımı" xml:space="preserve">
+    <value>Ekip Birim Tanımı</value>
+  </data>
+  <data name="Ekip Güncelleme" xml:space="preserve">
+    <value>Ekip Güncelleme</value>
+  </data>
+  <data name="Ekip Seçimi" xml:space="preserve">
+    <value>Ekip Seçimi</value>
+  </data>
+  <data name="Ekip Tanımlama" xml:space="preserve">
+    <value>Ekip Tanımlama</value>
+  </data>
+  <data name="Ekip Üyesi" xml:space="preserve">
+    <value>Ekip Üyesi</value>
+  </data>
+  <data name="Ekipler" xml:space="preserve">
+    <value>Ekipler</value>
+  </data>
+  <data name="Ekle" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="Ekran Adı" xml:space="preserve">
+    <value>Ekran Adı</value>
+  </data>
+  <data name="EMAIL" xml:space="preserve">
+    <value>EMAIL</value>
+  </data>
+  <data name="ENDPOİNT" xml:space="preserve">
+    <value>ENDPOİNT</value>
+  </data>
+  <data name="Erişim Yetkilendirme" xml:space="preserve">
+    <value>Erişim Yetkilendirme</value>
+  </data>
+  <data name="Erişim Yetkilendirmeleri Listesi" xml:space="preserve">
+    <value>Erişim Yetkilendirmeleri Listesi</value>
+  </data>
+  <data name="Eski Şifre" xml:space="preserve">
+    <value>Eski Parola</value>
+  </data>
+  <data name="Etkinlik Zamanı" xml:space="preserve">
+    <value>Etkinlik Zamanı</value>
+  </data>
+  <data name="EUR" xml:space="preserve">
+    <value>EUR</value>
+  </data>
+  <data name="EURO" xml:space="preserve">
+    <value>EURO</value>
+  </data>
+  <data name="Excele Aktar" xml:space="preserve">
+    <value>Excele Aktar</value>
+  </data>
+  <data name="Fakülte" xml:space="preserve">
+    <value>Fakülte</value>
+  </data>
+  <data name="Farklı Dil Eklenilecek Parametre" xml:space="preserve">
+    <value>Farklı Dil Eklenilecek Parametre</value>
+  </data>
+  <data name="Fransa" xml:space="preserve">
+    <value>Fransa</value>
+  </data>
+  <data name="Gelecek Program Düzenle" xml:space="preserve">
+    <value>Gelecek Program Düzenle</value>
+  </data>
+  <data name="Gelecek Program Tanımla" xml:space="preserve">
+    <value>Gelecek Program Tanımla</value>
+  </data>
+  <data name="Geri" xml:space="preserve">
+    <value>Geri</value>
+  </data>
+  <data name="Gerçekleşen Gör" xml:space="preserve">
+    <value>Gerçekleşen Gör</value>
+  </data>
+  <data name="Gerçekleşen/Gerçekleşmeyen Görüşmeler" xml:space="preserve">
+    <value>Gerçekleşen/Gerçekleşmeyen Görüşmeler</value>
+  </data>
+  <data name="Gerçekleşenler" xml:space="preserve">
+    <value>Gerçekleşenler</value>
+  </data>
+  <data name="Gerçekleşenmeyenler" xml:space="preserve">
+    <value>Gerçekleşenmeyenler</value>
+  </data>
+  <data name="Gerçekleşmeyen Gör" xml:space="preserve">
+    <value>Gerçekleşmeyen Gör</value>
+  </data>
+  <data name="Gerçekleşmeyenler" xml:space="preserve">
+    <value>Gerçekleşmeyenler</value>
+  </data>
+  <data name="Getir" xml:space="preserve">
+    <value>Getir</value>
+  </data>
+  <data name="Geçerli Olduğu Gün" xml:space="preserve">
+    <value>Geçerli Olduğu Gün</value>
+  </data>
+  <data name="Geçmiş" xml:space="preserve">
+    <value>Geçmiş</value>
+  </data>
+  <data name="Giriş Yap" xml:space="preserve">
+    <value>Giriş Yap</value>
+  </data>
+  <data name="Gizlilik Sözleşmesi" xml:space="preserve">
+    <value>Gizlilik Sözleşmesi</value>
+  </data>
+  <data name="Google Api Key" xml:space="preserve">
+    <value>Google Api Key</value>
+  </data>
+  <data name="Grubu Oluşturan Kişi" xml:space="preserve">
+    <value>Grubu Oluşturan Kişi</value>
+  </data>
+  <data name="Grup Adı" xml:space="preserve">
+    <value>Grup Adı</value>
+  </data>
+  <data name="Grup Görüşmesi Maksimum Süresi (Dk.)" xml:space="preserve">
+    <value>Grup Görüşmesi Maksimum Süresi (Dk.)</value>
+  </data>
+  <data name="Grup Oluşturulma Tarihi" xml:space="preserve">
+    <value>Grup Oluşturulma Tarihi</value>
+  </data>
+  <data name="Grup Tanımı Giriniz" xml:space="preserve">
+    <value>Grup Tanımı Giriniz</value>
+  </data>
+  <data name="Gönder" xml:space="preserve">
+    <value>Gönder</value>
+  </data>
+  <data name="Gönderen" xml:space="preserve">
+    <value>Gönderen</value>
+  </data>
+  <data name="Gönderen Kişi Adı" xml:space="preserve">
+    <value>Gönderen Kişi Adı</value>
+  </data>
+  <data name="Gönderilen Kişi Adı" xml:space="preserve">
+    <value>Gönderilen Kişi Adı</value>
+  </data>
+  <data name="Gönderilen Zamanı" xml:space="preserve">
+    <value>Gönderilen Zamanı</value>
+  </data>
+  <data name="Gönderim Metni" xml:space="preserve">
+    <value>Gönderim Metni</value>
+  </data>
+  <data name="Gönderim Zamanı" xml:space="preserve">
+    <value>Gönderim Zamanı</value>
+  </data>
+  <data name="Görünme Başlangıç Tarihi" xml:space="preserve">
+    <value>Görünme Başlangıç Tarihi</value>
+  </data>
+  <data name="Görünme Başlangıç Tarihi Seçiniz" xml:space="preserve">
+    <value>Görünme Başlangıç Tarihi Seçiniz</value>
+  </data>
+  <data name="Görünme Bitiş Tarihi Seçiniz" xml:space="preserve">
+    <value>Görünme Bitiş Tarihi Seçiniz</value>
+  </data>
+  <data name="Görünme Bitişi Tarihi" xml:space="preserve">
+    <value>Görünme Bitişi Tarihi</value>
+  </data>
+  <data name="Görüntüleme Zamanı" xml:space="preserve">
+    <value>Görüntüleme Zamanı</value>
+  </data>
+  <data name="Görüşme Adı/Tipi" xml:space="preserve">
+    <value>Görüşme Adı/Tipi</value>
+  </data>
+  <data name="Görüşme Başlangıç/Bitiş T." xml:space="preserve">
+    <value>Görüşme Başlangıç/Bitiş T.</value>
+  </data>
+  <data name="Görüşme Kaydı" xml:space="preserve">
+    <value>Görüşme Kaydı</value>
+  </data>
+  <data name="Görüşme Kaydı Süresi" xml:space="preserve">
+    <value>Görüşme Kaydı Süresi</value>
+  </data>
+  <data name="Görüşme Kaydı Süresi (Dk.)" xml:space="preserve">
+    <value>Görüşme Kaydı Süresi (Dk.)</value>
+  </data>
+  <data name="Görüşme Kaydı Yetkisi" xml:space="preserve">
+    <value>Görüşme Kaydı Yetkisi</value>
+  </data>
+  <data name="Görüşme Kayıtları Merkezi" xml:space="preserve">
+    <value>Görüşme Kayıtları Merkezi</value>
+  </data>
+  <data name="Görüşme Merkezi" xml:space="preserve">
+    <value>Görüşme Merkezi</value>
+  </data>
+  <data name="Görüşme Mesajları" xml:space="preserve">
+    <value>Görüşme Mesajları</value>
+  </data>
+  <data name="Görüşme Odası" xml:space="preserve">
+    <value>Görüşme Odası</value>
+  </data>
+  <data name="Görüşme Odası Adı" xml:space="preserve">
+    <value>Görüşme Odası Adı</value>
+  </data>
+  <data name="Görüşme Sahibi" xml:space="preserve">
+    <value>Görüşme Sahibi</value>
+  </data>
+  <data name="Görüşmeye Katılın" xml:space="preserve">
+    <value>Görüşmeye Katılın</value>
+  </data>
+  <data name="Gösterim Rengi" xml:space="preserve">
+    <value>Gösterim Rengi</value>
+  </data>
+  <data name="Gün" xml:space="preserve">
+    <value>Gün</value>
+  </data>
+  <data name="Gün Başlangıç Saati" xml:space="preserve">
+    <value>Gün Başlangıç Saati</value>
+  </data>
+  <data name="Gün Başlangıç-Bitiş Saati" xml:space="preserve">
+    <value>Gün Başlangıç-Bitiş Saati</value>
+  </data>
+  <data name="Gün Bitiş" xml:space="preserve">
+    <value>Gün Bitiş</value>
+  </data>
+  <data name="Güncelle" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="Güncelleme" xml:space="preserve">
+    <value>Güncelleme</value>
+  </data>
+  <data name="Hatırlatma" xml:space="preserve">
+    <value>Hatırlatma</value>
+  </data>
+  <data name="Hatırlatma Aralığı (Dakika)" xml:space="preserve">
+    <value>Hatırlatma Aralığı (Dakika)</value>
+  </data>
+  <data name="Hatırlatma Ayarları" xml:space="preserve">
+    <value>Hatırlatma Ayarları</value>
+  </data>
+  <data name="Hatırlatma Başlama Zaman Tipi" xml:space="preserve">
+    <value>Hatırlatma Başlama Zaman Tipi</value>
+  </data>
+  <data name="Hatırlatma Başlama Zaman Tipi Değeri" xml:space="preserve">
+    <value>Hatırlatma Başlama Zaman Tipi Değeri</value>
+  </data>
+  <data name="Hatırlatma Ekle" xml:space="preserve">
+    <value>Hatırlatma Ekle</value>
+  </data>
+  <data name="Hatırlatma Genel Ayar Güncelleme" xml:space="preserve">
+    <value>Hatırlatma Genel Ayar Güncelleme</value>
+  </data>
+  <data name="Hatırlatma Genel Ayar Tanımlama" xml:space="preserve">
+    <value>Hatırlatma Genel Ayar Tanımlama</value>
+  </data>
+  <data name="Hatırlatma Genel Ayarları Listesi" xml:space="preserve">
+    <value>Hatırlatma Genel Ayarları Listesi</value>
+  </data>
+  <data name="Hatırlatma Maksimum Sayısı" xml:space="preserve">
+    <value>Hatırlatma Maksimum Sayısı</value>
+  </data>
+  <data name="Hedef Kitle" xml:space="preserve">
+    <value>Hedef Kitle</value>
+  </data>
+  <data name="Hedef Kitle Güncelleme" xml:space="preserve">
+    <value>Hedef Kitle Güncelleme</value>
+  </data>
+  <data name="Hedef Kitle Listesi" xml:space="preserve">
+    <value>Hedef Kitle Listesi</value>
+  </data>
+  <data name="Hedef Kitle Sayısı" xml:space="preserve">
+    <value>Hedef Kitle Sayısı</value>
+  </data>
+  <data name="Hedef Kitle Seçiniz" xml:space="preserve">
+    <value>Hedef Kitle Seçiniz</value>
+  </data>
+  <data name="Hedef Kitle Tanım" xml:space="preserve">
+    <value>Hedef Kitle Tanım</value>
+  </data>
+  <data name="Hedef Kitle Tanımlama" xml:space="preserve">
+    <value>Hedef Kitle Tanımlama</value>
+  </data>
+  <data name="Hedef Kitle Testi" xml:space="preserve">
+    <value>Hedef Kitle Testi</value>
+  </data>
+  <data name="Hedef Kitleler" xml:space="preserve">
+    <value>Hedef Kitleler</value>
+  </data>
+  <data name="Hedef Kurumlar" xml:space="preserve">
+    <value>Hedef Kurumlar</value>
+  </data>
+  <data name="HEDEF KİTLE TANIMI" xml:space="preserve">
+    <value>HEDEF KİTLE TANIMI</value>
+  </data>
+  <data name="HEDEF KİTLE TİPİ" xml:space="preserve">
+    <value>HEDEF KİTLE TİPİ</value>
+  </data>
+  <data name="Hedef Pozisyonlar" xml:space="preserve">
+    <value>Hedef Pozisyonlar</value>
+  </data>
+  <data name="Hedef Roller" xml:space="preserve">
+    <value>Hedef Roller</value>
+  </data>
+  <data name="Hedeflenen Kurum Sayısı" xml:space="preserve">
+    <value>Hedeflenen Kurum Sayısı</value>
+  </data>
+  <data name="Hesap Numarası" xml:space="preserve">
+    <value>Hesap Numarası</value>
+  </data>
+  <data name="Hoş geldiniz" xml:space="preserve">
+    <value>Hoş geldiniz</value>
+  </data>
+  <data name="Hoş geldiniz! Devam etmek için giriş yapın." xml:space="preserve">
+    <value>Hoş geldiniz! Devam etmek için giriş yapın.</value>
+  </data>
+  <data name="Hoş geldiniz! Devam etmek için kayıt olun" xml:space="preserve">
+    <value>Hoş geldiniz! Devam etmek için kayıt olun</value>
+  </data>
+  <data name="Hızlı Toplantılarım" xml:space="preserve">
+    <value>Hızlı Toplantılarım</value>
+  </data>
+  <data name="IBAN" xml:space="preserve">
+    <value>IBAN</value>
+  </data>
+  <data name="Iyzico Ürün Planı Token" xml:space="preserve">
+    <value>Iyzico Ürün Planı Token</value>
+  </data>
+  <data name="Json Builder" xml:space="preserve">
+    <value>Json Builder</value>
+  </data>
+  <data name="Kalite" xml:space="preserve">
+    <value>Kalite</value>
+  </data>
+  <data name="Kan Grubu" xml:space="preserve">
+    <value>Kan Grubu</value>
+  </data>
+  <data name="Kapat" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="Katıl" xml:space="preserve">
+    <value>Katıl</value>
+  </data>
+  <data name="Katılımcı Ekle" xml:space="preserve">
+    <value>Katılımcı Ekle</value>
+  </data>
+  <data name="Katılımcılar" xml:space="preserve">
+    <value>Katılımcılar</value>
+  </data>
+  <data name="Kaydet" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="Kaydol" xml:space="preserve">
+    <value>Kaydol</value>
+  </data>
+  <data name="Kayıt No" xml:space="preserve">
+    <value>Kayıt No</value>
+  </data>
+  <data name="Kayıt Ol" xml:space="preserve">
+    <value>Kayıt Ol</value>
+  </data>
+  <data name="Kayıt Tarihi" xml:space="preserve">
+    <value>Kayıt Tarihi</value>
+  </data>
+  <data name="Kayıt Tipi" xml:space="preserve">
+    <value>Kayıt Tipi</value>
+  </data>
+  <data name="Kendi Takvimlerim" xml:space="preserve">
+    <value>Kendi Takvimlerim</value>
+  </data>
+  <data name="Kimlik Numaranız" xml:space="preserve">
+    <value>Kimlik Numaranız</value>
+  </data>
+  <data name="Kimlik Numaranızı Giriniz" xml:space="preserve">
+    <value>Kimlik Numaranızı Giriniz</value>
+  </data>
+  <data name="Kişi" xml:space="preserve">
+    <value>Kişi</value>
+  </data>
+  <data name="Kişi Adı" xml:space="preserve">
+    <value>Kişi Adı</value>
+  </data>
+  <data name="Kişi Ara" xml:space="preserve">
+    <value>Kişi Ara</value>
+  </data>
+  <data name="Kişi Ek Parametre Güncelleme" xml:space="preserve">
+    <value>Kişi Ek Parametre Güncelleme</value>
+  </data>
+  <data name="Kişi Ek Parametre Tanımlama" xml:space="preserve">
+    <value>Kişi Ek Parametre Tanımlama</value>
+  </data>
+  <data name="Kişi Ek Parametreler Listeleme Sayfası" xml:space="preserve">
+    <value>Kişi Ek Parametreler Listeleme Sayfası</value>
+  </data>
+  <data name="Kişi Günceelleme" xml:space="preserve">
+    <value>Kişi Günceelleme</value>
+  </data>
+  <data name="Kişi Listesi" xml:space="preserve">
+    <value>Kişi Listesi</value>
+  </data>
+  <data name="Kişi Sayısı" xml:space="preserve">
+    <value>Kişi Sayısı</value>
+  </data>
+  <data name="Kişi Temel Profil Bilgileri" xml:space="preserve">
+    <value>Kişi Temel Profil Bilgileri</value>
+  </data>
+  <data name="Kişi İsmi" xml:space="preserve">
+    <value>Kişi İsmi</value>
+  </data>
+  <data name="Kişi/Pozisyon" xml:space="preserve">
+    <value>Kişi/Pozisyon</value>
+  </data>
+  <data name="Kişiler" xml:space="preserve">
+    <value>Kişiler</value>
+  </data>
+  <data name="Kişiler Arası İlişki Tanımlama" xml:space="preserve">
+    <value>Kişiler Arası İlişki Tanımlama</value>
+  </data>
+  <data name="Kişinin bireysel planlarını kayıt ettiği sayfa" xml:space="preserve">
+    <value>Kişinin bireysel planlarını kayıt ettiği sayfa</value>
+  </data>
+  <data name="Kişisel Bilgiler" xml:space="preserve">
+    <value>Kişisel Bilgiler</value>
+  </data>
+  <data name="Kod" xml:space="preserve">
+    <value>Kod</value>
+  </data>
+  <data name="Kullanıcı" xml:space="preserve">
+    <value>Kullanıcı</value>
+  </data>
+  <data name="Kullanıcı Adı" xml:space="preserve">
+    <value>Kullanıcı Adı</value>
+  </data>
+  <data name="Kuruluş Tarihi" xml:space="preserve">
+    <value>Kuruluş Tarihi</value>
+  </data>
+  <data name="Kurum" xml:space="preserve">
+    <value>Kurum</value>
+  </data>
+  <data name="Kurum Adı" xml:space="preserve">
+    <value>Kurum Adı</value>
+  </data>
+  <data name="Kurum Banka Bilgileri" xml:space="preserve">
+    <value>Kurum Banka Bilgileri</value>
+  </data>
+  <data name="Kurum Bilgileri" xml:space="preserve">
+    <value>Kurum Bilgileri</value>
+  </data>
+  <data name="Kurum Ek Parametre Güncelleme" xml:space="preserve">
+    <value>Kurum Ek Parametre Güncelleme</value>
+  </data>
+  <data name="Kurum Ek Parametre Tanımlama" xml:space="preserve">
+    <value>Kurum Ek Parametre Tanımlama</value>
+  </data>
+  <data name="Kurum Ek Parametreler Listeleme Sayfası" xml:space="preserve">
+    <value>Kurum Ek Parametreler Listeleme Sayfası</value>
+  </data>
+  <data name="Kurum Kısa Adı" xml:space="preserve">
+    <value>Kurum Kısa Adı</value>
+  </data>
+  <data name="Kurum Lisans Bilgileri" xml:space="preserve">
+    <value>Kurum Lisans Bilgileri</value>
+  </data>
+  <data name="Kurum Lisans Listesi" xml:space="preserve">
+    <value>Kurum Lisans Listesi</value>
+  </data>
+  <data name="Kurum Lisans Tanımlama" xml:space="preserve">
+    <value>Kurum Lisans Tanımlama</value>
+  </data>
+  <data name="Kurum Lisans Yönetimi" xml:space="preserve">
+    <value>Kurum Lisans Yönetimi</value>
+  </data>
+  <data name="Kurum Lisansı Adı" xml:space="preserve">
+    <value>Kurum Lisansı Adı</value>
+  </data>
+  <data name="Kurum Listesi" xml:space="preserve">
+    <value>Kurum Listesi</value>
+  </data>
+  <data name="Kurum Logo" xml:space="preserve">
+    <value>Kurum Logo</value>
+  </data>
+  <data name="Kurum Müşteri Temsilcisi Seç" xml:space="preserve">
+    <value>Kurum Müşteri Temsilcisi Seç</value>
+  </data>
+  <data name="Kurum Parametre Değeri Tanımla" xml:space="preserve">
+    <value>Kurum Parametre Değeri Tanımla</value>
+  </data>
+  <data name="Kurum Seçimi" xml:space="preserve">
+    <value>Kurum Seçimi</value>
+  </data>
+  <data name="Kurum Seçiniz" xml:space="preserve">
+    <value>Kurum Seçiniz</value>
+  </data>
+  <data name="Kurum Temel Bilgileri" xml:space="preserve">
+    <value>Kurum Temel Bilgileri</value>
+  </data>
+  <data name="Kurum Tipi" xml:space="preserve">
+    <value>Kurum Tipi</value>
+  </data>
+  <data name="Kurum Tipi Seç" xml:space="preserve">
+    <value>Kurum Tipi Seç</value>
+  </data>
+  <data name="Kurum Çalışanları" xml:space="preserve">
+    <value>Kurum Çalışanları</value>
+  </data>
+  <data name="Kurum Ülke" xml:space="preserve">
+    <value>Kurum Ülke</value>
+  </data>
+  <data name="Kurum Şehir" xml:space="preserve">
+    <value>Kurum Şehir</value>
+  </data>
+  <data name="Kurumdaki Kişilerin Lisans Bilgileri" xml:space="preserve">
+    <value>Kurumdaki Kişilerin Lisans Bilgileri</value>
+  </data>
+  <data name="Kurumlar Arası İlişki Tanımlama" xml:space="preserve">
+    <value>Kurumlar Arası İlişki Tanımlama</value>
+  </data>
+  <data name="Kurumsal" xml:space="preserve">
+    <value>Kurumsal</value>
+  </data>
+  <data name="Kurumsal İçerik Şablonları" xml:space="preserve">
+    <value>Kurumsal İçerik Şablonları</value>
+  </data>
+  <data name="Kurumum" xml:space="preserve">
+    <value>Kurumum</value>
+  </data>
+  <data name="Küresel Sistem Parametreleri" xml:space="preserve">
+    <value>Küresel Sistem Parametreleri</value>
+  </data>
+  <data name="KİMLİK NO" xml:space="preserve">
+    <value>KİMLİK NO</value>
+  </data>
+  <data name="Link" xml:space="preserve">
+    <value>Link</value>
+  </data>
+  <data name="Link Kopyala" xml:space="preserve">
+    <value>Link Kopyala</value>
+  </data>
+  <data name="Lisans" xml:space="preserve">
+    <value>Lisans</value>
+  </data>
+  <data name="Lisans Adı" xml:space="preserve">
+    <value>Lisans Adı</value>
+  </data>
+  <data name="Lisans Bilgileri" xml:space="preserve">
+    <value>Lisans Bilgileri</value>
+  </data>
+  <data name="Lisans Durumu" xml:space="preserve">
+    <value>Lisans Durumu</value>
+  </data>
+  <data name="Lisans Görüşme Odası Özellik Eşleştirme Listesi" xml:space="preserve">
+    <value>Lisans Görüşme Odası Özellik Eşleştirme Listesi</value>
+  </data>
+  <data name="Lisans Görüşme Odası Özellik Eşleştirmeleri" xml:space="preserve">
+    <value>Lisans Görüşme Odası Özellik Eşleştirmeleri</value>
+  </data>
+  <data name="Lisans Görüşme Odası Özellik Eşleştirmeleri Güncelle" xml:space="preserve">
+    <value>Lisans Görüşme Odası Özellik Eşleştirmeleri Güncelle</value>
+  </data>
+  <data name="Lisans Gün Sayısı" xml:space="preserve">
+    <value>Lisans Gün Sayısı</value>
+  </data>
+  <data name="Lisans Güncelleme" xml:space="preserve">
+    <value>Lisans Güncelleme</value>
+  </data>
+  <data name="Lisans Kişi Sayısı" xml:space="preserve">
+    <value>Lisans Kişi Sayısı</value>
+  </data>
+  <data name="Lisans Listesi" xml:space="preserve">
+    <value>Lisans Listesi</value>
+  </data>
+  <data name="Lisans Satın Al" xml:space="preserve">
+    <value>Lisans Satın Al</value>
+  </data>
+  <data name="Lisans Sayfa Sayısı" xml:space="preserve">
+    <value>Lisans Sayfa Sayısı</value>
+  </data>
+  <data name="Lisans Seçiniz" xml:space="preserve">
+    <value>Lisans Seçiniz</value>
+  </data>
+  <data name="Lisans Son Kullanma Tarihi" xml:space="preserve">
+    <value>Lisans Son Kullanma Tarihi</value>
+  </data>
+  <data name="Lisans Tanımlama" xml:space="preserve">
+    <value>Lisans Tanımlama</value>
+  </data>
+  <data name="Lisans Zamanları" xml:space="preserve">
+    <value>Lisans Zamanları</value>
+  </data>
+  <data name="Lisans Zamanı Seçiniz" xml:space="preserve">
+    <value>Lisans Zamanı Seçiniz</value>
+  </data>
+  <data name="Lisans İsmi" xml:space="preserve">
+    <value>Lisans İsmi</value>
+  </data>
+  <data name="Lisansı Adı" xml:space="preserve">
+    <value>Lisansı Adı</value>
+  </data>
+  <data name="Lisansınızın bitimine kalan süre" xml:space="preserve">
+    <value>Lisansınızın bitimine kalan süre</value>
+  </data>
+  <data name="Lokasyon Tipi" xml:space="preserve">
+    <value>Lokasyon Tipi</value>
+  </data>
+  <data name="Lütfen paylaşılacak rol veya pozisyonlardan en az birini seçiniz." xml:space="preserve">
+    <value>Lütfen paylaşılacak rol veya pozisyonlardan en az birini seçiniz.</value>
+  </data>
+  <data name="LİSANS" xml:space="preserve">
+    <value>LİSANS</value>
+  </data>
+  <data name="LİSANS KİŞİ SAYISI" xml:space="preserve">
+    <value>LİSANS KİŞİ SAYISI</value>
+  </data>
+  <data name="LİSANS ZAMANI" xml:space="preserve">
+    <value>LİSANS ZAMANI</value>
+  </data>
+  <data name="Mail" xml:space="preserve">
+    <value>Mail</value>
+  </data>
+  <data name="Mail Katılımcılar" xml:space="preserve">
+    <value>Mail Katılımcılar</value>
+  </data>
+  <data name="Mail İçeriği" xml:space="preserve">
+    <value>Mail İçeriği</value>
+  </data>
+  <data name="Maks Grup Görüşme Süresi" xml:space="preserve">
+    <value>Maks Grup Görüşme Süresi</value>
+  </data>
+  <data name="Maks. Grup Görüşme Süresi" xml:space="preserve">
+    <value>Maks. Grup Görüşme Süresi</value>
+  </data>
+  <data name="Maks. Katılmıca Sayısı" xml:space="preserve">
+    <value>Maks. Katılmıca Sayısı</value>
+  </data>
+  <data name="Maks. Katılımcı Sayısı" xml:space="preserve">
+    <value>Maks. Katılımcı Sayısı</value>
+  </data>
+  <data name="Maksimum Katılımcı Sayısı" xml:space="preserve">
+    <value>Maksimum Katılımcı Sayısı</value>
+  </data>
+  <data name="Management Panel" xml:space="preserve">
+    <value>Management Panel</value>
+  </data>
+  <data name="Manuel/Planlı" xml:space="preserve">
+    <value>Manuel/Planlı</value>
+  </data>
+  <data name="Medeni Hali" xml:space="preserve">
+    <value>Medeni Hali</value>
+  </data>
+  <data name="Merkezi" xml:space="preserve">
+    <value>Merkezi</value>
+  </data>
+  <data name="Merkezi Gör" xml:space="preserve">
+    <value>Merkezi Gör</value>
+  </data>
+  <data name="Merkezi Görüşmeler" xml:space="preserve">
+    <value>Merkezi Görüşmeler</value>
+  </data>
+  <data name="Merkezi Plan Güncelle" xml:space="preserve">
+    <value>Merkezi Plan Güncelle</value>
+  </data>
+  <data name="Merkezi Plan Tanımları" xml:space="preserve">
+    <value>Merkezi Plan Tanımları</value>
+  </data>
+  <data name="Merkezi Plan Tanımları Listesi" xml:space="preserve">
+    <value>Merkezi Plan Tanımları Listesi</value>
+  </data>
+  <data name="Merkezi Planlar" xml:space="preserve">
+    <value>Merkezi Planlar</value>
+  </data>
+  <data name="Merkezi Süresi" xml:space="preserve">
+    <value>Merkezi Süresi</value>
+  </data>
+  <data name="Merkezi/Bireysel Görüşmeler" xml:space="preserve">
+    <value>Merkezi/Bireysel Görüşmeler</value>
+  </data>
+  <data name="Mesaj" xml:space="preserve">
+    <value>Mesaj</value>
+  </data>
+  <data name="Mesaj Detayları" xml:space="preserve">
+    <value>Mesaj Detayları</value>
+  </data>
+  <data name="Mesaj Kayıtlarında Arama" xml:space="preserve">
+    <value>Mesaj Kayıtlarında Arama</value>
+  </data>
+  <data name="Mesaj İçeriği" xml:space="preserve">
+    <value>Mesaj İçeriği</value>
+  </data>
+  <data name="Mesajlaşma Modülü İzin Ayarları" xml:space="preserve">
+    <value>Mesajlaşma Modülü İzin Ayarları</value>
+  </data>
+  <data name="MESLEKİ UNVAN" xml:space="preserve">
+    <value>MESLEKİ UNVAN</value>
+  </data>
+  <data name="Metin" xml:space="preserve">
+    <value>Metin</value>
+  </data>
+  <data name="Metni Kopyala" xml:space="preserve">
+    <value>Metni Kopyala</value>
+  </data>
+  <data name="Mevcut Görüşme Sayısı" xml:space="preserve">
+    <value>Mevcut Görüşme Sayısı</value>
+  </data>
+  <data name="Mezuniyet Tarihi" xml:space="preserve">
+    <value>Mezuniyet Tarihi</value>
+  </data>
+  <data name="Moderasyon Olacak Mı" xml:space="preserve">
+    <value>Moderasyon</value>
+  </data>
+  <data name="Modül Adi" xml:space="preserve">
+    <value>Modül Adi</value>
+  </data>
+  <data name="Modül Listesi" xml:space="preserve">
+    <value>Modül Listesi</value>
+  </data>
+  <data name="Modül Tanımlama" xml:space="preserve">
+    <value>Modül Tanımlama</value>
+  </data>
+  <data name="Modül İsmi" xml:space="preserve">
+    <value>Modül İsmi</value>
+  </data>
+  <data name="Modüller" xml:space="preserve">
+    <value>Modüller</value>
+  </data>
+  <data name="Müşteri Temsilcileri" xml:space="preserve">
+    <value>Müşteri Temsilcileri</value>
+  </data>
+  <data name="Müşteriler" xml:space="preserve">
+    <value>Müşteriler</value>
+  </data>
+  <data name="Oda Adı" xml:space="preserve">
+    <value>Oda Adı</value>
+  </data>
+  <data name="Okul Bilgileri" xml:space="preserve">
+    <value>Okul Bilgileri</value>
+  </data>
+  <data name="Okul Tipi" xml:space="preserve">
+    <value>Okul Tipi</value>
+  </data>
+  <data name="Oluşturan Kişi Adı" xml:space="preserve">
+    <value>Oluşturan Kişi Adı</value>
+  </data>
+  <data name="Oluşturan Kişi Pozisyonu" xml:space="preserve">
+    <value>Oluşturan Kişi Pozisyonu</value>
+  </data>
+  <data name="Oluşturan Kişi Rolu" xml:space="preserve">
+    <value>Oluşturan Kişi Rolu</value>
+  </data>
+  <data name="Onay Alınacak Birim" xml:space="preserve">
+    <value>Onay Alınacak Birim</value>
+  </data>
+  <data name="Onay/Ret" xml:space="preserve">
+    <value>Onay/Ret</value>
+  </data>
+  <data name="Onayla" xml:space="preserve">
+    <value>Onayla</value>
+  </data>
+  <data name="Onaylayan Pozisyon" xml:space="preserve">
+    <value>Onaylayan Pozisyon</value>
+  </data>
+  <data name="Onaylayan Rol" xml:space="preserve">
+    <value>Onaylayan Rol</value>
+  </data>
+  <data name="Online Kişi Sayısı" xml:space="preserve">
+    <value>Online Kişi Sayısı</value>
+  </data>
+  <data name="Organizasyon Ağacı" xml:space="preserve">
+    <value>Organizasyon Ağacı</value>
+  </data>
+  <data name="Organizasyon Bilgiler" xml:space="preserve">
+    <value>Organizasyon Bilgiler</value>
+  </data>
+  <data name="Organizasyon Bilgileri" xml:space="preserve">
+    <value>Organizasyon Bilgileri</value>
+  </data>
+  <data name="Organizasyon Birim Tanımı" xml:space="preserve">
+    <value>Organizasyon Birim Tanımı</value>
+  </data>
+  <data name="Organizasyon Birim Türü" xml:space="preserve">
+    <value>Organizasyon Birim Türü</value>
+  </data>
+  <data name="Organizasyon Birimi" xml:space="preserve">
+    <value>Organizasyon Birimi</value>
+  </data>
+  <data name="Organizasyon Birimi Tanımı" xml:space="preserve">
+    <value>Organizasyon Birimi Tanımı</value>
+  </data>
+  <data name="Organizasyon Birimi Türü" xml:space="preserve">
+    <value>Organizasyon Birimi Türü</value>
+  </data>
+  <data name="Organizayon Birim Tanımı" xml:space="preserve">
+    <value>Organizayon Birim Tanımı</value>
+  </data>
+  <data name="Organizayon Birimi" xml:space="preserve">
+    <value>Organizayon Birimi</value>
+  </data>
+  <data name="Ortalama" xml:space="preserve">
+    <value>Ortalama</value>
+  </data>
+  <data name="Ortalama Bant Genişliği" xml:space="preserve">
+    <value>Ortalama Bant Genişliği</value>
+  </data>
+  <data name="Ortalama Görüşme Süresi" xml:space="preserve">
+    <value>Ortalama Görüşme Süresi</value>
+  </data>
+  <data name="Ortalama Katılımcı Sayısı" xml:space="preserve">
+    <value>Ortalama Katılımcı Sayısı</value>
+  </data>
+  <data name="Oturum Aç" xml:space="preserve">
+    <value>Oturum Aç</value>
+  </data>
+  <data name="Paket Bedeli" xml:space="preserve">
+    <value>Paket Bedeli</value>
+  </data>
+  <data name="Parametere Adı" xml:space="preserve">
+    <value>Parametere Adı</value>
+  </data>
+  <data name="Parametre Adı" xml:space="preserve">
+    <value>Parametre Adı</value>
+  </data>
+  <data name="Parametre Dili" xml:space="preserve">
+    <value>Parametre Dili</value>
+  </data>
+  <data name="Parametre Gösterim Tipi" xml:space="preserve">
+    <value>Parametre Gösterim Tipi</value>
+  </data>
+  <data name="Parametre Tipi" xml:space="preserve">
+    <value>Parametre Tipi</value>
+  </data>
+  <data name="Parametre Yönetim Merkezi" xml:space="preserve">
+    <value>Parametre Yönetim Merkezi</value>
+  </data>
+  <data name="PAROLA" xml:space="preserve">
+    <value>PAROLA</value>
+  </data>
+  <data name="PAROLA TEKRAR" xml:space="preserve">
+    <value>PAROLA TEKRAR</value>
+  </data>
+  <data name="Parolanızı mı unuttunuz?" xml:space="preserve">
+    <value>Parolanızı mı unuttunuz?</value>
+  </data>
+  <data name="Pasaport Bitiş Tarihi" xml:space="preserve">
+    <value>Pasaport Bitiş Tarihi</value>
+  </data>
+  <data name="Pasif Kişi Listesi" xml:space="preserve">
+    <value>Pasif Kişi Listesi</value>
+  </data>
+  <data name="Pasif Konferans Listesi" xml:space="preserve">
+    <value>Pasif Konferans Listesi</value>
+  </data>
+  <data name="PAYLAŞILACAK POZİSYOLARI SEÇİNİZ" xml:space="preserve">
+    <value>PAYLAŞILACAK POZİSYOLARI SEÇİNİZ</value>
+  </data>
+  <data name="PAYLAŞILACAK ROLLERİ SEÇİNİZ" xml:space="preserve">
+    <value>PAYLAŞILACAK ROLLERİ SEÇİNİZ</value>
+  </data>
+  <data name="Paz" xml:space="preserve">
+    <value>Paz</value>
+  </data>
+  <data name="Per" xml:space="preserve">
+    <value>Per</value>
+  </data>
+  <data name="Plan Başlığı" xml:space="preserve">
+    <value>Plan Başlığı</value>
+  </data>
+  <data name="Plan Onay Tanım Güncelleme" xml:space="preserve">
+    <value>Plan Onay Tanım Güncelleme</value>
+  </data>
+  <data name="Plan Taslak Mı?" xml:space="preserve">
+    <value>Plan Taslak Mı?</value>
+  </data>
+  <data name="Planlama Dönemi" xml:space="preserve">
+    <value>Planlama Dönemi</value>
+  </data>
+  <data name="Planlama dönemi oluştur" xml:space="preserve">
+    <value>Planlama dönemi oluştur</value>
+  </data>
+  <data name="Planlama Notu" xml:space="preserve">
+    <value>Planlama Notu</value>
+  </data>
+  <data name="Planlarım" xml:space="preserve">
+    <value>Planlarım</value>
+  </data>
+  <data name="Planlayan Birim" xml:space="preserve">
+    <value>Planlayan Birim</value>
+  </data>
+  <data name="Planlı" xml:space="preserve">
+    <value>Planlı</value>
+  </data>
+  <data name="Planlı Gör" xml:space="preserve">
+    <value>Planlı Gör</value>
+  </data>
+  <data name="Planlı Görüşmeler" xml:space="preserve">
+    <value>Planlı Görüşmeler</value>
+  </data>
+  <data name="Planlı Süresi" xml:space="preserve">
+    <value>Planlı Süresi</value>
+  </data>
+  <data name="Planlı/Plansız Görüşmeler" xml:space="preserve">
+    <value>Planlı/Plansız Görüşmeler</value>
+  </data>
+  <data name="Plansız" xml:space="preserve">
+    <value>Bireysel</value>
+  </data>
+  <data name="Plansız Gör" xml:space="preserve">
+    <value>Plansız Gör</value>
+  </data>
+  <data name="Plansız Görüşmeler" xml:space="preserve">
+    <value>Plansız Görüşmeler</value>
+  </data>
+  <data name="Plansız Süresi" xml:space="preserve">
+    <value>Bireysel Süresi</value>
+  </data>
+  <data name="Port" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="Posta Açık Adres" xml:space="preserve">
+    <value>Posta Açık Adres</value>
+  </data>
+  <data name="Pozisyon" xml:space="preserve">
+    <value>Pozisyon</value>
+  </data>
+  <data name="Pozisyon Seçiniz" xml:space="preserve">
+    <value>Pozisyon Seçiniz</value>
+  </data>
+  <data name="Pozisyon Tanımları" xml:space="preserve">
+    <value>Pozisyon Tanımları</value>
+  </data>
+  <data name="Pozisyonlar" xml:space="preserve">
+    <value>Pozisyonlar</value>
+  </data>
+  <data name="Profil" xml:space="preserve">
+    <value>Profil</value>
+  </data>
+  <data name="Public API Adı" xml:space="preserve">
+    <value>Public API Adı</value>
+  </data>
+  <data name="Public API Listesi" xml:space="preserve">
+    <value>Public API Listesi</value>
+  </data>
+  <data name="Pzt" xml:space="preserve">
+    <value>Pzt</value>
+  </data>
+  <data name="Raporlama" xml:space="preserve">
+    <value>Raporlama</value>
+  </data>
+  <data name="Raporlama Süresi" xml:space="preserve">
+    <value>Raporlama Süresi</value>
+  </data>
+  <data name="Ret" xml:space="preserve">
+    <value>Ret</value>
+  </data>
+  <data name="Rol" xml:space="preserve">
+    <value>Rol</value>
+  </data>
+  <data name="Roller" xml:space="preserve">
+    <value>Roller</value>
+  </data>
+  <data name="Sal" xml:space="preserve">
+    <value>Sal</value>
+  </data>
+  <data name="Satın alan kişi ismi giriniz" xml:space="preserve">
+    <value>Satın alan kişi ismi giriniz</value>
+  </data>
+  <data name="Sayfa Adı" xml:space="preserve">
+    <value>Sayfa Adı</value>
+  </data>
+  <data name="Sayfalar" xml:space="preserve">
+    <value>Sayfalar</value>
+  </data>
+  <data name="Sertifika" xml:space="preserve">
+    <value>Sertifika</value>
+  </data>
+  <data name="Session Timeout (Saniye)" xml:space="preserve">
+    <value>Session Timeout (Saniye)</value>
+  </data>
+  <data name="Seçim" xml:space="preserve">
+    <value>Seçim</value>
+  </data>
+  <data name="Seçiniz" xml:space="preserve">
+    <value>Seçiniz</value>
+  </data>
+  <data name="Seçtiğiniz Kişiler" xml:space="preserve">
+    <value>Seçtiğiniz Kişiler</value>
+  </data>
+  <data name="Sicil No" xml:space="preserve">
+    <value>Sicil No</value>
+  </data>
+  <data name="Sil" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="Sistem API Adı" xml:space="preserve">
+    <value>Sistem API Adı</value>
+  </data>
+  <data name="Sistem Dili" xml:space="preserve">
+    <value>Sistem Dili</value>
+  </data>
+  <data name="Sistem Küresel Parametre Değeri Tanımla" xml:space="preserve">
+    <value>Sistem Küresel Parametre Değeri Tanımla</value>
+  </data>
+  <data name="Sistem SMTP Değerleri Ekleme" xml:space="preserve">
+    <value>Sistem SMTP Değerleri Ekleme</value>
+  </data>
+  <data name="Sistem SMTP Değerleri Güncelleme" xml:space="preserve">
+    <value>Sistem SMTP Değerleri Güncelleme</value>
+  </data>
+  <data name="Sistem SMTP Değerleri Listesi" xml:space="preserve">
+    <value>Sistem SMTP Değerleri Listesi</value>
+  </data>
+  <data name="Sistem İdari Profil" xml:space="preserve">
+    <value>Sistem İdari Profil</value>
+  </data>
+  <data name="SMS" xml:space="preserve">
+    <value>SMS</value>
+  </data>
+  <data name="Sms Api Kullanıcı Adı" xml:space="preserve">
+    <value>Sms Api Kullanıcı Adı</value>
+  </data>
+  <data name="Sms Api Url" xml:space="preserve">
+    <value>Sms Api Url</value>
+  </data>
+  <data name="Sms Api Şifresi" xml:space="preserve">
+    <value>Sms Api Şifresi</value>
+  </data>
+  <data name="Sms Başlığı" xml:space="preserve">
+    <value>Sms Başlığı</value>
+  </data>
+  <data name="SMS İçeriği" xml:space="preserve">
+    <value>SMS İçeriği</value>
+  </data>
+  <data name="SMS Şablon İçerik Metni" xml:space="preserve">
+    <value>SMS Şablon İçerik Metni</value>
+  </data>
+  <data name="SMS şablonu" xml:space="preserve">
+    <value>SMS şablonu</value>
+  </data>
+  <data name="SMTP Adı" xml:space="preserve">
+    <value>SMTP Adı</value>
+  </data>
+  <data name="SMTP Adı Giriniz" xml:space="preserve">
+    <value>SMTP Adı Giriniz</value>
+  </data>
+  <data name="SMTP Bağlantı Dizisi" xml:space="preserve">
+    <value>SMTP Bağlantı Dizisi</value>
+  </data>
+  <data name="SMTP Bağlantı Dizisi Giriniz" xml:space="preserve">
+    <value>SMTP Bağlantı Dizisi Giriniz</value>
+  </data>
+  <data name="SMTP Bağlantı Kullanıcı Adı" xml:space="preserve">
+    <value>SMTP Bağlantı Kullanıcı Adı</value>
+  </data>
+  <data name="SMTP Bağlantı Kullanıcı Adı Giriniz" xml:space="preserve">
+    <value>SMTP Bağlantı Kullanıcı Adı Giriniz</value>
+  </data>
+  <data name="SMTP Bağlantı Şifre Giriniz" xml:space="preserve">
+    <value>SMTP Bağlantı Şifre Giriniz</value>
+  </data>
+  <data name="SMTP Port" xml:space="preserve">
+    <value>SMTP Port</value>
+  </data>
+  <data name="Son Giriş" xml:space="preserve">
+    <value>Son Giriş</value>
+  </data>
+  <data name="Son Kullanım Tarihi" xml:space="preserve">
+    <value>Son Kullanım Tarihi</value>
+  </data>
+  <data name="Sonraki" xml:space="preserve">
+    <value>Sonraki</value>
+  </data>
+  <data name="Sonraki Aksiyon" xml:space="preserve">
+    <value>Sonraki Aksiyon</value>
+  </data>
+  <data name="Sonuç görüntülemek için lütfen arama yapınız." xml:space="preserve">
+    <value>Sonuç görüntülemek için lütfen arama yapınız.</value>
+  </data>
+  <data name="Soyad" xml:space="preserve">
+    <value>Soyad</value>
+  </data>
+  <data name="Soyadı" xml:space="preserve">
+    <value>Soyadı</value>
+  </data>
+  <data name="Statü" xml:space="preserve">
+    <value>Statü</value>
+  </data>
+  <data name="String" xml:space="preserve">
+    <value>String</value>
+  </data>
+  <data name="Süre" xml:space="preserve">
+    <value>Süre</value>
+  </data>
+  <data name="SİSTEM API" xml:space="preserve">
+    <value>SİSTEM API</value>
+  </data>
+  <data name="T.C. Kimlik No" xml:space="preserve">
+    <value>T.C. Kimlik No</value>
+  </data>
+  <data name="Takvim Dönem Detay Tanımı" xml:space="preserve">
+    <value>Planlama Dönemi Detay Tanımı</value>
+  </data>
+  <data name="Takvim Dönem Tanımı" xml:space="preserve">
+    <value>Planlama Dönemi Tanımı</value>
+  </data>
+  <data name="Takvim Dönemleri Listesi" xml:space="preserve">
+    <value>Planlama Dönemi Listesi</value>
+  </data>
+  <data name="Takvim Paylaş" xml:space="preserve">
+    <value>Takvim Paylaş</value>
+  </data>
+  <data name="Takvime Toplantı Ekleme" xml:space="preserve">
+    <value>Takvime Toplantı Ekleme</value>
+  </data>
+  <data name="Takvimi Paylaş" xml:space="preserve">
+    <value>Takvimi Paylaş</value>
+  </data>
+  <data name="Takvimler" xml:space="preserve">
+    <value>Takvimler</value>
+  </data>
+  <data name="Tamamlanan Gör" xml:space="preserve">
+    <value>Tamamlanan Gör</value>
+  </data>
+  <data name="Tamamlanmayan Gör" xml:space="preserve">
+    <value>Tamamlanmayan Gör</value>
+  </data>
+  <data name="Tanım" xml:space="preserve">
+    <value>Tanım</value>
+  </data>
+  <data name="Tanımlama Tarihi" xml:space="preserve">
+    <value>Tanımlama Tarihi</value>
+  </data>
+  <data name="Tanımlanma Tarihi" xml:space="preserve">
+    <value>Tanımlanma Tarihi</value>
+  </data>
+  <data name="Tanımlı Aksiyon Sayısı" xml:space="preserve">
+    <value>Tanımlı Aksiyon Sayısı</value>
+  </data>
+  <data name="Tanımlı Zaman Sayısı" xml:space="preserve">
+    <value>Tanımlı Zaman Sayısı</value>
+  </data>
+  <data name="Tarih" xml:space="preserve">
+    <value>Tarih</value>
+  </data>
+  <data name="Taslak Mı?" xml:space="preserve">
+    <value>Taslak Mı?</value>
+  </data>
+  <data name="TELEFON" xml:space="preserve">
+    <value>TELEFON</value>
+  </data>
+  <data name="Telefon Bilgileri" xml:space="preserve">
+    <value>Telefon Bilgileri</value>
+  </data>
+  <data name="Telefon No" xml:space="preserve">
+    <value>Telefon No</value>
+  </data>
+  <data name="Telefon Tipi" xml:space="preserve">
+    <value>Telefon Tipi</value>
+  </data>
+  <data name="Temizle" xml:space="preserve">
+    <value>Temizle</value>
+  </data>
+  <data name="Tercih Edilen Kur" xml:space="preserve">
+    <value>Tercih Edilen Kur</value>
+  </data>
+  <data name="Tetiklenecek Sayfa" xml:space="preserve">
+    <value>Tetiklenecek Sayfa</value>
+  </data>
+  <data name="Tetikleyebilecek Pozisyonlar" xml:space="preserve">
+    <value>Tetikleyebilecek Pozisyonlar</value>
+  </data>
+  <data name="Tetikleyebilecek Roller" xml:space="preserve">
+    <value>Tetikleyebilecek Roller</value>
+  </data>
+  <data name="Tetikleyecek Kişiler" xml:space="preserve">
+    <value>Tetikleyecek Kişiler</value>
+  </data>
+  <data name="Tetikleyecek Pozisyon" xml:space="preserve">
+    <value>Tetikleyecek Pozisyon</value>
+  </data>
+  <data name="Ticaret Sicil No" xml:space="preserve">
+    <value>Ticaret Sicil No</value>
+  </data>
+  <data name="Tipi" xml:space="preserve">
+    <value>Tipi</value>
+  </data>
+  <data name="TL" xml:space="preserve">
+    <value>TL</value>
+  </data>
+  <data name="Toplanti Süresi" xml:space="preserve">
+    <value>Toplanti Süresi</value>
+  </data>
+  <data name="Toplantı" xml:space="preserve">
+    <value>Toplantı</value>
+  </data>
+  <data name="Toplantı Başlangıç Zamanı" xml:space="preserve">
+    <value>Toplantı Başlangıç Zamanı</value>
+  </data>
+  <data name="Toplantı Bitiş Zamanı" xml:space="preserve">
+    <value>Toplantı Bitiş Zamanı</value>
+  </data>
+  <data name="Toplantı Listesi" xml:space="preserve">
+    <value>Toplantı Listesi</value>
+  </data>
+  <data name="Toplantı Odaları" xml:space="preserve">
+    <value>Toplantı Odaları</value>
+  </data>
+  <data name="Toplantı Odası Ekle" xml:space="preserve">
+    <value>Toplantı Odası Ekle</value>
+  </data>
+  <data name="Toplantı Odası Tanımı" xml:space="preserve">
+    <value>Toplantı Odası Tanımı</value>
+  </data>
+  <data name="Toplantı Oluştur" xml:space="preserve">
+    <value>Toplantı Oluştur</value>
+  </data>
+  <data name="Toplantı Süresi" xml:space="preserve">
+    <value>Toplantı Süresi</value>
+  </data>
+  <data name="Toplantı Tanım" xml:space="preserve">
+    <value>Toplantı Tanım</value>
+  </data>
+  <data name="Toplantı Tanımı" xml:space="preserve">
+    <value>Toplantı Tanımı</value>
+  </data>
+  <data name="Toplantı Türü" xml:space="preserve">
+    <value>Toplantı Türü</value>
+  </data>
+  <data name="Toplantı Yarat" xml:space="preserve">
+    <value>Toplantı Yarat</value>
+  </data>
+  <data name="Toplantı İsmi" xml:space="preserve">
+    <value>Toplantı İsmi</value>
+  </data>
+  <data name="Toplatı Zamanı" xml:space="preserve">
+    <value>Toplatı Zamanı</value>
+  </data>
+  <data name="TRY" xml:space="preserve">
+    <value>TRY</value>
+  </data>
+  <data name="Tümü" xml:space="preserve">
+    <value>Tümü</value>
+  </data>
+  <data name="Tümünü Seç" xml:space="preserve">
+    <value>Tümünü Seç</value>
+  </data>
+  <data name="Tümünü Sil" xml:space="preserve">
+    <value>Tümünü Sil</value>
+  </data>
+  <data name="Türkiye" xml:space="preserve">
+    <value>Türkiye</value>
+  </data>
+  <data name="Türkçe" xml:space="preserve">
+    <value>Türkçe</value>
+  </data>
+  <data name="Tıkla Daveti Kopyala" xml:space="preserve">
+    <value>Tıkla Daveti Kopyala</value>
+  </data>
+  <data name="Url Kopyala" xml:space="preserve">
+    <value>Url Kopyala</value>
+  </data>
+  <data name="USD" xml:space="preserve">
+    <value>USD</value>
+  </data>
+  <data name="Uygulama Mesajları" xml:space="preserve">
+    <value>Uygulama Mesajları</value>
+  </data>
+  <data name="Uygulayan Pozisyon" xml:space="preserve">
+    <value>Uygulayan Pozisyon</value>
+  </data>
+  <data name="Uygulayan Rol" xml:space="preserve">
+    <value>Uygulayan Rol</value>
+  </data>
+  <data name="Vazgeç" xml:space="preserve">
+    <value>Vazgeç</value>
+  </data>
+  <data name="VE" xml:space="preserve">
+    <value>VE</value>
+  </data>
+  <data name="Vergi Dairesi" xml:space="preserve">
+    <value>Vergi Dairesi</value>
+  </data>
+  <data name="Vergi No" xml:space="preserve">
+    <value>Vergi No</value>
+  </data>
+  <data name="VERGİ NO" xml:space="preserve">
+    <value>VERGİ NO</value>
+  </data>
+  <data name="Veya" xml:space="preserve">
+    <value>Veya</value>
+  </data>
+  <data name="VEYA1" xml:space="preserve">
+    <value>VEYA1</value>
+  </data>
+  <data name="Web Sitesi" xml:space="preserve">
+    <value>Web Sitesi</value>
+  </data>
+  <data name="Webinar" xml:space="preserve">
+    <value>Webinar</value>
+  </data>
+  <data name="Webinar Yetkisi" xml:space="preserve">
+    <value>Webinar Yetkisi</value>
+  </data>
+  <data name="Yabancı Dil Bilgileri" xml:space="preserve">
+    <value>Yabancı Dil Bilgileri</value>
+  </data>
+  <data name="Yabancı Dil Seviyesi" xml:space="preserve">
+    <value>Yabancı Dil Seviyesi</value>
+  </data>
+  <data name="Yabancı Dil Tipi" xml:space="preserve">
+    <value>Yabancı Dil Tipi</value>
+  </data>
+  <data name="Yayınlanma Zamanı" xml:space="preserve">
+    <value>Yayınlanma Zamanı</value>
+  </data>
+  <data name="Yeni bir mesajiniz bulunmamaktadır" xml:space="preserve">
+    <value>Yeni bir mesajiniz bulunmamaktadır</value>
+  </data>
+  <data name="Yeni Davet" xml:space="preserve">
+    <value>Yeni Davet</value>
+  </data>
+  <data name="Yeni Görüşme" xml:space="preserve">
+    <value>Yeni Görüşme</value>
+  </data>
+  <data name="Yeni Kişi Tanımlama" xml:space="preserve">
+    <value>Yeni Kişi Tanımlama</value>
+  </data>
+  <data name="Yeni Kullanıcı" xml:space="preserve">
+    <value>Yeni Kullanıcı</value>
+  </data>
+  <data name="Yeni Kurum" xml:space="preserve">
+    <value>Yeni Kurum</value>
+  </data>
+  <data name="Yeni Kurum Tanımlama" xml:space="preserve">
+    <value>Yeni Kurum Tanımlama</value>
+  </data>
+  <data name="Yeni Takvim Oluştur" xml:space="preserve">
+    <value>Yeni Takvim Oluştur</value>
+  </data>
+  <data name="Yeni Toplantı" xml:space="preserve">
+    <value>Yeni Toplantı</value>
+  </data>
+  <data name="Yeni Şifre" xml:space="preserve">
+    <value>Yeni Parola</value>
+  </data>
+  <data name="Yeni Şifre Tekrar" xml:space="preserve">
+    <value>Yeni Parola Tekrar</value>
+  </data>
+  <data name="Yetki Merkezi" xml:space="preserve">
+    <value>Yetki Merkezi</value>
+  </data>
+  <data name="Yönetim Paneli" xml:space="preserve">
+    <value>Yönetim Paneli</value>
+  </data>
+  <data name="Yükleme" xml:space="preserve">
+    <value>Yükleme</value>
+  </data>
+  <data name="Zaman" xml:space="preserve">
+    <value>Zaman</value>
+  </data>
+  <data name="Zamanı" xml:space="preserve">
+    <value>Zamanı</value>
+  </data>
+  <data name="Zaten hesabınız var mı?" xml:space="preserve">
+    <value>Zaten hesabınız var mı?</value>
+  </data>
+  <data name="Zorunlu Alan Mı?" xml:space="preserve">
+    <value>Zorunlu Alan Mı?</value>
+  </data>
+  <data name="Zorunlu Şifre Yenileme Aralığı (Gün)" xml:space="preserve">
+    <value>Zorunlu Şifre Yenileme Aralığı (Gün)</value>
+  </data>
+  <data name="ÇALIŞAN SAYISI" xml:space="preserve">
+    <value>ÇALIŞAN SAYISI</value>
+  </data>
+  <data name="Çalışan Sayısı" xml:space="preserve">
+    <value>Çalışan Sayısı</value>
+  </data>
+  <data name="Çalışma Sayısı" xml:space="preserve">
+    <value>Çalışma Sayısı</value>
+  </data>
+  <data name="Çar" xml:space="preserve">
+    <value>Çar</value>
+  </data>
+  <data name="Çocuk Sayısı" xml:space="preserve">
+    <value>Çocuk Sayısı</value>
+  </data>
+  <data name="Çıkış" xml:space="preserve">
+    <value>Çıkış</value>
+  </data>
+  <data name="Önceki" xml:space="preserve">
+    <value>Önceki</value>
+  </data>
+  <data name="Önceki Aksiyon" xml:space="preserve">
+    <value>Önceki Aksiyon</value>
+  </data>
+  <data name="Özel Bildirim Ekleme" xml:space="preserve">
+    <value>Özel Bildirim Ekleme</value>
+  </data>
+  <data name="Özel Bildirimler Listesi" xml:space="preserve">
+    <value>Özel Bildirimler Listesi</value>
+  </data>
+  <data name="Özel Gün Açıklama" xml:space="preserve">
+    <value>Özel Gün Açıklama</value>
+  </data>
+  <data name="Özel Gün Başlangıç Tarihi Seçiniz" xml:space="preserve">
+    <value>Özel Gün Başlangıç Tarihi Seçiniz</value>
+  </data>
+  <data name="Özel Gün Bitiş Tarihi Seçiniz" xml:space="preserve">
+    <value>Özel Gün Bitiş Tarihi Seçiniz</value>
+  </data>
+  <data name="Özel Gün Güncelleme" xml:space="preserve">
+    <value>Özel Gün Güncelleme</value>
+  </data>
+  <data name="Özel Gün Listesi" xml:space="preserve">
+    <value>Özel Gün Listesi</value>
+  </data>
+  <data name="Özel Gün Tanımlama" xml:space="preserve">
+    <value>Özel Gün Tanımlama</value>
+  </data>
+  <data name="Özel Gün Tipi Seçiniz" xml:space="preserve">
+    <value>Özel Gün Tipi Seçiniz</value>
+  </data>
+  <data name="Özet Metin" xml:space="preserve">
+    <value>Özet Metin</value>
+  </data>
+  <data name="Özet Metni Giriniz" xml:space="preserve">
+    <value>Özet Metni Giriniz</value>
+  </data>
+  <data name="Ülke" xml:space="preserve">
+    <value>Ülke</value>
+  </data>
+  <data name="Ülke Seçiniz" xml:space="preserve">
+    <value>Ülke Seçiniz</value>
+  </data>
+  <data name="Üst Birim" xml:space="preserve">
+    <value>Üst Birim</value>
+  </data>
+  <data name="Üye Ol" xml:space="preserve">
+    <value>Üye Ol</value>
+  </data>
+  <data name="Üye Olduğu Dernek/Vakıf" xml:space="preserve">
+    <value>Üye Olduğu Dernek/Vakıf</value>
+  </data>
+  <data name="Üyelik Koşulları" xml:space="preserve">
+    <value>Üyelik Koşulları</value>
+  </data>
+  <data name="Üyelik koşulları ve Gizlilik Sözleşmesi ni kabul ediyorum." xml:space="preserve">
+    <value>Üyelik koşulları ve Gizlilik Sözleşmesi ni kabul ediyorum.</value>
+  </data>
+  <data name="İleri" xml:space="preserve">
+    <value>İleri</value>
+  </data>
+  <data name="İlgili Kurum" xml:space="preserve">
+    <value>İlgili Kurum</value>
+  </data>
+  <data name="İlgili Lisans" xml:space="preserve">
+    <value>İlgili Lisans</value>
+  </data>
+  <data name="İlgili Ülke Seçiniz" xml:space="preserve">
+    <value>İlgili Ülke Seçiniz</value>
+  </data>
+  <data name="İlişki Türü" xml:space="preserve">
+    <value>İlişki Türü</value>
+  </data>
+  <data name="İndirme" xml:space="preserve">
+    <value>İndirme</value>
+  </data>
+  <data name="İngilizce" xml:space="preserve">
+    <value>İngilizce</value>
+  </data>
+  <data name="İptal Et" xml:space="preserve">
+    <value>İptal Et</value>
+  </data>
+  <data name="İçerdiği Modül Sayısı" xml:space="preserve">
+    <value>İçerdiği Modül Sayısı</value>
+  </data>
+  <data name="İçerdiği Sayfa Sayısı" xml:space="preserve">
+    <value>İçerdiği Sayfa Sayısı</value>
+  </data>
+  <data name="İçerik Başlığı" xml:space="preserve">
+    <value>İçerik Başlığı</value>
+  </data>
+  <data name="İçerik Kurumsal Şablon Tanımları Listesi" xml:space="preserve">
+    <value>İçerik Kurumsal Şablon Tanımları Listesi</value>
+  </data>
+  <data name="İçerik Metni" xml:space="preserve">
+    <value>İçerik Metni</value>
+  </data>
+  <data name="İçerik metni ekleyebilirsiniz" xml:space="preserve">
+    <value>İçerik metni ekleyebilirsiniz</value>
+  </data>
+  <data name="İçerik Sistemsel Şablon Tanımları Listesi" xml:space="preserve">
+    <value>İçerik Sistemsel Şablon Tanımları Listesi</value>
+  </data>
+  <data name="İçerik Tanımı" xml:space="preserve">
+    <value>İçerik Tanımı</value>
+  </data>
+  <data name="İçerik Şablon Tanımları Kurumsal" xml:space="preserve">
+    <value>İçerik Şablon Tanımları Kurumsal</value>
+  </data>
+  <data name="İçerik Şablon Tanımları Sistemsel" xml:space="preserve">
+    <value>İçerik Şablon Tanımları Sistemsel</value>
+  </data>
+  <data name="İçerik Şablon Tanımları Sistemsel Güncelle" xml:space="preserve">
+    <value>İçerik Şablon Tanımları Sistemsel Güncelle</value>
+  </data>
+  <data name="İçerik Şablon Tipi" xml:space="preserve">
+    <value>İçerik Şablon Tipi</value>
+  </data>
+  <data name="İşe Giriş Tarihi" xml:space="preserve">
+    <value>İşe Giriş Tarihi</value>
+  </data>
+  <data name="İşlem" xml:space="preserve">
+    <value>İşlem</value>
+  </data>
+  <data name="İşlemler" xml:space="preserve">
+    <value>İşlemler</value>
+  </data>
+  <data name="Şablon Gönderim Tipi" xml:space="preserve">
+    <value>Şablon Gönderim Tipi</value>
+  </data>
+  <data name="Şablon Gönderim Türü" xml:space="preserve">
+    <value>Şablon Gönderim Türü</value>
+  </data>
+  <data name="Şablon Kayıt Tarihi" xml:space="preserve">
+    <value>Şablon Kayıt Tarihi</value>
+  </data>
+  <data name="Şablon İçerik Başlığı" xml:space="preserve">
+    <value>Şablon İçerik Başlığı</value>
+  </data>
+  <data name="Şablon İçerik Tanımı" xml:space="preserve">
+    <value>Şablon İçerik Tanımı</value>
+  </data>
+  <data name="Şablon İçerik Türü" xml:space="preserve">
+    <value>Şablon İçerik Türü</value>
+  </data>
+  <data name="Şehir" xml:space="preserve">
+    <value>Şehir</value>
+  </data>
+  <data name="Şehir Giriniz" xml:space="preserve">
+    <value>Şehir Giriniz</value>
+  </data>
+  <data name="Şehir Ismi" xml:space="preserve">
+    <value>Şehir Ismi</value>
+  </data>
+  <data name="Şehir Sayısı" xml:space="preserve">
+    <value>Şehir Sayısı</value>
+  </data>
+  <data name="Şehirler" xml:space="preserve">
+    <value>Şehirler</value>
+  </data>
+  <data name="Şeçili Şehirler" xml:space="preserve">
+    <value>Şeçili Şehirler</value>
+  </data>
+  <data name="Şifre" xml:space="preserve">
+    <value>Parola</value>
+  </data>
+  <data name="Şifreniz en az 1 küçük harf, 1 büyük harf, 1 sayı ve 1 özel karakter içermelidir ve en az 8 karakter uzunluğunda olmalıdır." xml:space="preserve">
+    <value>Parolanız en az 1 küçük harf, 1 büyük harf, 1 sayı ve 1 özel karakter içermelidir ve en az 8 karakter uzunluğunda olmalıdır.</value>
+  </data>
+  <data name="Şifrenizi mi unuttunuz? Lütfen e-posta adresinizi ilgili alana giriniz." xml:space="preserve">
+    <value>Şifrenizi mi unuttunuz? Lütfen e-posta adresinizi ilgili alana giriniz.</value>
+  </data>
+  <data name="Şube" xml:space="preserve">
+    <value>Şube</value>
+  </data>
+  <data name="Şube Sayısı" xml:space="preserve">
+    <value>Şube Sayısı</value>
+  </data>
+  <data name="ŞİRKET DİLİ" xml:space="preserve">
+    <value>ŞİRKET DİLİ</value>
+  </data>
+</root>

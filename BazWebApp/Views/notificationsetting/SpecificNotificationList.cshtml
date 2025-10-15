@@ -1,0 +1,59 @@
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+@*<link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.common.min.css" rel="stylesheet" />*@
+<link href="~/lib/kendo/Content/kendo/2020.3.1118/kendo.common.min.css" rel="stylesheet" />
+<link href="~/css/All/notificationsetting.css" rel="stylesheet" />
+<script type="text/javascript" src="~/js/Model/OzelBildirimModel.js"></script>
+<script type="text/javascript" src="~/js/Services/OzelBildirimlerService.js"></script>
+<div class="container-fluid">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>@localizator["Özel Bildirimler Listesi"].Value</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="model-bind">
+                        <div class="card-header text-right">
+                            <button type="button" class="btn add-buttons mr-4" data-bind="click:toSpecNotAddPage">@localizator["Ekle"].Value</button>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="">
+                            <table id="SpecNotListTable" style="width: 100% !important;" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>@localizator["Gönderen Kişi Adı"].Value</th>
+                                        <th>@localizator["Gönderilen Kişi Adı"].Value</th>
+                                        <th>@localizator["Gönderim Zamanı"].Value</th>
+                                        <th>@localizator["Gönderim Metni"].Value</th>
+                                        <th style=' min-width: 20% !important;'>@localizator["İşlem"].Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody"></tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<script src="~/lib/AdminLTE/plugins/moment/locale/tr.js"></script>
+<script>
+
+    $(document).ready(function () {
+        ozelBildirimlerService.initializeForList();
+    })
+</script>

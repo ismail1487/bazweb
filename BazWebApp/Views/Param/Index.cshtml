@@ -1,0 +1,420 @@
+﻿@*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>*@
+<script src="~/lib/AdminLTE/plugins/jsgrid/jsgrid.min.js" asp-append-version="true"></script>
+<script src="~/lib/AdminLTE/plugins/jsgrid/i18n/jsgrid-tr.js" asp-append-version="true"></script>
+@*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous"></script>*@
+<link href="~/lib/select2-4-0-13/select2.min.css" rel="stylesheet" asp-append-version="true" />
+<link href="~/css/All/Param.css" rel="stylesheet" asp-append-version="true" />
+<script src="~/lib/select2-4-0-13/select2.min.js" asp-append-version="true"></script>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>@localizator["Parametre Yönetim Merkezi"].Value</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+
+<section class="content">
+    <div class="container-fluid">
+        <!-- Button trigger modal -->
+        <!-- Modal -->
+        <div class="modal fade" id="ParametreDillerDialog" tabindex="-1" role="dialog" aria-labelledby="ParametreDillerDialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header bg-primary">
+                        <h5 class="modal-title" id="ModalLabel">Parametre Dil Değerleri</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="DialogContent">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="btnDialogCancel"><i class="fas fa-ban"></i> Vazgeç</button>
+                        <button type="button" class="btn btn-success" id="btnDialogSave"><i class="fas fa-save"></i>  Kaydet </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="">
+                    <div class="card-header">
+                        <h3 class="card-title"> </h3>
+                    </div>
+                    <label for="Tanim" class="validationMessage"></label>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 text-left">
+                        <label for="select-param-tipi">@localizator["Parametre Tipi"].Value</label>
+                        <select class="form-control" id="select-param-tipi"> </select>
+                    </div>
+                    <div class="col-9 text-right">
+                        @*<button class="btn btn-success right" id="btnDilEkle">Dil Ekle</button>*@
+                        <button type="button" class="btn btn-success right" id="btnDialogOpen" style="display:none;">
+                            Dil Değerleri
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-12">
+                <div id="jsGrid"></div>
+            </div>
+
+            <!-- /.col (right) -->
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+
+
+</section>
+<script type="text/javascript">
+    var ParamListForDDL = [];
+    $(document).ready(function () {
+
+        var DialogID = $("#ParametreDillerDialog");
+        var DialogContent = $("#DialogContent");
+        jsGrid.locale("tr");
+        var selectDil = [
+            { id: 1, text: "Türkçe" },
+            { id: 2, text: "İngilizce" }
+        ];
+
+        var selectData = [
+            { id: 0, text: "Seçiniz" },
+            { id: "ParamAdresTipi", text: "ParamAdresTipi" },
+            { id: "ParamBankalar", text: "ParamBankalar" },
+            { id: "ParamCalisanSayilari", text: "ParamCalisanSayilari" },
+            { id: "ParamCinsiyet", text: "ParamCinsiyet" },
+            { id: "ParamDilSeviyesi", text: "ParamDilSeviyesi" },
+            { id:"ParamDiller", text: "ParamDiller"},
+            { id: "ParamDinler", text: "ParamDinler" },
+            { id: "ParamIcerikSablonTipleri", text: "ParamIcerikSablonTipleri" },
+            { id: "ParamIliskiTurleri", text: "ParamIliskiTurleri" },
+            { id: "ParamKimlikTipleri", text: "ParamKimlikTipleri" },
+            { id: "ParamKureselParametreler", text: "ParamKureselParametreler" },
+            { id: "ParamKurumBelgeTipleri", text: "ParamKurumBelgeTipleri" },
+            { id: "ParamKurumLokasyonTipi", text: "ParamKurumLokasyonTipi" },
+            { id: "ParamKurumSektorleri", text: "ParamKurumSektorleri" },
+            { id: "ParamKurumTipleri", text: "ParamKurumTipleri" },
+            { id: "ParamLokasyonTipleri", text: "ParamLokasyonTipleri" },
+            { id: "ParamMedeniHal", text: "ParamMedeniHal" },
+            { id: "ParamMedyaTipleri", text: "ParamMedyaTipleri" },
+            { id: "ParamOkulTipi", text: "ParamOkulTipi" },
+            { id: "ParamOlcumBirimleri", text: "ParamOlcumBirimleri" },
+            { id: "ParamOrganizasyonBirimleri", text: "ParamOrganizasyonBirimleri" },
+            { id: "ParamParaBirimleri", text: "ParamParaBirimleri" },
+            { id: "ParamPostaciIslemDurumTipleri", text: "ParamPostaciIslemDurumTipleri" },
+            { id: "ParamSayfaYetkiGurubu", text: "ParamSayfaYetkiGurubu" },
+            { id: "ParamSistemModulleri", text: "ParamSistemModulleri" },
+            { id: "ParamTelefonTipi", text: "ParamTelefonTipi" },
+            { id: "ParamUlkeler", text: "ParamUlkeler" },
+            { id: "ParamIcerikKategoriler", text: "ParamIcerikKategoriler" },
+            { id: "ParamUrunKategoriler", text: "ParamUrunKategoriler" },
+            { id: "ParamUrunMarkalar", text:"ParamUrunMarkalar"},
+            { id: "ParamOlcumKategorileri", text:"ParamOlcumKategorileri"},
+            { id: "ParamIcerikBlokKategorileri", text:"ParamIcerikBlokKategorileri"},
+            {id:"ParamKaynakTipleri", text:"ParamKaynakTipleri"},
+            {id:"ParamRezervasyonOnayStatu", text:"ParamRezervasyonOnayStatu"}
+        ];
+        $("#select-param-tipi").select2({ data: selectData })
+        $("#select-param-tipi").on('select2:select', function (e) {
+            $(".jsgrid-grid-body").children().remove();
+            var data = e.params.data;
+            var IsSelect = (data.id != 0);
+            $("#btnDialogOpen").hide();
+
+            if (IsSelect) {
+                $("#btnDialogOpen").show();
+                readGrid();
+            }
+
+        })
+        function readGrid() {
+            $(".validationMessage").hide();
+            var data = {
+                ModelName: $("#select-param-tipi").select2().find(":selected")[0].value,
+                UstId: 0,
+                KurumId: 0,
+                TabloID: 0,
+                Tanim: "test",
+                ParamKod: "",
+                DilID: 0,
+                EsDilID: 0
+            }
+            $.ajax({
+                data: data,
+                url: "/panel/param/listparam",
+                type: "POST",
+                dataType: "json",
+                success: function (result) {
+                    if (result.value) {
+
+                        var ustData = result.value.slice();
+                        DialogFillData(ustData);
+
+                        ustData.splice(0, 0, { tanim: "", paramKod: "", tabloID: 0 });
+                        $("#jsGrid").jsGrid({
+                            width: "100%",
+                            height: "auto",
+                            inserting: true,
+                            editing: true,
+                            sorting: true,
+                            onItemEditing: function (args) {
+                                // var str = ".jsgrid-edit-row > td > select> option[value=" + args.item.tabloID + "]";
+                                //setTimeout(function () {
+                                //   $(str).remove();
+                                //},500)
+                            },
+                            //onItemDeleted: function (args) {
+                            //    args.item["modelName"] = $("#select-param-tipi").select2().find(":selected")[0].value;
+                            //    $.ajax({
+                            //        data: args.item,
+                            //        url: "/panel/param/delete",
+                            //        type: "POST",
+                            //        dataType: "json",
+                            //        success: function () {
+                            //            readGrid();
+                            //        }
+                            //    })
+                            //},
+                            onItemUpdated: function (args) {
+                                args.item["modelName"] = $("#select-param-tipi").select2().find(":selected")[0].value;
+                                $.ajax({
+                                    data: args.item,
+                                    url: "/panel/param/update",
+                                    type: "POST",
+                                    dataType: "json",
+                                    success: function () {
+                                        readGrid();
+                                    },
+                                    error: function (e) {
+                                        errorHandler(e);
+                                        readGrid();
+                                    }
+                                })
+                            },
+                            onItemInserted: function (args) {
+                                args.item["modelName"] = $("#select-param-tipi").select2().find(":selected")[0].value;
+                                args.item["tabloID"] = 0;
+                                if (!args.item["esDilID"] || args.item["esDilID"] === undefined || !(args.item["esDilID"] > 0)) {
+                                    args.item["esDilID"] = 0;
+                                }
+                                $.ajax({
+                                    data: args.item,
+                                    url: "/panel/param/add",
+                                    type: "POST",
+                                    dataType: "json",
+                                    success: function (data) {
+                                        if (data.isSuccess) {
+                                            readGrid();
+                                        } else {
+                                            alertim.toast(siteLang.Hata, alertim.types.danger);
+                                        }
+                                    },
+                                    error: function (e) {
+                                        readGrid();
+                                        errorHandler(e);
+                                        alertim.toast(siteLang.Hata, alertim.types.danger);
+                                    }
+                                })
+                            },
+                            confirmDeleting: false,
+                            onItemDeleting: function (args) {
+                                if (!args.item.deleteConfirmed) { // custom property for confirmation
+                                    args.cancel = true; // cancel deleting
+                                    alertim.confirm(siteLang.SilOnay, "info",
+                                        function () {
+                                            args.item["modelName"] = $("#select-param-tipi").select2().find(":selected")[0].value;
+                                            $.ajax({
+                                                data: args.item,
+                                                url: "/panel/param/delete",
+                                                type: "POST",
+                                                dataType: "json",
+                                                success: function () {
+                                                    readGrid();
+                                                }
+                                            })
+                                        }
+                                    );
+                                }
+                            },
+                            data: result.value,
+                            fields: [
+                                { name: "tabloID", title: siteLang.KayitNo, type: "hidden", width: 50 },
+                                { name: "dilID", title: siteLang.ParametreDili, type: "select", items: selectDil, valueField: "id", textField: "text" },
+                                { name: "tanim", title: siteLang.Tanım + "*", type: "text", width: 150 },
+                                { name: "paramKod", title: siteLang.Kod, type: "text", width: 150 },
+                                { name: "esDilID", title: siteLang.FarkliDil, type: "select", items: ustData, valueField: "esDilID", textField: "tanim" },
+                                { name: "ustId", title: siteLang.BaglıOlduğuParametre, type: "select", items: ustData, valueField: "tabloID", textField: "tanim" },
+                                { type: "control" }
+                            ]
+                        });
+                    }
+                }
+            })
+        }
+
+
+        // Diller Dialogla ilgili işlemler
+        //ParametreDillerDialog
+
+        $("#btnDialogOpen").on('click', (e) => {
+            // Ek Dil seçeneklerini göster
+            $(DialogID).modal('show')
+        })
+
+        $("#btnDialogCancel").on("click", (e) => {
+            // Ek Dil seçeneklerinden çık
+            $(DialogID).modal('hide');
+        });
+
+
+
+        $("#btnDialogSave").on("click", (e) => {
+            var SabitDiller = ["English", "German", "Franch"];// 1 Türkçedir ve değeri 1 dir. 2,3,4 şeklinde diğer dilleri gelir.
+            var modelData = {
+                "modelName": $("#select-param-tipi").select2().find(":selected")[0].value,
+                "tabloID": 0,
+                "kurumId": 0,
+                "ustId": 0,
+                "tanim": "-",
+                "paramKod": "",
+                "dilID": 0,
+                "esDilID": 0,
+                "tanimlar": []
+            };
+
+            var rows = $(".diller-row");
+            for (var i = 0; i < rows.length; i++) {
+                var row = rows[i];
+                var ParamID = $(row).attr("row-tablo-id");
+                for (var DilNo = 2; DilNo <= SabitDiller.length+1; DilNo++) {
+                    var DilName = "Dil" + DilNo + "Control" + ParamID;
+                    var TanimID = $("#" + DilName).attr("tabloid");
+                    var Tanim =$("#" + DilName).val();
+                    if (Tanim == undefined || Tanim == '') {
+                        Tanim ="";
+                    }
+                    if (TanimID==undefined || TanimID==''){
+                        TanimID=0;
+                    }
+                    var dilData ={
+                        "tabloID": TanimID,
+                        "paramDilID": DilNo,
+                        "paramID": ParamID,
+                        "tanim": Tanim
+                    }
+                    if (dilData.tanim != undefined && dilData.tanim != '') {
+                        modelData.tanimlar.push(dilData);
+                    }
+                }
+            }
+
+            $.ajax({
+                data: modelData,
+                url: "/panel/param/saveparamDiller",
+                type: "POST",
+                dataType: "json",
+                success: function (result) {
+                    if (result.value){
+                        alertim.toast(siteLang.Kaydet, alertim.types.success);
+                    } else {
+                        alertim.toast(siteLang.Hata, alertim.types.danger);
+                    }
+                    readGrid();
+                }
+            });
+            $(DialogID).modal('hide');
+        });
+
+
+        function DialogReset() {
+            $(DialogContent).html('');
+        }
+        function DialogFillData(aData) {
+            ParametreDilleriYukle();
+            DialogReset();
+            var rowStr = ``;
+            if (aData.length > 0) {
+                for (var i = 0; i < aData.length; i++) {
+                    console.log(aData[i]);
+                    rowStr += `
+                                <tr row-tablo-id="${aData[i].tabloID}" class="diller-row">
+                                    <td>${aData[i].tanim}   </td>
+                                        <td><input type="text" class="form-control" value="" id="Dil2Control${aData[i].tabloID}"  ></td>
+                                        <td><input type="text" class="form-control" value="" id="Dil3Control${aData[i].tabloID}"></td>
+                                        <td><input type="text" class="form-control" value="" id="Dil4Control${aData[i].tabloID}"></td>
+                                </tr>
+                        `;
+                }
+            }
+            var str = `
+                    <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th nowrap>Param Tanım</th>
+                                    <th>İngilizce</th>
+                                    <th>Almanca</th>
+                                    <th>Fransızca</th>
+                                </tr>
+                            </thead>
+                            <tbody>`
+                + rowStr +
+                `</tbody>
+                        </table>
+                        `;
+            $(DialogContent).append(str);
+        }
+
+
+
+        function ParametreDilleriYukle() {
+            /*  Parametre tablosuna bağlı Diller tablosundaki tüm kayıtları getirir.
+                Bu kayıtları DialogBox taki, daha önce oluşturulmuş olan Tabloya render eder.
+                Render işlemini DilID değeri ve ParamID değeri ile eşleşerek yapar.
+            */
+            //  Bu request değiştirilecek. Bu model çıkmayı gerektirir, erteliyorum.
+            var data = {
+                ModelName: $("#select-param-tipi").select2().find(":selected")[0].value,
+                UstId: 0,
+                KurumId: 0,
+                TabloID: 0,
+                Tanim: "test",
+                ParamKod: "",
+                DilID: 0,
+                EsDilID: 0
+            }
+            $.ajax({
+                data: data,
+                url: "/panel/param/listparamDiller",
+                type: "POST",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result.value);
+                    if (result.value) {
+                        var data = result.value;
+                        for (var i = 0; i < data.length; i++) {
+                            var row = data[i];
+                            var controlName = "Dil" + row.paramDilID + "Control" + row.paramID;
+                            $("#" + controlName).val(row.tanim);
+                            $("#" + controlName).attr("TabloID",row.tabloID);
+                        }
+                    }
+                }
+            });
+        }
+    })
+
+</script>

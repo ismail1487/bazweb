@@ -1,0 +1,43 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link href="~/lib/AdminLTE/dist/css/adminlte.css" rel="stylesheet" />
+<link href="~/lib/AdminLTE/plugins/fontawesome-free/css/all.css" rel="stylesheet" />
+@*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
+<script src="~/lib/AdminLTE/plugins/jquery/jquery.js"></script>
+<script src="~/js/RegisterJS.js" asp-append-version="true"></script>
+<script src="~/lib/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.js"></script>
+<script src="~/lib/AdminLTE/plugins/bootstrap/js/bootstrap.js"></script>
+<script src="~/lib/AdminLTE/dist/js/adminlte.js"></script>
+<script src="~/js/tools.js" asp-append-version="true"></script>
+<link href="~/lib/AdminLTE/plugins/fontawesome-free/css/all.css" rel="stylesheet" />
+<script src="~/lib/AdminLTE/plugins/select2/js/select2.min.js"></script>
+<script src="~/lib/AdminLTE/plugins/moment/moment.min.js"></script>
+<script src="~/lib/AdminLTE/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+<script src="~/lib/AdminLTE/plugins/toastr/toastr.min.js"></script>
+<link href="~/css/All/Register.css" rel="stylesheet" />
+<link type="text/css" href="~/lib/AdminLTE/plugins/toastr/toastr.css" rel="stylesheet" />
+<div class="hold-transition register-page" style="height: auto !important;">
+    <div class='text-center mt-5' style="min-height: 5vh;"> <p class='' id="alertDiv" style="display:none;"></p></div>
+    <div>
+        <div class="register-logo">
+            <a href="/"><b>Gizlilik Sözleşmesi</b></a>
+        </div>
+        <div class="row col-md-10 offset-1 mb-5">
+            <!-- /.card -->
+            <div class="card col-md-8 offset-2">
+                <div class="card-body register-card-body">
+                    <p class="login-box-msg"></p>
+                    <div class="col-md-10 offset-1">
+                        <p>&nbsp;</p><p>&nbsp;<strong>GİZLİLİK POLİTİKASI </strong></p><p><em>Sayın Ziyaret&ccedil;imiz</em>,</p><p><strong>1 </strong><em>Mirket App Bilişim Teknolojileri Anonim Şirketi </em>(&ldquo;<strong>Mirket</strong>&rdquo;) kişisel verilerinizi <em>6698 sayılı Kişisel Verilerin Korunması Kanunu</em>&rsquo;na (&ldquo;<strong>KVKK</strong>&rdquo;) uygun olarak işlenmesini ve veri g&uuml;venliğinin sağlanmasını temin etmektedir. Mirket bu kapsamda gerekli teknik ve idari tedbirleri almaktadır.</p><p><strong>2 </strong>Kişisel verileri işlenen kişiler, gizlilik politikasını g&ouml;zeterek Mirket&rsquo;in veri sorumlusu sıfatıyla topladığı kişisel verilerin neler olduğunu, işlenme ama&ccedil;larını, aktarılabileceği kişileri, toplanma y&ouml;ntemini, hukuki sebebini ve haklarını &ouml;ğrenebilir. Mirket&rsquo;in kullanıcılarına sunduğu uygulama kullanımı hizmeti &ccedil;er&ccedil;evesinde aşağıda yer verilen veriler işlenmektedir:</p><p> <strong>Kimlik Bilgileri : </strong>İsim, soyisim, doğum tarihi, cinsiyet, uygulamaya kayıt olurken oluşturulan isim.</p><p> <strong>İletişim Bilgileri : </strong>E-posta adresi, posta adresi, yaşadığı il, telefon numarası.</p><p> <strong>Lokasyon : </strong>Bulunduğu yerin konum bilgileri.</p><p> <strong>İşlem G&uuml;venliği : </strong>IP adres bilgileri, internet sitesi giriş &ccedil;ıkış bilgileri, şifre ve parola bilgileri.</p><p> <strong>Finansal Veri : </strong>Kredi kartı bilgisi (Kredi kartı numarası, kartın &uuml;zerinde yaza isim, kartın son kullanma tarihi ve g&uuml;venlik numarası).</p><p> <strong>İlgi Alanı Verisi : </strong>Kişilerin yaşam tarzlarına ilişkin verileri i&ccedil;erir.</p><p>&nbsp;</p><p><strong>3 </strong>Mirket, kişisel verilerinizin g&uuml;venliğine &ouml;zen g&ouml;stermekte ve bu &ccedil;er&ccedil;evede teknik, fiziki ve idari &ouml;nlemleri almaktadır.</p><p><strong>4 </strong>Kişisel verileriniz a&ccedil;ık rızanız d&acirc;hilinde tamamen veya kısmen elde edilebilir, kaydedilebilir, saklanabilir, depolanabilir, değiştirilebilir, g&uuml;ncellenebilir, periyodik olarak kontrol edilebilir, yeniden d&uuml;zenlenebilir, sınıflandırılabilir, işlendikleri ama&ccedil; i&ccedil;in gerekli olan ya da ilgili kanunda &ouml;ng&ouml;r&uuml;len s&uuml;re kadar muhafaza edilebilir, kanuni ya da hizmete bağlı fiili gereklilikler halinde Mirket birlikte &ccedil;alıştığı iş ortaklarıyla, tedarik&ccedil;ileri ile ya da kanunen y&uuml;k&uuml;ml&uuml; olduğu kamu kurum ve kuruluşlarıyla paylaşılabilir.</p><p><strong>5 </strong>Mirket olarak, veri sorumlusu sıfatıyla, mevzuattan kaynaklanan yasal y&uuml;k&uuml;ml&uuml;l&uuml;klerimiz &ccedil;er&ccedil;evesinde; bizimle iletişim kurabilmeniz, mesajınıza d&ouml;n&uuml;ş yapabilmemiz, &ouml;neri ve şikayetlerinizi kayıt altına alabilmek ve sizlere daha iyi hizmet</p><p>standartları oluşturabilmek ama&ccedil;larıyla kimlik bilgilerinizi ve iletişim bilgilerinizi elektronik y&ouml;ntemle toplamakta ve işlemekteyiz.</p><p><strong>6 </strong>Kişisel verilerinizin işlenmesinde; <strong>(i) </strong>hukuka ve d&uuml;r&uuml;stl&uuml;k kurallarına uygunluk, <strong>(ii) </strong>doğru ve gerektiğinde g&uuml;ncel olma, <strong>(iii) </strong>belirli, a&ccedil;ık ve meşru ama&ccedil;larla işlenme, <strong>(iv) </strong>işlendikleri ama&ccedil;la, bağlantılı, sınırlı ve &ouml;l&ccedil;&uuml;l&uuml; olma, <strong>(v) </strong>ilgili mevzuatta &ouml;ng&ouml;r&uuml;len veya işlendikleri ama&ccedil; i&ccedil;in gerekli olan s&uuml;re kadar muhafaza edilme ilkelerine uymaktayız.</p><p><strong>7 </strong>Ayrıca, kişisel verilerinizin kullanımı ve veri g&uuml;venliğine ilişkin olarak almış olduğumuz idari ve teknik &ouml;nlemler ile ilgili daha detaylı bilgi almak isterseniz, politikamızı aşağıda [●] belirtilen e-posta adresine e-posta atarak talep edebilirsiniz.</p><p><strong>8 </strong>Kişisel veri sahibi olarak Mirket&rsquo;e başvurarak <strong>(i) </strong>kişisel verilerinizin işlenip işlenmediğini &ouml;ğrenme, <strong>(ii) </strong>işlenmişse buna ilişkin bilgi talep etme, <strong>(iii) </strong>kişisel verilerinizin işlenme amacını ve bunların amacına uygun kullanılıp kullanılmadığını &ouml;ğrenme, <strong>(iv) </strong>kişisel verilerinizin eksik veya yanlış işlenmiş olması halinde bunların d&uuml;zeltilmesini isteme, <strong>(v) </strong>KVKK&rsquo;nin 7. maddesinde &ouml;ng&ouml;r&uuml;len şartlar &ccedil;er&ccedil;evesinde kişisel verilerinizin silinmesini veya yok edilmesini isteme, <strong>(vi) </strong>kişisel verilerinizin d&uuml;zeltilmesi, silinmesi ya da yok edilmesi talebi halinde; yapılan işlemlerin, kişisel verilerin aktarıldığı &uuml;&ccedil;&uuml;nc&uuml; kişilere bildirilmesini isteme, <strong>(vii) </strong>işlenen kişisel verilerinizin m&uuml;nhasıran otomatik sistemler vasıtasıyla analiz edilmesi suretiyle aleyhinize bir sonucun ortaya &ccedil;ıkmasına itiraz etme ve <strong>(viii) </strong>kişisel verilerin kanuna aykırı olarak işlenmesi sebebiyle zarara uğramanız halinde zararınızın giderilmesini talep etme, haklarına sahipsiniz.</p><p><strong>9 </strong>Yukarıda belirtilen hakların kullanımı ile ilgili taleplerin elektronik ortamda info@mirketapp.com adresine veya 5070 sayılı <em>Elektronik İmza Kanunu</em>&rsquo;nda tanımlı olan g&uuml;venli elektronik imzalı olarak ya da mobil imza ya da ilgili kişi tarafından veri sorumlusuna daha &ouml;nce bildirilen ve veri sorumlusunun sisteminde kayıtlı bulunan e-posta adresini (info@mirketapp.com) kullanmak suretiyle adresine konu kısmında &ldquo;<em>Kişisel Veri Bilgi Edinme Talebi</em>&rdquo; ifadesi ile iletilmesi gerekmektedir.</p><p>---</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+﻿<link href="~/css/All/LicenseExpired.css" rel="stylesheet" />
+<!-- Content Wrapper. Contains page content -->
+<div class="container-fluid">
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="col-12" style="text-align:center;">
+                <div class="">
+                    <div class="error-content container pt-5">
+                        <h1 class="headError pt-5">Lisans Süreniz Dolmuştur</h1>
+                        <p>
+                            Lisansınızın süresi dolmuştur, lütfen kurum admininizle iletişime geçiniz.
+                        </p>
+                        <button type="button" id="logoutNoauth" class="btn add-buttons-nofloat">Çıkış Yap</button>
+                    </div>
+                </div>
+
+                <!-- /.error-page -->
+            </div>
+            <!-- /.content -->
+        </div>
+    </div>
+</div>
+<!-- /.content -->
+<!-- /.content-wrapper -->
+<script>
+    $(document).on("click", "#logoutNoauth", function () {
+        $.ajax({
+            type: "GET",
+            url: "/LoginRegister/Logout",
+            data: null,
+            dataType: "json",
+            success: function (data) {
+                window.location.href = "/";
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
+    });
+</script>

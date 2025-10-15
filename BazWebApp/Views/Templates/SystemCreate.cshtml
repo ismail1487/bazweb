@@ -1,0 +1,207 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+@*<link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.common.min.css" rel="stylesheet" />*@
+<link href="~/lib/kendo/Content/kendo/2020.3.1118/kendo.bootstrap.min.css" rel="stylesheet" />
+<link href="~/css/All/Templates.css" rel="stylesheet" />
+<link href="~/lib/AdminLTE/plugins/icheck-bootstrap/icheck-bootstrap.css" rel="stylesheet" />
+<script src="~/js/Model/IcerikKurumsalSablonTanimlariModel.js"></script>
+<script src="~/js/Services/ContentTemplates/SystemContentTemplatesService .js"></script>
+<!-- Content Header (Page header) -->
+<!--<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>İçerik Şablon Tanımları</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/Panel">Anasayfa</a></li>
+                    <li class="breadcrumb-item active">İçerik Şablon Tanımları Sistemsel</li>
+                </ol>
+            </div>
+        </div>
+    </div>-->
+<!-- /.container-fluid -->
+<!--</section>-->
+<!-- Main content -->
+<section class="content model-bind">
+    <!-- Default box -->
+    <div class="col-12 mt-3 row">
+        <div class="col-md-6 col-12">
+            <h3 class="header-left">@localizator["İçerik Şablon Tanımları Sistemsel"].Value</h3>
+            <p class="content-left">@localizator["İçerik Şablon Tanımları Sistemsel"].Value</p>
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="card ">
+                <div class="card-body ">
+                    <div class="row row-cols-1">
+                        <div class="col">
+                            <div class="row">
+                                <!-- radio -->
+                                <div class="form-group clearfix">
+                                    <label class="Lbl">@localizator["Şablon Gönderim Tipi"].Value</label>
+                                    <div class="">
+                                        <input type="radio" id="mailRadio" name="SablonTipi" value="mail " data-bind="value:GonderimTipiModel.mail, checked: data.GonderimTipi" checked="">
+                                        <label for="mailRadio" class="radio-label">
+                                            @localizator["E posta şablonu"].Value
+                                        </label>
+                                    </div>
+                                    <div class="">
+                                        <input type="radio" id="smsRadio" name="SablonTipi" value="sms" data-bind="value:GonderimTipiModel.sms, checked: data.GonderimTipi">
+                                        <label for="smsRadio" class="radio-label">
+                                            @localizator["SMS şablonu"].Value
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="Lbl">   @localizator["İçerik Başlığı"].Value <b>*</b></label>
+                                    <div class="input-group">
+                                        <input name="IcerikBaslik" type="text" class="form-control form-control-sm SonrasibildirimZorunlu" data-bind="value: data.IcerikBaslik" required validationMessage="<p style='color:red;'>İçerik başlığı giriniz!</p>">
+                                    </div>
+                                </div>
+                                <label for="IcerikBaslik" class="validationMessage"></label>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="Lbl">   @localizator["İçerik Tanımı"].Value <b>*</b></label>
+                                    <div class="input-group">
+                                        <input name="IcerikTanim" type="text" class="form-control form-control-sm SonrasibildirimZorunlu" data-bind="value: data.IcerikTanim" required validationMessage="<p style='color:red;'>İçerik tanımı giriniz!</p>">
+                                    </div>
+                                </div>
+                                <label for="IcerikTanim" class="validationMessage"></label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label class="Lbl">   @localizator["İçerik Şablon Tipi"].Value <b>*</b></label>
+                            <div class="input-group input-group-select mb-3">
+                                <select name="sablonTip" class="form-control form-control-sm field-select2" data-placeholder="Seçiniz." data-text-field="tanim" data-value-field="tabloID" data-bind="source:sablonTipleriList, value:data.SablonIcerikTipiId, events:{change:GorusmeOdasiButtonControl}" data-role="dropdownlist">
+                                </select>
+                            </div>
+                            <label for="SablonIcerikTipiId" class="validationMessage"></label>
+                        </div>
+                        <div class="col row">
+                            <div class="form-group col-md-3">
+                                <button type="button" class="btn btn-block btn-default btn-flat tagekle" value="<Kişi Adı>"> @localizator["Kişi Adı"].Value</button>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <button type="button" class="btn btn-block btn-default btn-flat tagekle" value="<Etkinlik Zamanı>"> @localizator["Etkinlik Zamanı"].Value</button>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <button type="button" class="btn btn-block btn-default btn-flat tagekle" value="<Mesaj içeriği>"> @localizator["Mesaj İçeriği"].Value</button>
+                            </div>
+                            <div class="form-group col-md-3" id="linkbtn">
+                                <button type="button" class="btn btn-block btn-default btn-flat tagekle link" value="<Mesaj içeriği>">@localizator["Link"].Value</button>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row mx-auto" id="mailSablonAlani">
+                                <div class="col">
+                                    <label class="Lbl"> @localizator["E Posta Şablon İçerik Metni"].Value <b>*</b></label>
+                                    <label for="IcerikTamMetin" class="validationMessage"></label>
+                                    <div class=" form-group" style="height: 100%;">
+                                        <textarea name="MailSablonMetin" class="form-control form-control-sm editor" rows="3" placeholder="@localizator["İçerik metni ekleyebilirsiniz"].Value" value="mail" style="height: 90%;">  </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mx-auto" id="smsSablonAlani" style="height: 37vh; margin-bottom: 20px; display: none;">
+                                <div class="col">
+                                    <label class="Lbl">   @localizator["SMS Şablon İçerik Metni"].Value <b>*</b></label>
+<label for="IcerikTamMetin" class="validationMessage"></label>
+<div class="row form-group" style=" height: 100%;">
+    <textarea name="SmsSablonMetin" id="SmsSablonMetin" class="form-control form-control-sm" rows="5" placeholder="@localizator["İçerik metni ekleyebilirsiniz"].Value" value="sms" style="height: 90%;" data-bind="value:data.IcerikTamMetin" required validationMessage="<p style='color:red;'>Bildirim metni giriniz!</p>"></textarea>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-11 text-center mb-3 mt-3 mr-5">
+    <button type="button" class="btn add-buttons" data-bind="click:savetemplate">
+        @localizator["Kaydet"].Value
+</button>
+<button type="button" class="btn cancel-button-right" onclick="location.href = '/Templates/Listforsystem';"> @localizator["Vazgeç"].Value</button>
+</div>
+</div>
+</div>
+</div>
+<!-- /.card-body -->
+<!-- /.card -->
+</section>
+<!-- /.content -->
+<script>
+
+    $(document).ready(function () {
+        SystemTemplateService.InitializeForSave();
+    })
+    ClassicEditor
+        .create(document.querySelector('.editor'), {
+            toolbar: {
+                items: [
+                    'heading',
+                    '|',
+                    'bold',
+                    'italic',
+                    'link',
+                    'bulletedList',
+                    'numberedList',
+                    '|',
+                    'outdent',
+                    'indent',
+                    '|',
+                    'blockQuote',
+                    'insertTable',
+                    'imageInsert',
+                    'mediaEmbed',
+                    'undo',
+                    'redo',
+                    'fontBackgroundColor',
+                    'fontFamily',
+                    'fontColor',
+                    'fontSize'
+                ]
+            },
+            language: 'tr',
+            table: {
+                contentToolbar: [
+                    'tableColumn',
+                    'tableRow',
+                    'mergeTableCells'
+                ]
+            }
+        })
+        .then(editor => {
+            console.log("editor eklendi.", editor);
+            customeditor = editor;
+        })
+        .catch(error => { console.error(error.stack); });
+
+    $('input[type=radio][name=SablonTipi]').change(function () {
+        if (this.value.toLowerCase() == 'mail') {
+            $('#smsSablonAlani').hide();
+            $('#mailSablonAlani').show();
+        }
+        else if (this.value.toLowerCase() == 'sms') {
+            $('#mailSablonAlani').hide();
+            $('#smsSablonAlani').show();
+        }
+    });
+    $('.tagekle').on("click", function () {
+        if ($(this).hasClass("link")) {
+            SysInsertElemByType(this.value, true);;
+            return;
+        }
+        SysInsertElemByType(this.value, false);//putElemAtEditor(customeditor, "<Kişi Adı>");
+    });
+    //$('[name="sablonTip"]').on("change", function () {
+    //    GorusmeOdasiButtonControl();
+    //});
+</script>

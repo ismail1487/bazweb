@@ -1,0 +1,90 @@
+﻿<script src="~/js/KurumEkParametrelerTanimlama.js"></script>
+<link href="~/css/All/KurumEkParametreler.css" rel="stylesheet" />
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+<div class="container-fluid">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h2>@localizator["Kurum Ek Parametre Tanımlama"].Value</h2>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-primary">
+
+                    <div class="card-body">
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="Lbl">
+                                        @localizator["Parametre Adı"].Value
+                                        <b style="color: red;">*</b>
+                                    </label>
+                                    <input class="form-control" type="text" placeholder="@localizator["Parametre Adı"].Value" id="ParamAdi">
+                                    <label for="ParametreAdi" class="validationMessage" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="Lbl">@localizator["Parametre Tipi"].Value</label>
+                                    <select id="ParamTip" class="form-control" style="width: 100%;">
+                                        <option value="1">@localizator["Metin"].Value</option>
+                                        <option value="2">@localizator["Seçim"].Value</option>
+                                        <option value="3">@localizator["Dosya"].Value</option>
+                                    </select>
+                                    <div class="card card-secondary" id="DegerTekrarliAlan">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="Lbl">@localizator["Parametre Gösterim Tipi"].Value</label>
+                                    <select id="ParamGosTip" class="form-control" style="width: 100%;">
+                                        @*<option value="1">Textbox</option>
+                                            <option value="2">TextArea</option>
+                                            <option value="3">NumericText</option>
+                                            <option value="4">Datepicker</option>
+                                            <option value="5">Dropdown</option>
+                                            <option value="6">Listbox</option>
+                                            <option value="7">Radiobox</option>
+                                            <option value="8">Checkbox</option>
+                                            <option value="9">Filepicker</option>*@
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="Lbl">@localizator["Zorunlu Alan Mı?"].Value</label>
+                                    <div>
+                                        <input id="ZorunluMuCheckbox" type="checkbox" value="false" />
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div class="col-md-3 mt-1">
+                                    <br />
+                                    <button type="button" id="ekParamKaydetButton" class="btn btn-success">Kaydet</button>
+                                </div>*@
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-8 col-8 offset-xl-4 offset-lg-4 offset-md-3 offset-4 text-center">
+                                <a href="/SuppParameters/CompanySuppParameterList" class="btn cancel-button-float">@localizator["Vazgeç"].Value</a>
+                                <button type="button" id="ekParamKaydetButton" class="btn confirm add-buttons-nofloat">@localizator["Kaydet"].Value</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>

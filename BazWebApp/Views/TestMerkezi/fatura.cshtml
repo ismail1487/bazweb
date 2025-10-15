@@ -1,0 +1,248 @@
+﻿@*<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>*@
+<script src="~/lib/html2canvas-0-4-1/html2canvas.js"></script>
+<link href="~/css/All/fatura.css" rel="stylesheet" />
+<script src="~/lib/html2canvas-0-4-1/jspdf.min.js"></script>
+<section class="content service-body">
+    <div class="container px-0">
+        <div class="row mt-4">
+            <div id="printable" class="col-12 col-lg-10 offset-lg-1" style="margin:0px !important; padding:0px !important;font-size:smaller">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="text-center text-150">
+                            <img src="/images/earsiv.png" />
+                        </div>
+                    </div>
+                </div>
+                <!-- .row -->
+                <div class="row">
+                    <hr class="row brc-default-l1 mx-n1 mb-4">
+                    <div class="col-sm-6">
+                        <div class="col-sm-12">
+                            <div class="text-grey-m2">
+                                <div class="my-1">
+                                    BİMAR DAYANIKLI MAL İH LTF ŞT
+                                </div>
+                                <div class="my-1">
+                                    CUMHURİYET MAH. MİTAT CAD. NO:28/26 ÇANKAYA/ ANKARA
+                                </div>
+                                <div>
+                                    <span class="text-sm text-grey-m2 align-middle">Vergi Dairesi:</span>
+                                    <span class="text-600 text-110 align-middle">ÇANKAYA</span>
+                                </div>
+                                <div>
+                                    <span class="text-sm text-grey-m2 align-middle">VKN:</span>
+                                    <span class="text-600 text-110 align-middle">154564545452</span>
+                                </div>
+
+                                <div>
+                                    <span class="text-sm text-grey-m2 align-middle">MERSİS NO:</span>
+                                    <span class="text-600 text-110 align-middle"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="row brc-default-l1 mx-n1 mb-4" />
+                        <div class="col-sm-12">
+                            <div>
+
+                                <span class="text-600 text-110 align-middle">Sayın</span>
+                            </div>
+                            <div class="my-1">
+                                ORSA YAZILIM DANIŞMANLIK TİC.LTD.ŞTİ.
+                            </div>
+                            <div class="my-1">
+                                SALACAK MAH. TUNUSBAĞI CAD. 12/10
+                            </div>
+                            <div class="my-1">
+                                ÜSKÜDAR/İST
+                            </div>
+                            <div>
+                                <span class="text-sm text-grey-m2 align-middle">TEL:</span>
+                                <span class="text-600 text-110 align-middle">0216 555 55 55</span>
+                            </div>
+                            <div>
+                                <span class="text-sm text-grey-m2 align-middle">VERGİ DAİRESİ:</span>
+                                <span class="text-600 text-110 align-middle">ÜSKÜDAR</span>
+                            </div>
+                            <div>
+                                <span class="text-sm text-grey-m2 align-middle">VKN:</span>
+                                <span class="text-600 text-110 align-middle">123669874</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+
+                    <div class="text-95 col-sm-6 align-self-start d-sm-flex justify-content-end">
+                        <hr class="d-sm-none" />
+                        <div class="text-grey-m2">
+
+                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">FATURA TİPİ:</span> SATIŞ</div>
+
+                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">FATURA NO:</span> BEA202000145</div>
+
+                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">FATURA TARİHİ:</span> <span class="badge badge-warning badge-pill px-25">14/09/2019</span></div>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+
+                <div class="mt-4" style="font-size:smaller">
+                    <div class="row text-600 text-white bgc-default-tp1 py-25">
+                        <div class="col-1">#</div>
+                        <div class="col-2">Mal Hizmet</div>
+                        <div class="col-1">Miktar</div>
+                        <div class="col-1">Birim Fiyat</div>
+                        <div class="col-1">Iskonto Oranı</div>
+                        <div class="col-1">Iskonto Tutarı</div>
+                        <div class="col-1">KDV Oranı</div>
+                        <div class="col-1">KDV Tutarı</div>
+                        <div class="col-1">Diğer Vergiler</div>
+                        <div class="col-1">Tutar</div>
+                    </div>
+
+                    <div class="text-95 text-secondary-d3" style="font-size:smaller">
+                        <div class="row mb-2 mb-sm-0 py-25">
+                            <div class="col-1">1</div>
+                            <div class="col-2">Kablo Net Modem</div>
+                            <div class="col-1">1 Adet</div>
+                            <div class="col-1">300,85 TL</div>
+                            <div class="col-1">0</div>
+                            <div class="col-1">0</div>
+                            <div class="col-1">%18,00</div>
+                            <div class="col-1">54,15 TL</div>
+                            <div class="col-1">0</div>
+                            <div class="col-1">300,85 TL</div>
+                        </div>
+                    </div>
+
+                    <div class="row border-b-2 brc-default-l2"></div>
+
+                    <div class="row mt-3">
+                        <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
+                            Extra note such as company or payment information...
+                        </div>
+
+                        <div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
+                            <div class="row my-2">
+                                <div class="col-7 text-right">
+                                    Mal Hizmet Toplam Tutarı
+                                </div>
+                                <div class="col-5">
+                                    <span class="text-120 text-secondary-d1">300,85 TL</span>
+                                </div>
+                            </div>
+
+                            <div class="row my-2">
+                                <div class="col-7 text-right">
+                                    Toplam Iskonto
+                                </div>
+                                <div class="col-5">
+                                    <span class="text-110 text-secondary-d1">0,00 TL</span>
+                                </div>
+                            </div>
+                            <div class="row my-2">
+                                <div class="col-7 text-right">
+                                    Hesaplanan KDV Gerçek(%18)
+                                </div>
+                                <div class="col-5">
+                                    <span class="text-110 text-secondary-d1">54,15 TL</span>
+                                </div>
+                            </div>
+                            <div class="row my-2">
+                                <div class="col-7 text-right">
+                                    Vergiler Dahil Toplam Tutar
+                                </div>
+                                <div class="col-5">
+                                    <span class="text-110 text-secondary-d1">355,00 TL</span>
+                                </div>
+                            </div>
+                            <div class="row my-2 align-items-center bgc-primary-l3 p-2">
+                                <div class="col-7 text-right">
+                                    Ödenecek Tutar
+                                </div>
+                                <div class="col-5">
+                                    <span class="text-150 text-success-d3 opacity-2">355,00 TL</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+                    <div class="text-95 text-secondary-d3">
+                        <div class="row mb-2 mb-sm-0 py-25">
+                            <div class="d-none d-sm-block col-2">İş Bankası</div>
+                            <div class="col-9 col-sm-5">TR63 85524565 5656 55666</div>
+                        </div>
+
+                        <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
+                            <div class="d-none d-sm-block col-2">Ziraat Bankası</div>
+                            <div class="col-9 col-sm-5">TR48 65656 66566 666 6565</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10 offset-1 text-center mb-3" style="margin-top:10px;">
+                <a id="savepdf" href="javascript:;" class="btn btn-success btn-sm">
+                    <i class="fa fa-save"></i> İndir
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        $("#savepdf").on("click",
+            function () {
+                printToPDF();
+            });
+    });
+</script>
+
+<script>
+    function printToPDF() {
+        console.log('converting...');
+
+        var printableArea = document.getElementById('printable');
+
+        html2canvas(printableArea, {
+            useCORS: true,
+            onrendered: function (canvas) {
+
+                var pdf = new jsPDF('p', 'pt', 'letter');
+
+                var pageHeight = 900;
+                var pageWidth = 1200;
+                for (var i = 0; i <= printableArea.clientHeight / pageHeight; i++) {
+                    var srcImg = canvas;
+                    var sX = 0;
+                    var sY = pageHeight * i; // start 1 pageHeight down for every new page
+                    var sWidth = pageWidth;
+                    var sHeight = pageHeight;
+                    var dX = 0;
+                    var dY = 0;
+                    var dWidth = pageWidth;
+                    var dHeight = pageHeight;
+
+                    window.onePageCanvas = document.createElement("canvas");
+                    onePageCanvas.setAttribute('width', pageWidth);
+                    onePageCanvas.setAttribute('height', pageHeight);
+                    var ctx = onePageCanvas.getContext('2d');
+                    ctx.drawImage(srcImg, sX, sY, sWidth, sHeight, dX, dY, dWidth, dHeight);
+
+                    var canvasDataURL = onePageCanvas.toDataURL("image/png", 1.0);
+                    var width = onePageCanvas.width;
+                    var height = onePageCanvas.clientHeight;
+
+                    if (i > 0) // if we're on anything other than the first page, add another page
+                        pdf.addPage(612, 791); // 8.5" x 11" in pts (inches*72)
+
+                    pdf.setPage(i + 1); // now we declare that we're working on that page
+                    pdf.addImage(canvasDataURL, 'PNG', 20, 40, (width * .62), (height * .62)); // add content to the page
+
+                }
+                pdf.save('fatura.pdf');
+            }
+        });
+    }
+</script>

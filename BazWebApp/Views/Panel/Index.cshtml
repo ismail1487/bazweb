@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "BazWebApp";
+}
+
+@using Baz.Model.Entity.ViewModel;
+
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+<script src="~/js/Model/IcerikGenel/IcerikKutuphanesiModel.js"></script>
+<script src="~/js/Model/IcerikGenel/IcerikMedyaModel.js"></script>
+<script src="~/js/Model/IcerikGenel/IcerikHedefKitleModel.js"></script>
+<script src="~/js/Model/Select2OptionModel.js"></script>
+<script src="~/js/Model/KisiListesiModel.js"></script>
+<script src="~/js/Model/DropDownModel.js"></script>
+<script src="~/js/Model/panel/GraphModel.js"></script>
+<script src="~/js/Services/IcerikGenel/IcerikDuyuruService.js"></script>
+<link href="~/css/All/Planning.css" rel="stylesheet" />
+<link href="~/css/All/Dashboard.css" rel="stylesheet" />
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="liste-baslik">@localizator["Dashboard"].Value</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<div class="container-fluid model-bind">
+    <div class="content">
+        <div class="row mt-3">
+            <div class="col-md-12 model-bind duyuru-col">
+                <div class="card duyr">
+                    <div class="card-header duyuru-header">
+                        <h5>@localizator["Duyurular"].Value</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group mr-3" id="DuyuruList">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,87 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+@*<link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.common.min.css" rel="stylesheet" />*@
+<link href="~/lib/kendo/Content/kendo/2020.3.1118/kendo.common.min.css" rel="stylesheet" />
+<link href="~/css/All/CompanyLicense.css" rel="stylesheet" />
+<script src="~/js/Model/LicenseModuleModel/LisansDetayKayitModel.js"></script>
+<script src="~/js/Model/LicenseModuleModel/KurumLisansDetayKayitModel.js"></script>
+<script type="text/javascript" src="~/js/Repository/IRepository.js"></script>
+<script src="~/js/Services/LicenseModuleServices/CompanyLicenseService.js"></script>
+
+<div class="container-fluid service-body">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-md-6">
+                    <h1>@localizator["Kurum Lisans Tanımlama"].Value</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content model-bind">
+        <div class="container-fluid">
+            <div class="row text-center">
+                <div class="col-12 text-center">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 offset-3">
+                                    <div class="row">
+                                        <div class="form-group col-md-6 offset-3">
+                                            <label class="Lbl">@localizator["Kurum Seçiniz"].Value:<b style="color: red;">*</b> </label>
+                                            <select style="height: 38px; line-height: 38px; width: 100%" id="Kurumlar" data-placeholder="Kurum Seçiniz" data-text-field="tanim" data-value-field="tabloID" data-bind="source:kurumList, value:data.IlgiliKurumId" data-role="dropdownlist" class="form-control select2-primary">
+                                            </select>
+                                            <label for="IlgiliKurumId" class="validationMessage"></label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6 offset-3">
+                                            <label class="Lbl">@localizator["Lisans Seçiniz"].Value:<b style="color: red;">*</b> </label>
+                                            <select style="height: 38px; line-height: 38px; width: 100%" id="Lisanslar" data-placeholder="Lisans Seçiniz" data-text-field="tanim" data-value-field="tabloID" data-bind="source:lisansList, value:data.LisansId,events:{change:LisansZamanıGetir}" data-role="dropdownlist" class="form-control select2-primary">
+                                            </select>
+                                            <label for="LisansId" class="validationMessage"></label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6 offset-3">
+                                            <label class="Lbl">@localizator["Lisans Zamanı Seçiniz"].Value:<b style="color: red;">*</b> </label>
+                                            <select style="height: 38px; line-height: 38px; width: 100%" id="Zamanlar" data-text-field="tanim" data-value-field="tabloID" data-placeholder="Zaman Seçiniz" data-bind="source:lisansZamanList, value:data.LisansZamanId, events:{change:ZamanIdyegoreGecerliGunAta}" data-role="dropdownlist" class="form-control select2-primary">
+                                            </select>
+                                            <label for="LisansZamanId" class="validationMessage"></label>
+                                        </div>
+                                    </div>
+                                    @*<div class="row">
+                                            <div class="form-group col-md-6 offset-3">
+                                                <label class="Lbl">@localizator["Kişi Sayısı"].Value:</label>
+                                                <input type="text" class="form-control numeric" placeholder="Sayı Giriniz" data-bind="value: data.LisansKisiSayisi">
+                                                <label for="LisansKisiSayisi" class="validationMessage"></label>
+                                            </div>
+                                        </div>*@
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <a href="/CompanyLicense/List" class="btn cancel-button-float">@localizator["Vazgeç"].Value</a>
+                                <button type="button" class="btn confirm add-buttons-nofloat" data-bind="click:Kaydet">@localizator["Kaydet"].Value </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- /.container-fluid -->
+<!-- /.content -->
+
+<script>
+    $(document).ready(function () {
+        companyLicenseService.SaveInitialize();
+        Numeric();
+    });
+</script>

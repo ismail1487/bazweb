@@ -1,0 +1,56 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+@*<link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.common.min.css" rel="stylesheet" />*@
+<link href="~/lib/kendo/Content/kendo/2020.3.1118/kendo.common.min.css" rel="stylesheet" />
+<link href="~/css/All/Templates.css" rel="stylesheet" />
+<link href="~/lib/AdminLTE/plugins/icheck-bootstrap/icheck-bootstrap.css" rel="stylesheet" />
+<script src="~/js/Model/IcerikKurumsalSablonTanimlariModel.js"></script>
+<script src="~/js/Services/ContentTemplates/SystemContentTemplatesService .js"></script>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6 liste-baslik ">
+                <h1>@localizator["İçerik Sistemsel Şablon Tanımları Listesi"].Value</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class=" model-bind">
+        <div class="card-header text-right">
+            <button type="button" class="btn add-buttons" data-bind="click:toCreatePage">@localizator["Ekle"].Value</button>
+        </div>
+        <!-- /.card-header -->
+        <div class="">
+            <table id="SablonListesiTable" style="width: 100% !important;" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>@localizator["Şablon İçerik Başlığı"].Value</th>
+                        <th>@localizator["Şablon İçerik Tanımı"].Value</th>
+                        <th>@localizator["Şablon İçerik Türü"].Value</th>
+                        <th>@localizator["Şablon Gönderim Türü"].Value</th>
+                        <th>@localizator["Şablon Kayıt Tarihi"].Value</th>
+                        <th style=' min-width: 20% !important;'>@localizator["İşlem"].Value</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody"></tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card-body -->
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+<script>
+    $(document).ready(function () {
+        SystemTemplateService.InitializeForList();
+    });
+</script>

@@ -1,0 +1,66 @@
+﻿
+
+<link href="~/css/All/IcerikGirisEkrani.css" rel="stylesheet" />
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<div class="container justify-content-center align-items-center">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="liste-baslik">@localizator["Slider Oluşturma"].Value</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    @*Slider başlık ve açıklama alanı*@
+    <section class="content">
+        <div class="border rounded p-3 mb-4 position-relative" style="background-color: #ffffff;">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="Lbl">Başlık</label>
+                            <input type="text" id="Baslik_1" class="form-control" placeholder="Başlık Giriniz">
+                            <label for="Baslik" class="validationMessage" id="validationMessageBaslik_1" style="display:none" required>Başlık Giriniz</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="Lbl">Açıklama</label>
+                            <textarea id="Aciklama_1" class="form-control" placeholder="Açıklama Giriniz"></textarea>
+                            <label for="Aciklama" class="validationMessage" id="validationMessageAciklama" style="display:none" required>Açıklama Giriniz</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @*medya alanı*@
+    <div class="border rounded p-3 mb-4 position-relative" style="background-color: #ffffff;">
+        <span class="position-absolute top-0 start-0 translate-middle-y px-2" style="
+        position: absolute;
+        top: -12px;
+        left: 16px;
+        padding: 0 8px;
+        font-weight: bold;
+        font-size: 1rem;
+    ">
+            @localizator["Medyalar"].Value
+        </span>
+        <div id="tekrarliMedya">
+        </div>
+
+    </div>
+    @*Kaydetme İşlemi*@
+    <div class="row mb-5">
+        <div class="col-md-12 col-12 text-right">
+            <button type="button" onclick="SliderKaydet()" id="kaydetButton" class="btn btn-primary">
+                @localizator["Kaydet"]
+            </button>
+        </div>
+    </div>
+</div>
+<script src="~/js/sliderkutuphanesi/sliderkutuphanesigiris.js" asp-append-version="true"></script>
+

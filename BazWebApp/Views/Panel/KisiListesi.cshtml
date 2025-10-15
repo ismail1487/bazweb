@@ -1,0 +1,172 @@
+﻿<script src="~/js/KisiListesi.js" asp-append-version="true"></script>
+<link href="~/css/All/Kisi.css" rel="stylesheet" />
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+<div class="container-fluid">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="liste-baslik">@localizator["Kişi Listesi"].Value</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="row card">
+                    <div class="tabbable-line col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 offset-xl-5 offset-lg-5 offset-md-5">
+                        <ul class="nav nav-tabs" id="kurumTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="kurumTab-aktif-tab" data-toggle="tab" aria-selected="true">@localizator["Kurum Çalışanları"].Value</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="kurumTab-pasif-tab" data-toggle="tab" aria-selected="false">@localizator["Diğer Çalışanlar"].Value</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="">
+                    <div class="card-header">
+                        <div class="tabbable-line col-12">
+                            <ul class="nav nav-tabs" id="kisiTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="kisiTab-aktif-tab" data-toggle="tab" href="#kisiAktifTabContent" role="tab" aria-controls="kisiAktifTabContent" aria-selected="true">@localizator["Aktif Kişi Listesi"].Value</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="kisiTab-pasif-tab" data-toggle="tab" href="#kisiPasifTabContent" role="tab" aria-controls="kisiPasifTabContent" aria-selected="false">@localizator["Pasif Kişi Listesi"].Value</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="tab-content" id="kisiTabContent">
+                            <div class="tab-pane fade active show" id="kisiAktifTabContent" role="tabpanel" aria-labelledby="kisiTab-aktif-tab">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="">
+                                            <div class="card-header text-right">
+                                                <div class="row">
+                                                    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-3 col-3 offset-xl-8 offset-lg-8 offset-md-7">
+                                                        <a href="/files/KisiListesiImport.xlsx" target="_blank" class="btn btn-outline-success" title="@localizator["Taslak Excel dosyasını indirebilirisiniz"].Value."><i class="fas fa-file-excel"></i></a>
+                                                    </div>
+                                                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-6 col-6">
+                                                        <button type="button" class="btn btn-success" id="ExcelEkleHeaderbtn">@localizator["Excel'den Ekle"].Value</button>
+                                                    </div>
+                                                    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-3 col-3">
+                                                        <button type="button" class="btn add-buttons" id="ekleHeaderbtn">@localizator["Ekle"].Value</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- /.card-header -->
+                                            <div class="">
+                                                <div style="width: 100%;">
+                                                    <div class="table-responsive">
+                                                        <table id="KisiListesiTable" class="table table-bordered table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>@localizator["Ad"].Value</th>
+                                                                    <th>@localizator["Soyad"].Value</th>
+                                                                    <th>@localizator["Kullanıcı Adı"].Value</th>
+                                                                    <th>@localizator["Ekran Adı"].Value</th>
+                                                                    <th>@localizator["E posta"].Value</th>
+                                                                    <th style='max-width: 13% !important;'>@localizator["Bağlı Olduğu Kurum"].Value</th>
+                                                                    <th style='min-width: 20% !important;'>@localizator["İşlem"].Value</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="tbody"></tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- /.card-body -->
+                                        </div>
+                                    </div>
+                                    <!-- /.col -->
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="kisiPasifTabContent" role="tabpanel" aria-labelledby="kisiTab-pasif-tab">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="">
+                                            <!-- /.card-header -->
+                                            <div class="">
+                                                <div style="width: 100%;">
+                                                    <div class="table-responsive">
+                                                        <table id="PasifKisiListesiTable" class="table table-bordered table-hover" style="width: 100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>@localizator["Ad"].Value</th>
+                                                                    <th>@localizator["Soyad"].Value</th>
+                                                                    <th>@localizator["E posta"].Value</th>
+                                                                    <th style='min-width: 20% !important;'>@localizator["İşlem"].Value</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="tbodypasif"></tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- /.card-body -->
+                                        </div>
+                                    </div>
+                                    <!-- /.col -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal kisi-sifre-modal " id="kisiSifreModal" tabindex="-1" role="dialog" aria-labelledby="kisiSifreModal" aria-hidden="true">
+            <div class="modal-dialog" id="davetmodaldialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <label class="modal-title" id="kisiListesiModalLabel">Şifre Ataması</label>
+                        <a class="close" data-dismiss="modal" aria-label="Close" href="javascript:;" data-bind="click:tabPrevios">
+                            <span aria-hidden="true">&times;</span>
+                        </a>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card card-tabs" style="width: 100%;">
+                            <div class="card-header" id="kisiSifreModal">
+                            </div>
+                            <div class="card-body">
+                                <form class="form-horizontal">
+                                    <div class="card-body">
+                                        <div class="col-12 left">
+                                            <div class="form-group row">
+                                                <label class="Lbl">@localizator["PAROLA"].Value</label>
+                                                <input type="password" class="form-control Shape" id="txtSifre" placeholder="Şifre*" autocomplete="new-password">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 left">
+                                            <div class="form-group row">
+                                                <label class="Lbl">@localizator["PAROLA TEKRAR"].Value</label>
+                                                <input type="password" class="form-control Shape" id="txtSifreTekrar" placeholder="Şifre Tekrar*">
+                                            </div>
+                                        </div>
+                                        <label for="KisiSifre" class="validationMessage"></label>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="button" class="btn modal-kaydet" id="sifreAta" onclick="SifreKaydet()">@localizator["Kaydet"].Value</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn modal-kapat" data-dismiss="modal">@localizator["Kapat"].Value</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="file" hidden="hidden" id="updexcel" />
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>

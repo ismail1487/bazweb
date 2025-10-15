@@ -1,0 +1,75 @@
+﻿<link href="~/css/All/Profile2.css" rel="stylesheet" />
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+@section MetaForNoCache
+    {
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+}
+<!-- Main content -->
+<section class="content profile-view-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <!-- Profile Image -->
+                <div class="card card-primary card-outline mt-4">
+                    <div class="card-body box-profile">
+                        <div class="text-center">
+                            <img id="KisiResimUrl" src="/img/_image.svg" class="profile-user-img img-fluid img-circle"
+                                 alt="User profile picture">
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-9 mt-3">
+
+
+                <div class="row">
+                    <div class="card card-primary card-outline mt-2 col-12 pt-3 pb-3">
+                        <h3 class="profile-username text-center" id="KisiAdi">&nbsp;</h3>
+                    </div>
+
+                    <div class="col-md-5">
+                        <ul class="list-group list-group-unbordered mb-3">
+                            <li class="list-group-item">
+                                <b class="float-left pl-3 w-50" id="KeyDepartman">@localizator["Departman"].Value:</b> <a id="ValDepartman"></a>
+                            </li>
+                            
+                            <li class="list-group-item">
+                                <b class="float-left pl-3 w-50" id="KeyPozisyon">@localizator["Pozisyon"].Value:</b> <a id="ValPozisyon"></a>
+                            </li>
+
+                            <li class="list-group-item">
+                                <b class="float-left pl-3 w-50" id="KeyRol">@localizator["Rol"].Value:</b> <a id="ValRol"></a>
+                            </li>
+                    </div>
+                    <div class="col-md-7">
+                        <ul class="list-group list-group-unbordered mb-3">
+                            <li class="list-group-item">
+                                <b class="float-left mx-5">@localizator["E-Mail"].Value:</b> <a id="KisiEposta"></a>
+                            </li>
+                            @*<li class="list-group-item">
+                            <b class="mx-5">Ekran Adı:</b> <a id="KisiEkranAdi" class="float-right mx-5"></a>
+                            </li>*@
+                            <li class="list-group-item">
+                                <b class="float-left mx-5">@localizator["Telefon No"].Value:</b> <a id="KisiTelefon1"></a>
+                            </li>
+
+                            <li class="list-group-item">
+                                <b class="float-left mx-5">@localizator["Sistem Dili"].Value:</b> <a id="DilAd"></a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+
+                <div class="text-center"><a href="/panel/profile/update" class="btn cancel-button">@localizator["Güncelle"].Value</a></div>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->

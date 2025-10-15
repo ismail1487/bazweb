@@ -1,0 +1,38 @@
+﻿@{
+
+    var kontrol = ViewBag.Durum;
+}
+<!-- Content Wrapper. Contains page content -->
+<link href="~/css/All/LicenseExpired.css" rel="stylesheet" />
+<div class="container-fluid">
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="col-12 mt-5" style="text-align:center;">
+                @*<img src="~/img/404.png" />*@
+                <div class="">
+                    <h2 class="headError">@ViewBag.Baslik</h2>
+                    @*@{
+
+                            ViewBag.Durum = true;
+                            ViewBag.Baslik = "Tebrikler";
+                            ViewBag.Aciklama = "Ödeme işleminiz başarıyla gerçekleşti.";
+
+                        }*@
+                    <div class="error-content">
+                        @*<h3>@ViewBag.Baslik</h3>*@
+                        <p>
+                            @ViewBag.Aciklama
+                        </p>
+                        <a href="/panel" class="btn add-buttons-nofloat">Anasayfaya Dön</a>
+                    </div>
+                    <!-- /.error-content -->
+                </div>
+                <!-- /.error-page -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.content -->
+<!-- /.content-wrapper -->

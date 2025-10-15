@@ -1,0 +1,59 @@
+﻿<script src="~/js/ErisimYetkiList.js" asp-append-version="true"></script>
+<link href="~/css/All/YetkiMerkezi.css" rel="stylesheet" />
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+
+<div class="container-fluid">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6 liste-baslik">
+                    <h1>@localizator["Erişim Yetkilendirmeleri Listesi"].Value</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="">
+                        <div class="card-header text-right">
+                            <button type="button" class="btn add-buttons" id="ekleHeaderbtn">@localizator["Ekle"].Value</button>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="">
+                            <table style="width: 100% !important;" id="YetkiListesiTable" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>@localizator["Organizasyon Birim Türü"].Value</th>
+                                        <th>@localizator["Sayfa Adı"].Value</th>
+                                        <th>@localizator["Birim Tanımı Adı"].Value</th>
+                                        <th>@localizator["İşlem"].Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody"></tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>@localizator["Organizasyon Birim Türü"].Value</th>
+                                        <th>@localizator["Sayfa Adı"].Value</th>
+                                        <th>@localizator["Birim Tanımı Adı"].Value</th>
+                                        <th>@localizator["İşlem"].Value</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>

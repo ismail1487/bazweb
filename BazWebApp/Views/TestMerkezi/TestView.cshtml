@@ -1,0 +1,227 @@
+﻿@*<link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.common.min.css" rel="stylesheet" />*@
+<link href="~/lib/kendo/Content/kendo/2020.3.1118/kendo.common.min.css" rel="stylesheet" />
+
+<script src="~/js/Model/TestMerkezi/HatirlatmaKayitlarModel.js"></script>
+<link href="~/css/All/TestView.css" rel="stylesheet" />
+@*<script type="text/javascript" src="~/js/Repository/IRepository.js"></script>*@
+<script src="~/js/Services/TestMerkezi/TestMerkeziService.js"></script>
+@*<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />*@
+<link href="~/lib/font-awesome-4-7-0/font-awesome.min.css" rel="stylesheet" />
+
+<section class="content service-body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header card-header-admin">
+                        <h3 class="card-title card-title-admin">İki Tarih Arasındaki Hafta Sonları</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Başlangıç Tarihi</label>
+                                    <input class="form-control" type="date" id="TarihX">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Son Tarihi</label>
+                                    <input class="form-control" type="date" id="TarihY">
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <label>Haftasonu Günleri</label> <br />
+                                <table>
+                                    <ul id="TarihZ">
+                                    </ul>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-md-10 offset-1 text-center mb-4" style="margin-top: 10px;">
+                                <button type="button" id="temizleTarih" class="btn btn-danger btn-sm">Temizle</button>
+                                <button type="button" id="getirTarih" class="btn btn-success btn-sm">Getir</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-secondary">
+                    <div class="card-header card-header-admin">
+                        <h3 class="card-title card-title-admin">Hatırlatma Ayarları Tetikleme</h3>
+                    </div>
+                    <div class="card-body model-bind">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Zaman</label>
+                                    <input id="hatirlatmaZamani" class="form-control datetimepicker" type="text" data-bind="value:data.HatirlatmaZamani">
+                                    <label for="HatirlatmaMetni" class="validationMessage"></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label>Metin</label> <br />
+                                <input class="form-control" type="text" data-bind="value:data.HatirlatmaMetni">
+                            </div>
+                            <div class="col-md-2">
+                                <label>Mail</label>
+                                <div class="input-group input-group-select mb-1">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
+                                    </div>
+                                    <input type="checkbox" class="form-control" data-bind="checked:data.HatirlatmaEpostaYollayacakMi" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>SMS</label>
+                                <div class="input-group input-group-select mb-1">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
+                                    </div>
+                                    <input type="checkbox" class="form-control" data-bind="checked:data.HatirlatmaSmsyollayacakMi" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-md-10 offset-1 text-center mb-3" style="margin-top:10px;">
+                                <button type="button" class="btn btn-success btn-sm" data-bind="click:save">
+                                    <i class="fa fa-save"></i> Kaydet
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-secondary ozel-gun-validate">
+                    <div class="card-header card-header-admin">
+                        <h3 class="card-title card-title-admin">Özel Gün Bildirimi Tetikleme</h3>
+                    </div>
+                    <div class="card-body model-bind">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Zaman</label>
+                                    <input id="hatirlatmaZamani" class="form-control datetimepicker" type="text" data-bind="value:ozelGunData.HatirlatmaZamani">
+                                    <label for="HatirlatmaMetni" class="validationMessage"></label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Metin</label> <br />
+                                <input class="form-control" type="text" data-bind="value:ozelGunData.HatirlatmaMetni">
+                            </div>
+                            <div class="col-md-2">
+                                <label>Mail</label>
+                                <div class="input-group input-group-select mb-1">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
+                                    </div>
+                                    <input type="checkbox" class="form-control" data-bind="checked:ozelGunData.HatirlatmaEpostaYollayacakMi" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>SMS</label>
+                                <div class="input-group input-group-select mb-1">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
+                                    </div>
+                                    <input type="checkbox" class="form-control" data-bind="checked:ozelGunData.HatirlatmaSmsyollayacakMi" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-md-10 offset-1 text-center mb-3" style="margin-top:10px;">
+                                <button type="button" class="btn btn-success btn-sm" data-bind="click:ozelGunSave">
+                                    <i class="fa fa-save"></i> Kaydet
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-secondary">
+                    <div class="card-header card-header-admin">
+                        <h3 class="card-title card-title-admin">Google Maps Entegrasyonu</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="googlemap row col-md-10 offset-md-1" data-lat="41.019" data-long="29.013">
+                                <div id="map" class="col-md-6 mx-auto">
+                                </div>
+                                @*<div class="col-md-4 offset-md-1 my-auto">
+                                        <div class="col-md-10 offset-md-1 my-auto">
+                                            <div class="form-group">
+                                                <label>Enlem: </label>
+                                                <a id="latitude" data-bind="value:latitude" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-10 offset-md-1">
+                                            <div class="form-group">
+                                                <label>Boylam: </label>
+                                                <a id="longitude" data-bind="value:longitude" />
+                                            </div>
+                                        </div>
+                                    </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-secondary">
+                    <div class="card-header card-header">
+                        <h3 class="card-title card-title-admin">Örnek Faturanın Pdf Olarak İndirilmesi</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 text-center"> <img src="/images/earsiv.png" /></div>
+                            <div class="col-md-12 text-center">
+                                <a id="gopdf" href="/testcenter/fatura" class="btn btn-success btn-sm">
+                                    <i class="fa fa-save"></i> Faturaya Git
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/lib/AdminLTE/plugins/moment/locale/tr.js"></script>
+<script>
+    $(document).ready(function () {
+        var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+        var dateNow = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
+        //var dateNow = new Date().toISOString();
+        $('#hatirlatmaZamani').val((dateNow.substring(0, dateNow.length - 7)));
+        $("#hatirlatmaZamani").attr("min", (dateNow.substring(0, dateNow.length - 7)));
+
+        var todayDate = new Date().toISOString().slice(0, 10);
+
+        $('#TarihX').val(todayDate);
+
+        moment.locale('tr');
+        $('#getirTarih').on("click", function () {
+            $('#TarihZ').empty();
+            var startFrom = $('#TarihX').val();
+            var startDate = new Date(startFrom);
+            var endFrom = $('#TarihY').val();
+            var endDate = new Date(endFrom);
+            //var weekendCnt = getWeekendCountBetweenDates(startDate, endDate);
+            var weekends = calcBusinessDays(startDate, endDate);
+            for (var i = 0; i < weekends.length; i++) {
+                $('#TarihZ').append($("<li>").html(moment(weekends[i]).format('dddd Do MMMM YYYY')));
+            }
+        });
+
+        $('#TarihX').on("change", function () {
+            //debugger;
+            $("#TarihY").attr("min", $('#TarihX').val());
+            $("#TarihY").val($('#TarihX').val());
+        });
+
+        $('#temizleTarih').on("click", function () {
+            $('#TarihZ').empty();
+            $('#TarihX').val("");
+            $('#TarihY').val("");
+        });
+    });
+</script>

@@ -1,0 +1,241 @@
+﻿<script src="~/js/KisiTanimlamaJS.js" asp-append-version="true"></script>
+<script src="~/js/dinamikAlanlar.js" asp-append-version="true"></script>
+<link href="~/css/All/Kisi.css" rel="stylesheet" />
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+<div class="container-fluid">
+	<!-- Content Header (Page header) -->
+	<!--<section class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h2>Kişi Tanımlama Sayfası</h2>
+				</div>
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a href="/panel">Anasayfa</a></li>
+						<li class="breadcrumb-item active">Kişi Tanımlama Sayfası</li>
+					</ol>
+				</div>
+			</div>
+		</div>-->
+	<!-- /.container-fluid -->
+	<!--</section>-->
+	<!-- Main content -->
+	<section class="content">
+		<div class="row">
+			<div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12">
+				<div class="col-12">
+					<h5 class="left-head">@localizator["Yeni Kullanıcı"].Value</h5>
+					<p class="left-body">@localizator["Yeni Kişi Tanımlama"].Value</p>
+				</div>
+			</div>
+			<div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12">
+				<div class="card container mt-2">
+					<h5>@localizator["Organizasyon Bilgileri"].Value<b>*</b></h5>
+					<div class="row row-cols-2 kisiTanimlamaDivBlocks container">
+						<div class="col-4" id="Krm">
+							<div class="form-group">
+								<label class="Lbl">@localizator["Kurum Seçimi"].Value<b>*</b></label>
+								<select id="Kurum" class="form-control" style="width: 100%;" onchange="BirimDDLDoldur($(this).val())" @* required="true" *@>
+								</select>
+								<label for="Kurum" class="validationMessage"></label>
+							</div>
+						</div>
+
+						<div class="col-4">
+							<div class="form-group">
+								<label class="Lbl">Departman<b>*</b></label>
+								<select id="Departman" class="form-control" style="width: 100%;" @* required="true" *@>
+									<option value="0">Seçiniz</option>
+								</select>
+								<label for="Departman" class="validationMessage"></label>
+							</div>
+						</div>
+						<div class="col-4" id="Pzsyn">
+							<div class="form-group">
+								<label class="Lbl">@localizator["Pozisyon"].Value<b>*</b></label>
+								<select id="Pozisyon" class="form-control" style="width: 100%;" @* required="true" *@>
+									<option value="0">@localizator["Seçiniz"].Value</option>
+								</select>
+								<label for="Pozisyon" class="validationMessage"></label>
+							</div>
+						</div>
+						@*<div class="col" id="Rl" style="display:none">*@
+						<div class="col-4" id="R">
+							<div class="form-group">
+								<label class="Lbl">@localizator["Rol"].Value<b>*</b></label>
+								<select id="Rol" class="form-control" style="width: 100%;" @* required="true" *@>
+									<option value="0">@localizator["Seçiniz"].Value</option>
+								</select>
+								<label for="Rol" class="validationMessage"></label>
+							</div>
+						</div>
+						@*<div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Lokasyon</label>
+                                    <select id="Lokasyon" class="form-control" style="width: 100%;">
+                                        <option value="0">Seçiniz</option>
+                                    </select>
+                                </div>
+                            </div>*@
+						<div class="col-4" id="Grs">
+							<div class="form-group">
+								<label class="Lbl">@localizator["İşe Giriş Tarihi"].Value<b>*</b></label>
+								<input class="form-control" type="date" id="IseGirisTarihi" @* required="true" *@>
+								<label for="IseGirisTarihi" class="validationMessage"></label>
+							</div>
+						</div>
+					</div>
+					<hr />
+					<h5>@localizator["Kişisel Bilgiler"].Value<b>*</b></h5>
+					<div class="row container">
+						<div class="col-6">
+							<div class="form-group">
+								<label class="Lbl" for="Ad">@localizator["Ad"].Value<b>*</b></label>
+								<input type="text" id="Ad" class="form-control onlyText" @* required="true" *@>
+								<label for="Adi" class="validationMessage"></label>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="form-group">
+								<label class="Lbl" for="Soyad">@localizator["Soyad"].Value<b>*</b></label>
+								<input type="text" id="Soyad" class="form-control onlyText" @* required="true" *@>
+								<label for="Soyadi" class="validationMessage"></label>
+							</div>
+						</div>
+					</div>
+					<div clas="row container">
+						<div class="col">
+							<div class="form-group">
+								<label class="Lbl" for="Eposta">@localizator["E-posta"].Value<b>*</b></label>
+								<input type="text" id="Eposta" class="form-control" @* required="true" *@>
+								<label for="EpostaAdresi" class="validationMessage"></label>
+							</div>
+							
+						</div>
+					</div>
+					<div class="row row-cols-2 kisiTanimlamaDivBlocks container">
+						<div class="col">
+							<div class="form-group">
+								<label class="Lbl" for="Sicil">@localizator["Sicil No"].Value</label>
+								<input type="text" id="Sicil" class="form-control numeric">
+							</div>
+							@* <label for="SicilNo" class="validationMessage"></label> *@
+						</div>
+						<div class="col">
+							<div class="form-group">
+								<label class="Lbl" for="Tc">@localizator["T.C. Kimlik No"].Value<b>*</b></label>
+								<input type="text" id="Tc" class="form-control numeric" @* required="true" *@>
+								<label for="TCKimlikNo" class="validationMessage"></label>
+							</div>
+						</div>
+						<div class="col">
+							<div class="form-group">
+								<label class="Lbl" for="Baba">@localizator["Baba Adı"].Value</label>
+								<input type="text" id="Baba" class="form-control onlyText">
+							</div>
+							@* <label for="BabaAdi" class="validationMessage"></label> *@
+						</div>
+						<div class="col">
+							<div class="form-group">
+								<label class="Lbl" for="Ana">@localizator["Anne Adı"].Value</label>
+								<input type="text" id="Ana" class="form-control onlyText">
+							</div>
+							@* <label for="AnneAdi" class="validationMessage"></label> *@
+						</div>
+						@* <div class="col" style="display: none">
+                            <div class="form-group">
+                                <label class="Lbl" for="Din">@localizator["Dini"].Value</label>
+                                <select id="Din" class="form-control" style="width: 100%;">
+                                </select>
+                            </div>
+                        </div> *@
+						<div class="col">
+							<div class="form-group">
+								<label class='Lbl' for="Medeni">@localizator["Medeni Hali"].Value</label>
+								<select id="Medeni" class="form-control" style="width: 100%;">
+								</select>
+							</div>
+						</div>
+						<div class="col">
+							<div class="form-group">
+								<label class="Lbl" for="Cins"> @localizator["Cinsiyet"].Value<b>*</b></label>
+								<select id="Cins" class="form-control" style="width: 100%;" @* required="true" *@>
+								</select>
+								<label for="Cinsiyeti" class="validationMessage"></label>
+							</div>
+						</div>
+						<div class="col">
+							<div class="form-group">
+								<label class="Lbl">@localizator["Doğduğu Ülke"].Value</label>
+								<select id="DogduguUlke" class="form-control" style="width: 100%;">
+								</select>
+							</div>
+						</div>
+						<div class="col">
+							<div class="form-group">
+								<label class="Lbl">@localizator["Doğduğu Şehir"].Value</label>
+								<select id="DogduguSehir" class="form-control" style="width: 100%;">
+								</select>
+							</div>
+						</div>
+						<div class="col">
+							<div class="form-group">
+								<label class="Lbl" for="birthday">@localizator["Doğum Tarihi"].Value<b>*</b></label>
+								<input class="form-control" type="date" id="DogumTarihi" @* required="true" *@>
+								<label for="DogumTarihi" class="validationMessage"></label>
+							</div>
+						</div>
+					</div>
+					<hr />
+					<div class="col-md-12">
+						<h5>@localizator["Adres Bilgileri"].Value</h5>
+						<div class="tekrarliAlanBox" id="AdresTekrarliAlan">
+						</div>
+					</div>
+					<div class="col-md-12">
+						<h5>@localizator["Okul Bilgileri"].Value</h5>
+
+						<div class="tekrarliAlanBox" id="OkulTekrarliAlan">
+						</div>
+					</div>
+					<div class="col-md-12">
+						<h5>@localizator["Telefon Bilgileri"].Value<b>*</b></h5>
+
+						<div class="tekrarliAlanBox" id="TelefonTekrarliAlan">
+						</div>
+					</div>
+					@* Yabancı Dil bilgileri kaldırıldı projeye dönünce tekrar açılacak *@
+					<div class="col-md-12">
+						<h5>@localizator["Yabanci Dil Bilgileri"].Value</h5>
+						<div class="tekrarliAlanBox" id="YabanciDilTekrarliAlan">
+						</div>
+					</div>
+					@* Ek bilgiler kullanılmadığı için buradan kaldırıldı. *@
+					@* <div class="col-md-12">
+                        <h5>@localizator["Ek Bilgiler"].Value</h5>
+                        <div class="" id="kisiEkBilgiler">
+                        </div>
+                    </div> *@
+					<div class="row">
+						<div class="col-12 text-center mb-3">
+							<button type="button" id="kaydetButton" class="btn add-buttons">@localizator["Kaydet"].Value</button>
+							<a href="/panel/PersonList" class="btn cancel-button-right">@localizator["Vazgeç"].Value</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- /.content -->
+</div>
+<!-- InputMask -->
+<script src="/lib/AdminLTE/plugins/moment/moment.min.js"></script>  <!-- date-range-picker -->
+@*<script>
+        $(document).ready(function () {
+            $('#Ana').keypress(function (e) {
+                var key = e.keyCode;
+                return ((key >= 97 && key <= 122) || key == 8 || key == 32);
+            });
+        });
+    </script>*@

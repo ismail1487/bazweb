@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30524.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BazWebApp", "BazWebApp\BazWebApp.csproj", "{9740EA97-87E3-4FCA-B870-2FD2A39631E9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAppUnitTests", "WebAppUnitTests\WebAppUnitTests.csproj", "{70B1EEAF-E76F-400C-B297-979915B06225}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9740EA97-87E3-4FCA-B870-2FD2A39631E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9740EA97-87E3-4FCA-B870-2FD2A39631E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9740EA97-87E3-4FCA-B870-2FD2A39631E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9740EA97-87E3-4FCA-B870-2FD2A39631E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70B1EEAF-E76F-400C-B297-979915B06225}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70B1EEAF-E76F-400C-B297-979915B06225}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70B1EEAF-E76F-400C-B297-979915B06225}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70B1EEAF-E76F-400C-B297-979915B06225}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B649C9FA-0A73-4AB2-854D-9C63ED2F0EF0}
+	EndGlobalSection
+EndGlobal

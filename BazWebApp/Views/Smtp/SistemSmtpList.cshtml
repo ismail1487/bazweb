@@ -1,0 +1,59 @@
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+@*<link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.common.min.css" rel="stylesheet" />*@
+<link href="~/lib/kendo/Content/kendo/2020.3.1118/kendo.common.min.css" rel="stylesheet" />
+<link href="~/css/All/Smtp.css" rel="stylesheet" />
+<script src="~/js/Model/Smtp/SistemSmtpDegerleriModel.js"></script>
+<script src="~/js/Repository/IRepository.js"></script>
+<script src="~/js/Services/Smtp/SmtpService.js"></script>
+<div class="container-fluid">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>@localizator["Sistem SMTP Değerleri Listesi"].Value</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="model-bind">
+                        <div class="card-header text-right">
+                            <button type="button" class="btn add-buttons" data-bind="click:toSmtpAddPage">@localizator["Ekle"].Value</button>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="">
+                            <table id="SmtpListesiTable" style="width: 100% !important;" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>@localizator["SMTP Adı"].Value</th>
+                                        <th>@localizator["SMTP Bağlantı Dizisi"].Value</th>
+                                        <th>@localizator["SMTP Bağlantı Kullanıcı Adı"].Value</th>
+                                        <th>@localizator["SMTP Port"].Value</th>
+                                        <th style=' min-width: 20% !important;'>@localizator["İşlem"].Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody"></tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+
+<script>
+    $(document).ready(function () {
+        smtpService.initializeForList();
+    })
+</script>

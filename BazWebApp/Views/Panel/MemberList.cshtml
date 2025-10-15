@@ -1,0 +1,60 @@
+﻿
+
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+
+<script src="~/js/Repository/IRepository.js"></script>
+<script src="~/js/Services/Uye/UyeService.js"></script>
+
+<div class="container-fluid">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="liste-baslik">@localizator["Üye Listesi"].Value</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content servicebind">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header text-right">
+                    <div class="row">
+                        @*<div class="col-xl-1 col-lg-1 col-md-1 col-sm-3 col-3 offset-xl-8 offset-lg-8 offset-md-7">
+                                <a href="/files/KisiListesiImport.xlsx" target="_blank" class="btn btn-outline-success" title="@localizator["Taslak Excel dosyasını indirebilirisiniz"].Value."><i class="fas fa-file-excel"></i></a>
+                            </div>*@
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="">
+                    <div style="width: 100%;">
+                        <div class="table-responsive">
+                            <table id="UyeListesiTable" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>@localizator["Ad Soyad"].Value</th>
+                                        <th>@localizator["E-Posta"].Value</th>
+                                        <th>@localizator["Aktiflik"].Value</th>
+                                        <th>@localizator["Üyelik Tarihi"].Value</th>
+                                        <th>@localizator["Lisans Adı"].Value</th>
+                                        <th>@localizator["Free Trial Mi"].Value</th>
+                                        <th>@localizator["Ödeme Durumu"].Value</th>
+                                        <th>@localizator["Kurum Lisans Sayısı"].Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+    $(document).ready(function () {
+        uyeService.initalize();
+    })
+</script>

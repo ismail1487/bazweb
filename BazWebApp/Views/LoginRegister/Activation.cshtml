@@ -1,0 +1,89 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+@inject ILocalizationService localizationService;
+@{
+    var dil = localizationService.GetCulture();
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @{
+#if (DEBUG)
+    }
+    <meta name="robots" content="noindex">
+    @{
+#else
+    }
+
+    @{
+#endif
+    }
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="~/lib/AdminLTE/dist/css/adminlte.css" rel="stylesheet" />
+    <link href="~/lib/AdminLTE/plugins/fontawesome-free/css/all.css" rel="stylesheet" />
+    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
+    <script src="~/lib/AdminLTE/plugins/jquery/jquery.js"></script>
+    <script src="~/js/tools.js" asp-append-version="true"></script>
+    <script src="~/lib/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="~/lib/AdminLTE/plugins/bootstrap/js/bootstrap.js"></script>
+    <script src="~/lib/AdminLTE/dist/js/adminlte.js"></script>
+    <script src="~/js/ActivationJS.js" asp-append-version="true"></script>
+    <script src="~/lib/AdminLTE/plugins/toastr/toastr.min.js"></script>
+    <link type="text/css" href="~/lib/AdminLTE/plugins/toastr/toastr.css" rel="stylesheet" />
+    <link href="~/css/All/General.css" rel="stylesheet" />
+    <link href="~/css/All/Login.css" rel="stylesheet" />
+    <link href="~/css/All/Activation.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@500&display=swap" rel="stylesheet">
+    @if (dil == "tr-TR")
+    {
+
+        <script src="~/js/Lang/LangToastTr.js"></script>
+    }
+    else
+    {
+        <script src="~/js/Lang/LangToastEn.js"></script>
+    }
+</head>
+<body>
+    <div class="col-12 row">
+        <div class="col-6 BackLeft d-none d-md-none d-lg-block d-xl-block  ">
+            <div>
+                <h1 class="ProjectTittle">BAZ PROJE</h1>
+            </div>
+
+            <!-- svg -->
+            <div class="ImageDivLogin">
+                
+            </div>
+        </div>
+        <div class="col-12 col-lg-6 col-sm-12 col-md-12">
+            <div class="login-page">
+                <div class="" style=" margin: 25px;">
+
+                    @*<div class="login-logo">
+                            <a href="/"><b>DigiForce</b></a>
+                        </div>*@
+                    <!-- /.login-logo -->
+                    <div class="card">
+                        <div class="card-body login-card-body">
+                            @*<p class="login-box-msg aktivasyon-message">Hesabınız aktifleştirilmiştir. Giriş yapıp servisimizi kullanmaya başlayabilirsiniz.</p>*@
+                            <p class="login-box-msg aktivasyon-message">Aktivasyon linki kontrol ediliyor, Lütfen bekleyin.</p>
+                            <div class="row text-center">
+                                <div class="col-12 text-center">
+                                    <button type="button" class="btn add-buttons-nofloat" onclick="ToLogin()">Giriş Sayfasına Git</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

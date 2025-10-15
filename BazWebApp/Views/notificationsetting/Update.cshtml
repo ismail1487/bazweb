@@ -1,0 +1,85 @@
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+@*<link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.common.min.css" rel="stylesheet" />*@
+<link href="~/lib/kendo/Content/kendo/2020.3.1118/kendo.common.min.css" rel="stylesheet" />
+<link href="~/css/All/notificationsetting.css" rel="stylesheet" />
+<script type="text/javascript" src="~/js/Model/HatirlatmaGenelAyarModel.js"></script>
+<script type="text/javascript" src="~/js/Repository/IRepository.js"></script>
+<script type="text/javascript" src="~/js/Services/HatirlatmaGenelAyarlarService.js"></script>
+<section class="content service-body">
+    <div class="container-fluid">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h2>@localizator["Hatırlatma Genel Ayar Güncelleme"].Value</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card ">
+                    <div class="card-body model-bind">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label class="Lbl">@localizator["Başlama Zaman Tipi"].Value</label>
+                                <div class="input-group input-group-select mb-3">
+                                    <select class="form-control form-control-sm field-select2" data-text-field="tanim" data-value-field="tanim" data-bind="source:zamanTipi, value:data.HatirlatmaBaslamaZamanTipi" data-role="dropdownlist" required>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="Lbl">@localizator["Başlama Zaman Değeri"].Value</label>
+                                <div class="input-group input-group-select mb-3">
+                                    <input type="number" onkeypress="return event.charCode >= 48" min="0" class="form-control form-control-sm" data-bind="value:data.HatirlatmaBaslamaZamanTipiDegeri" required/>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="Lbl">@localizator["Başlama Zaman Değeri"].Value</label>
+                                <div class="input-group input-group-select mb-3">
+                                    <input type="number" class="form-control form-control-sm" data-bind="value:data.HatirlatmaBaslamaZamanTipiDegeri" required/>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="Lbl">@localizator["Çalışma Sayısı"].Value</label>
+                                <div class="input-group input-group-select mb-3">
+
+                                    <input type="number" class="form-control form-control-sm" data-bind="value:data.HatirlatmaMaksimumSayisi" required/>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="Lbl">@localizator["Hatirlatma Aralığı(Dakika)"].Value</label>
+                                <div class="input-group input-group-select mb-3">
+
+                                    <input type="number" class="form-control form-control-sm" data-bind="value:data.HatirlatmaAralikSikligiDakikaBazinda" required/>
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-6 col-6 text-center">
+                                <label class="Lbl">@localizator["Mail"].Value</label>
+                                <div class="">
+
+                                    <input type="checkbox" class="form-control" data-bind="checked:data.HatirlatmaEpostaYollasinMi"/>
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-6 col-6 text-center">
+                                <label class="Lbl">@localizator["SMS"].Value</label>
+                                <div class="">
+
+                                    <input type="checkbox" class="form-control" data-bind="checked:data.HatirlatmaSmsyollasinMi"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-md-10 offset-1 text-center mb-4" style="margin-top: 10px;">
+                <button type="button" class="btn add-buttons btn-sm" data-bind="click:save">
+                    @localizator["Güncelle"].Value
+                </button>
+                <button type="button" class="btn btn-sm cancel-button-right" onclick="location.href = '/notificationsetting/List'"> @localizator["Vazgeç"].Value</button>
+            </div>
+        </div>
+    </div>
+</section>

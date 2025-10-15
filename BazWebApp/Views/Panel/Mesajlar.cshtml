@@ -1,0 +1,363 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@*<script src="~/js/Repository/IRepository.js"></script>*@
+<script src="~/js/Model/MessageRecordsSearchModel.js"></script>
+<script src="~/js/Services/MessageRecordsSearchService.js"></script>
+
+<link href="~/css/All/General.css" rel="stylesheet" />
+<link href="~/css/All/MessageRecord.css" rel="stylesheet" />
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+
+<div class="container-fluid model-bind">
+
+    <!-- Main content -->
+    <section class="content">
+
+
+        <div class="row">
+            <div class="col-12 mt-2">
+                <h1 class="display-6 my-2 text-center">Kurum İçi Mesajlaşma</h1>
+            </div>
+            <div class="col-3">
+
+
+                <div class="card card-widget widget-user-2">
+
+
+                    <div class="card-footer p-0">
+
+                        <input id="user-search-input" class="form-control" placeholder="Search User" type="search">
+                        <ul class="nav flex-column" id="chat-user-list">
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-9" id="message-container">
+
+
+
+                <div class="card direct-chat-primary">
+                    <div class="card-header bg-dark ui-sortable-handle" style="cursor: move;">
+                        <h3 class="card-title">Mesajlar</h3>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="direct-chat-messages">
+                            <div class="imessages" id="imessages-0">
+                                <!--
+                                <p class="from-them">Abi, Coffy güncellemesi okeymidir,”<span class="saat-span">13:50:49</span></p>
+                                <p class="from-me">Az bekle Cenk, pushluyorum<span class="saat-span">13:50:49</span></p>
+                                <p class="from-them margin-b_one">Bitince bende püleline çalıştırayım, Bitince bende püleline çalıştırayımBitince bende püleline çalıştırayım, Bitince bende püleline çalıştırayımBitince bende püleline çalıştırayım, Bitince bende püleline çalıştırayımBitince bende püleline çalıştırayım, Bitince bende püleline çalıştırayımBitince bende püleline çalıştırayım, Bitince bende püleline çalıştırayımBitince bende püleline çalıştırayım, Bitince bende püleline çalıştırayımBitince bende püleline çalıştırayım, Bitince bende püleline çalıştırayımBitince bende püleline çalıştırayım, Bitince bende püleline çalıştırayımBitince bende püleline çalıştırayım, Bitince bende püleline çalıştırayım<span class="saat-span">13:50:49</span></p>
+                                -->
+                            </div>
+                        </div>
+                    </div>
+                    <!--
+                    <div class="card-footer">
+                        <form action="#" method="post">
+                            <div class="input-group">
+                                <input type="text" id="message-box-text" name="message-box" placeholder="Type Message ..." class="form-control" autocomplete="off">
+                                <span class="input-group-append">
+                                    <button id="message-send-btn" type="button" class="btn btn-primary">Send</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div> -->
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .direct-chat-messages {
+            height: 550px !important;
+        }
+
+        .Combined-Shape {
+            width: 320px;
+            height: 84px;
+            flex-grow: 0;
+            margin: 0 0 4px;
+            padding: 16px 24px 20px;
+            background-color: #ff5f00;
+        }
+
+        .Value {
+            width: 272px;
+            height: 48px;
+            flex-grow: 0;
+            font-family: EncodeSans;
+            font-size: 15px;
+            font-weight: 500;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: 1.6;
+            letter-spacing: normal;
+            text-align: left;
+            color: #fff;
+        }
+
+        .Message {
+            width: 1440px;
+            height: 854px;
+            flex-grow: 0;
+            border-radius: 16px;
+            box-shadow: 0 4px 45px 0 rgba(63, 64, 71, 0);
+            background-color: #fff;
+        }
+    </style>
+    <!-- /.content -->
+</div>
+
+<script src="~/lib/AdminLTE/plugins/chart.js/Chart.min.js"></script>
+<input type="file" hidden="hidden" id="uploadFileControl" />
+<script>
+    $(document).ready(function () {
+        // Search User
+        const searvhBar = document.getElementById('user-search-input');
+        searvhBar.addEventListener('input', () => {
+            const navoptions = document.querySelectorAll('#chat-user-list li .nav-link');
+            const filter = searvhBar.value.toLowerCase();
+            navoptions.forEach((el) => {
+                el.style.display = 'block';
+            });
+            const valueExist = !!filter.length;
+            if (valueExist) {
+                navoptions.forEach((el) => {
+                    const elText = el.textContent.trim().toLowerCase();
+                    const isIncluded = elText.includes(filter);
+                    if (!isIncluded) {
+                        el.style.display = 'none';
+                    }
+                });
+            }
+        });
+
+
+    });
+</script>
+<style>
+    #user-search-input {
+        border-top-right-radius: 0.25rem;
+        border-top-left-radius: 0.25rem;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .ur-span {
+        position: relative;
+    }
+
+    .ur-baget {
+        position: absolute;
+        top: -8px;
+        right: -5px;
+        font-size: 10px;
+        font-weight: 500;
+        display: none;
+    }
+
+    /* ########################### CUSTOM CSS END ##########################33 */
+
+
+    .imessages {
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto 1rem;
+        width: 100%;
+        padding: 0.5rem 1.5rem;
+    }
+
+        .imessages p {
+            border-radius: 1.15rem;
+            line-height: 1.25;
+            max-width: 75%;
+            padding: 0.5rem .875rem;
+            position: relative;
+            word-wrap: break-word;
+            min-width: 100px;
+            margin: 0.2rem 0 !important;
+        }
+
+            .imessages p::before,
+            .imessages p::after {
+                bottom: -0.1rem;
+                content: "";
+                height: 1rem;
+                position: absolute;
+            }
+
+    p.from-me {
+        align-self: flex-end;
+        background-color: #248bf5;
+        color: #fff;
+    }
+
+        p.from-me::before {
+            border-bottom-left-radius: 0.8rem 0.7rem;
+            border-right: 1rem solid #248bf5;
+            right: -0.35rem;
+            transform: translate(0, -0.1rem);
+        }
+
+        p.from-me::after {
+            background-color: #fff;
+            border-bottom-left-radius: 0.5rem;
+            right: -40px;
+            transform: translate(-30px, -2px);
+            width: 10px;
+        }
+
+    p[class^="from-"] {
+        margin: 0.5rem 0;
+        margin-top: 20px;
+        width: fit-content;
+    }
+
+    p.from-me ~ p.from-me {
+        margin: 0.25rem 0 0;
+    }
+
+        p.from-me ~ p.from-me:not(:last-child) {
+            margin: 0.2rem 0 0;
+        }
+
+        p.from-me ~ p.from-me:last-child {
+            margin: 0.2rem 0 0;
+        }
+
+    p.from-them {
+        align-items: flex-start;
+        background-color: #e5e5ea;
+        color: #000;
+    }
+
+        p.from-them:before {
+            border-bottom-right-radius: 0.8rem 0.7rem;
+            border-left: 1rem solid #e5e5ea;
+            left: -0.35rem;
+            transform: translate(0, -0.1rem);
+        }
+
+        p.from-them::after {
+            background-color: #fff;
+            border-bottom-right-radius: 0.5rem;
+            left: 20px;
+            transform: translate(-30px, -2px);
+            width: 10px;
+        }
+
+    p[class^="from-"].emoji {
+        background: none;
+        font-size: 2.5rem;
+    }
+
+        p[class^="from-"].emoji::before {
+            content: none;
+        }
+
+    .no-tail::before {
+        display: none;
+    }
+
+    .margin-b_none {
+        margin-bottom: 0 !important;
+    }
+
+    .margin-b_one {
+        margin-bottom: 1rem !important;
+    }
+
+    .margin-t_one {
+        margin-top: 1rem !important;
+    }
+
+
+    .comment {
+        color: #222;
+        font-size: 1.25rem;
+        line-height: 1.5;
+        margin-bottom: 1.25rem;
+        max-width: 100%;
+        padding: 0;
+    }
+
+
+    .imessages {
+        font-size: 1.05rem;
+        margin: 0 auto 1rem;
+        padding: 0.20rem 0.875rem;
+    }
+
+        .imessages p {
+            margin: 0.5rem 0;
+        }
+
+
+    .saat-span {
+        position: absolute;
+        bottom: -18px;
+        font-size: 55%;
+        /*border-radius: 0.5em;*/
+        right: 5px;
+        display :none;
+        color: black;
+    }
+
+    .profile-span-left {
+        position: absolute;
+        top: -20px;
+        font-size: 60%;
+        border-radius: 0.5em;
+        white-space: nowrap; /* Satır kaymasını engeller */
+    }
+      .saat-span-left {
+        position: absolute;
+        bottom: -18px;
+        font-size: 55%;
+        /*border-radius: 0.5em;*/
+        display :none;
+        color: black;
+    }
+
+    .profile-span {
+        position: absolute;
+        top: -20px;
+        font-size: 60%;
+        border-radius: 0.5em;
+        right: 20px;
+        white-space: nowrap; /* Satır kaymasını engeller */
+    }
+
+    .from-me:hover .saat-span {
+        display: block; 
+    }
+
+    .from-me:hover .saat-span-left {
+        display: block; 
+    }
+ /*   .from-them:hover .saat-span {
+        display: inline-block; 
+    }*/
+    p.from-me:hover + p.from-me:not(:last-child) {
+        margin: 1.5rem 0 0 !important;
+    }
+
+    .from-them:hover .saat-span-left {
+        display: block; 
+    }
+ /*   .from-them:hover .saat-span {
+        display: inline-block; 
+    }*/
+    p.from-them:hover + p.from-them:not(:last-child) {
+        margin: 1.5rem 0 0!important;
+    }
+    /* ########################### CUSTOM CSS END ##########################33 */
+</style>
+<script src="~/js/Chat.js"></script>

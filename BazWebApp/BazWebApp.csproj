@@ -1,0 +1,415 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <UserSecretsId>3c5c8c1e-ef47-4555-bc74-9a1fc45505be</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Baz.AOP.Logger.ExceptionLog" Version="1.1.37" />
+    <PackageReference Include="Baz.AOP.Logger.Http" Version="1.0.98" />
+    <PackageReference Include="Baz.Attributes" Version="1.0.1" />
+    <PackageReference Include="Baz.Model.Entity" Version="1.20.37" />
+    <PackageReference Include="Baz.Model.Pattern" Version="1.0.11" />
+    <PackageReference Include="Baz.ProcessResult" Version="1.0.13" />
+    <PackageReference Include="Baz.RequestManager" Version="1.1.29" />
+    <PackageReference Include="DotNetCore.NPOI" Version="1.2.3" />
+    <PackageReference Include="Elasticsearch.Net" Version="7.17.5" />
+    <PackageReference Include="googlemaps.TypeScript.DefinitelyTyped" Version="0.7.9" />
+    <PackageReference Include="HtmlSanitizer" Version="6.0.441" />
+    <PackageReference Include="Iyzipay" Version="2.1.39" />
+    <PackageReference Include="LettuceEncrypt" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="5.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="5.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.SqlServer" Version="5.0.0" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.1.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.14" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="SharedSession" Version="1.2.11" />
+
+    <PackageReference Include="WebEssentials.AspNetCore.PWA" Version="1.0.65" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Scripts\Services\EkParametreler\" />
+    <Folder Include="Scripts\Services\ThirdParty\" />
+    <Folder Include="TempExcel\" />
+	  <Folder Include="wwwroot\fonts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\files\KisiListesiImport.xlsx" />
+    <None Include="wwwroot\lib\ckeditor5-image\CHANGELOG.md" />
+    <None Include="wwwroot\lib\ckeditor5-image\CONTRIBUTING.md" />
+    <None Include="wwwroot\lib\ckeditor5-image\docs\api\image.md" />
+    <None Include="wwwroot\lib\ckeditor5-image\docs\features\image.md" />
+    <None Include="wwwroot\lib\ckeditor5-image\docs\framework\guides\deep-dive\upload-adapter.md" />
+    <None Include="wwwroot\lib\ckeditor5-image\docs\_snippets\features\build-image-source.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\docs\_snippets\features\image-caption.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\docs\_snippets\features\image-insert-via-pasting-url-into-editor.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\docs\_snippets\features\image-insert-via-url.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\docs\_snippets\features\image-link.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\docs\_snippets\features\image-resize-buttons-dropdown.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\docs\_snippets\features\image-resize-buttons.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\docs\_snippets\features\image-resize-px.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\docs\_snippets\features\image-resize.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\docs\_snippets\features\image-style-presentational.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\docs\_snippets\features\image-style.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\docs\_snippets\features\image-toolbar.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\docs\_snippets\features\image.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\ar.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\ast.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\az.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\bg.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\cs.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\da.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\de.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\el.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\en-au.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\en-gb.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\en.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\eo.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\es.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\et.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\eu.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\fa.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\fi.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\fr.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\gl.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\he.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\hi.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\hr.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\hu.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\id.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\it.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\ja.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\km.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\kn.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\ko.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\ku.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\lt.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\lv.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\nb.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\ne.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\nl.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\no.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\pl.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\pt-br.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\pt.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\ro.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\ru.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\si.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\sk.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\sq.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\sr-latn.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\sr.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\sv.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\th.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\tk.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\tr.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\ug.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\uk.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\vi.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\zh-cn.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\lang\translations\zh.po" />
+    <None Include="wwwroot\lib\ckeditor5-image\LICENSE.md" />
+    <None Include="wwwroot\lib\ckeditor5-image\README.md" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\autoimage.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\image.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imagecaption.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imagecaption\imagecaptionediting.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imagecaption\utils.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imageinsert.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imageinsert\imageinsertui.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imageinsert\ui\imageinsertformrowview.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imageinsert\ui\imageinsertpanelview.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imageinsert\utils.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imageresize.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imageresize\imageresizebuttons.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imageresize\imageresizeediting.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imageresize\imageresizehandles.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imageresize\resizeimagecommand.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imagestyle.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imagestyle\converters.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imagestyle\imagestylecommand.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imagestyle\imagestyleediting.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imagestyle\imagestyleui.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imagestyle\utils.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imagetextalternative.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imagetextalternative\imagetextalternativecommand.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imagetextalternative\imagetextalternativeediting.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imagetextalternative\imagetextalternativeui.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imagetextalternative\ui\textalternativeformview.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imagetoolbar.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imageupload.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imageupload\imageuploadediting.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imageupload\imageuploadprogress.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imageupload\imageuploadui.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imageupload\uploadimagecommand.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\imageupload\utils.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\image\converters.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\image\imageediting.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\image\imageloadobserver.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\image\insertimagecommand.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\image\ui\utils.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\image\utils.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\src\index.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\autoimage.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\image.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imagecaption.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imagecaption\imagecaption-integration.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imagecaption\imagecaptionediting.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imagecaption\utils.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imageinsert\imageinsertui.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imageinsert\ui\imageinsertformrowview.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imageinsert\ui\imageinsertpanelview.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imageinsert\utils.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imageresize\imageresize.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imageresize\imageresizebuttons.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imageresize\imageresizeediting.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imageresize\imageresizehandles.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imageresize\resizeimagecommand.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imageresize\_utils\utils.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imagestyle.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imagestyle\imagestylecommand.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imagestyle\imagestyleediting.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imagestyle\imagestyleui.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imagestyle\utils.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imagetextalternative.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imagetextalternative\imagetextalternativecommand.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imagetextalternative\imagetextalternativeediting.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imagetextalternative\imagetextalternativeui.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imagetextalternative\ui\textalternativeformview.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imagetoolbar.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imageupload.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imageupload\imageuploadediting.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imageupload\imageuploadprogress.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imageupload\imageuploadui.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imageupload\uploadimagecommand.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\imageupload\utils.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\image\converters.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\image\imageediting.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\image\imageloadobserver.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\image\insertimagecommand.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\image\ui\utils.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\image\utils.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\integration.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\caption.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\caption.md" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\image.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\image.md" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\imageinsertviaurl.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\imageinsertviaurl.md" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\imageplaceholder.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\imageplaceholder.md" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\imageresize.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\imageresize.md" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\imageresizebuttons.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\imageresizebuttons.md" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\imageresizepx.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\imageresizepx.md" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\imagestyle.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\imagestyle.md" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\imageupload.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\imageupload.md" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\textalternative.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\textalternative.md" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\tickets\106\1.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\tickets\106\1.md" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\tickets\110\1.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\tickets\110\1.md" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\tickets\127\1.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\tickets\127\1.md" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\tickets\142\1.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\tickets\142\1.md" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\tickets\8433\1.js" />
+    <None Include="wwwroot\lib\ckeditor5-image\tests\manual\tickets\8433\1.md" />
+    <None Include="wwwroot\lib\ckeditor5-image\theme\icons\image_placeholder.svg" />
+    <None Include="wwwroot\lib\ckeditor5-image\webpack.config.js" />
+    <None Include="wwwroot\lib\ckeditor\build\ckeditor.js" />
+    <None Include="wwwroot\lib\ckeditor\build\ckeditor.js.map" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\af.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\ar.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\ast.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\az.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\bg.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\ca.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\cs.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\da.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\de-ch.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\de.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\el.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\en-au.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\en-gb.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\en.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\eo.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\es.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\et.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\eu.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\fa.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\fi.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\fr.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\gl.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\gu.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\he.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\hi.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\hr.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\hu.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\id.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\it.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\ja.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\km.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\kn.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\ko.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\ku.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\lt.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\lv.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\nb.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\ne.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\nl.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\no.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\oc.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\pl.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\pt-br.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\pt.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\ro.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\ru.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\si.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\sk.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\sl.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\sq.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\sr-latn.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\sr.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\sv.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\th.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\tk.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\tt.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\ug.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\uk.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\vi.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\zh-cn.js" />
+    <None Include="wwwroot\lib\ckeditor\build\translations\zh.js" />
+    <None Include="wwwroot\lib\ckeditor\LICENSE.md" />
+    <None Include="wwwroot\lib\ckeditor\README.md" />
+    <None Include="wwwroot\lib\ckeditor\src\ckeditor.js" />
+    <None Include="wwwroot\lib\ckeditor\webpack.config.js" />
+    <None Include="wwwroot\lib\dropzone\.gitignore" />
+    <None Include="wwwroot\lib\dropzone\.tagconfig" />
+    <None Include="wwwroot\lib\dropzone\CONTRIBUTING.md" />
+    <None Include="wwwroot\lib\dropzone\dist\dropzone-amd-module.js" />
+    <None Include="wwwroot\lib\dropzone\dist\dropzone.js" />
+    <None Include="wwwroot\lib\dropzone\dist\dropzone.js.map" />
+    <None Include="wwwroot\lib\dropzone\dist\min\dropzone-amd-module.min.js" />
+    <None Include="wwwroot\lib\dropzone\dist\min\dropzone.min.js" />
+    <None Include="wwwroot\lib\dropzone\index.js" />
+    <None Include="wwwroot\lib\dropzone\LICENSE" />
+    <None Include="wwwroot\lib\dropzone\README.md" />
+    <None Include="wwwroot\lib\fabric\fabric.js" />
+    <None Include="wwwroot\lib\fabric\fabric.min.js" />
+    <None Include="wwwroot\lib\fullCalandar\fullcalendar\main.js" />
+    <None Include="wwwroot\lib\fullCalandar\interaction\main.global.min.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\af.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\ar-dz.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\ar-kw.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\ar-ly.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\ar-ma.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\ar-sa.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\ar-tn.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\ar.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\az.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\bg.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\bs.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\ca.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\cs.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\da.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\de.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\el.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\en-au.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\en-gb.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\en-nz.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\es-us.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\es.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\et.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\eu.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\fa.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\fi.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\fr-ca.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\fr-ch.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\fr.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\gl.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\he.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\hi.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\hr.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\hu.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\id.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\is.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\it.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\ja.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\ka.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\kk.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\ko.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\lb.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\lt.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\lv.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\mk.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\ms.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\nb.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\ne.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\nl.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\nn.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\pl.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\pt-br.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\pt.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\ro.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\ru.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\sk.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\sl.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\sq.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\sr-cyrl.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\sr.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\sv.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\th.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\tr.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\ug.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\uk.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\uz.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\vi.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\zh-cn.js" />
+    <None Include="wwwroot\lib\fullCalandar\locales\zh-tw.js" />
+    <None Include="wwwroot\lib\strophe\strophe.disco.min.js" />
+    <None Include="wwwroot\lib\strophe\strophe.js" />
+    <None Include="wwwroot\lib\strophe\strophe.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\DisplayNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DisplayNames.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Panel\Mesajlar.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\DisplayNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DisplayNames.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

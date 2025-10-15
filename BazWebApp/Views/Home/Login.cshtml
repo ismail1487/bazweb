@@ -1,0 +1,170 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+
+}
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+<link href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@500&display=swap" rel="stylesheet">
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment env;
+<!DOCTYPE html>
+<html lang="en" class="overflow-hidden">
+<head>
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-KCT949V');
+    </script>
+    <script type="text/javascript">
+        var dataLayer = dataLayer || [];
+        dataLayer.push({
+            event: "pageLoad",
+            pageinfo: {
+                pageType: "page",
+                pageURL: window.location.host + window.location.pathname,
+                pageTitle: document.title
+            }
+        })
+    </script>
+    <!-- End Google Tag Manager -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @if (env.EnvironmentName == "Development")
+    {
+        <meta name="robots" content="noindex">
+    }
+
+    <title>Baz Proje</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="~/lib/AdminLTE/dist/css/adminlte.css" rel="stylesheet" />
+
+    <link href="~/css/Loading.css" rel="stylesheet" />
+
+    <script src="~/lib/AdminLTE/plugins/jquery/jquery.js"></script>
+    <script src="~/lib/AdminLTE/plugins/bootstrap/js/bootstrap.js"></script>
+    <script src="~/lib/AdminLTE/dist/js/adminlte.js"></script>
+    <script src="~/js/tools.js" asp-append-version="true"></script>
+    <link href="~/lib/AdminLTE/plugins/fontawesome-free/css/all.css" rel="stylesheet" />
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/aspnet-signalr/1.1.4/signalr.js"></script>*@
+    <script src="~/lib/signalr-1-1-4/signalr.js"></script>
+    <script src="~/lib/AdminLTE/plugins/toastr/toastr.min.js"></script>
+    <link type="text/css" href="~/lib/AdminLTE/plugins/toastr/toastr.css" rel="stylesheet" />
+
+    <script src="~/js/loginJS.js" asp-append-version="true"></script>
+
+    <!-- OctaPull Css -->
+
+    <link href="~/css/All/General.css" rel="stylesheet" />
+    <link href="~/css/All/Login.css" rel="stylesheet" />
+</head>
+<body class="overflow-hidden w-100">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KCT949V"
+                height="0" width="0"
+                style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div class="container-fluid">
+        <div class="row h-100">
+            <div id="loader">
+                <div class="lds-roller">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 d-none d-md-block d-lg-block d-xl-block BackLeft h-100">
+                <div>
+                    <h1 class="ProjectTittle">BAZ PROJE</h1>
+                </div>
+
+                <!-- svg -->
+                <div class="ImageDivLogin">
+                    
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 BackRight">
+                <div class="row">
+                    <div class='col-12 left'>
+                        <p class='text-danger' id="alertDiv" style="display: none;">Kullanıcı adı ve şifrenizi kontrol ediniz!</p>
+                    </div>
+                    <div class="col-12 left">
+                        <h1 class="Font32">@localizator["Oturum Aç"].Value</h1>
+                    </div>
+                    <div class="col-12 left">
+                        <p class="Welcome-Log-in-to-continue">@localizator["Hoş geldiniz! Devam etmek için giriş yapın."].Value</p>
+                    </div>
+
+                    <div class="col-12 left">
+                        <div class="form-group row">
+                            <label class="Lbl">@localizator["EMAIL"].Value</label>
+                            <input type="email" class="form-control Shape pr-0" id="txtMail" placeholder="E-mail">
+                            <label for="EmailOrUserName" class="validationMessage" style="display: none"></label>
+                        </div>
+                    </div>
+
+                    <div class="col-12 left">
+                        <div class="form-group row">
+                            <div class="col-6 p-0">
+                                <label class="Lbl">@localizator["PAROLA"].Value</label>
+                            </div>
+                            
+                            <input type="password" class="form-control Shape pr-0" id="txtPassword" placeholder="Şifre">
+                            <label for="Password" class="validationMessage" style="display: none"></label>
+
+                            <div class="w-100 ForgotPswDiv text-end">
+                                <a href="/LoginRegister/ForgotPassword" class="ForgotPsw">@localizator["Parolanızı mı unuttunuz?"].Value</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 left">
+                        <div class="form-group row">
+                            <button type="button" class="btn btn-block loggingButton" id="btnLogin" onclick="Login()">
+                                @localizator["Giriş Yap"].Value
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 left p-0">
+                        <p class="Txt15">@localizator["Bir hesabın yok mu?"].Value<a href="/LoginRegister/Register" class="Sign-Up">@localizator["Üye Ol"].Value</a></p>
+                    </div>
+
+                    @*<div class="col-12 left">
+                            <div class="row">
+                                <div class="col-md-5"><hr /></div>
+                                <div class="col-md-2">
+                                    <p class="or">veya</p>
+                                </div>
+                                <div class="col-md-5"><hr /></div>
+                            </div>
+                        </div>*@
+                    <!--<div class="col-12 text-center">
+                    <div class="row">
+                        <div class="col-6"><button type="button" class="btn SocialLoginButton" onclick="location.href = '/facebook-login'"><img src="img/face.svg" class="Frame-1"></button></div>
+                        <div class="col-6"><button type="button" class="btn SocialLoginButton" onclick="location.href = '/googlelogin'"><img src="img/google.svg" class="Frame-1"></button></div>-->
+                    @*<div class="col-4"><button type="button" class="btn SocialLoginButton" onclick="location.href = '#'"><img src="img/twt.svg" class="Frame-1"></button></div>*@
+                    <!--</div>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
