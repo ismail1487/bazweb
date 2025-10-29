@@ -34,10 +34,22 @@ function initializeDataTables() {
 
     window.malzemeTalepTable = $('#malzemeTalepTable').DataTable({
         "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Turkish.json"
+            "lengthMenu": "Sayfada _MENU_ kayıt göster",
+            "zeroRecords": "Eşleşen kayıt bulunamadı",
+            "info": "Toplam _TOTAL_ kayıttan _START_ - _END_ arası gösteriliyor",
+            "infoEmpty": "Gösterilecek kayıt yok",
+            "infoFiltered": "(_MAX_ kayıt içerisinden filtrelendi)",
+            "search": "Ara:",
+            "paginate": {
+                "first": "İlk",
+                "last": "Son",
+                "next": "Sonraki",
+                "previous": "Önceki"
+            }
         },
+        "dom": "<'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-7'i><'col-sm-12 col-md-5 text-right'p>>",
         "responsive": true,
-        "lengthChange": true,
+        "lengthChange": false,
         "autoWidth": false,
         "pageLength": 10,
         "order": [[8, "desc"]], // Oluşturma tarihine göre sırala
@@ -112,15 +124,34 @@ function initializeDataTables() {
 
     window.depoHazirlamaTable = $('#depoHazirlamaTable').DataTable({
         "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Turkish.json"
+            "lengthMenu": "Sayfada _MENU_ kayıt göster",
+            "zeroRecords": "Eşleşen kayıt bulunamadı",
+            "info": "Toplam _TOTAL_ kayıttan _START_ - _END_ arası gösteriliyor",
+            "infoEmpty": "Gösterilecek kayıt yok",
+            "infoFiltered": "(_MAX_ kayıt içerisinden filtrelendi)",
+            "search": "Ara:",
+            "paginate": {
+                "first": "İlk",
+                "last": "Son",
+                "next": "Sonraki",
+                "previous": "Önceki"
+            }
         },
+        "dom": "<'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-7'i><'col-sm-12 col-md-5 text-right'p>>",
         "responsive": true,
-        "lengthChange": true,
+        "lengthChange": false,
         "autoWidth": false,
         "pageLength": 10,
-        "order": [[7, "desc"]], // Oluşturma tarihine göre sırala
+        "order": [[8, "desc"]], // Oluşturma tarihine göre sırala
         "data": [], // Başlangıçta boş veri
         "columns": [
+            {
+                "data": null,
+                "orderable": false,
+                "render": function (data, type, row) {
+                    return `<input type="checkbox" class="depo-row-checkbox" data-id="${row.malzemeTalep.malzemeTalebiEssizID}" />`;
+                }
+            },
             {
                 "data": null,
                 "render": function (data, type, row) {
@@ -203,6 +234,16 @@ function initializeEventHandlers() {
         refreshDepoHazirlamaTable();
     });
 
+    // Malzeme arama input
+    $('#malzemeSearchInput').on('keyup', function () {
+        window.malzemeTalepTable.search($(this).val()).draw();
+    });
+
+    // Depo arama input
+    $('#depoSearchInput').on('keyup', function () {
+        window.depoHazirlamaTable.search($(this).val()).draw();
+    });
+
     // Yeni Talep butonu
     $('#btnYeniTalep').on('click', function () {
         yeniTalepEkle();
@@ -227,6 +268,11 @@ function initializeEventHandlers() {
         exportToExcel('depo');
     });
 
+    // Hazırlandı butonu
+    $('#btnHazirlandi').on('click', function () {
+        handleHazirlandi();
+    });
+
     // Tab değişikliği olayları
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         const targetTab = $(e.target).attr("href");
@@ -244,6 +290,12 @@ function initializeEventHandlers() {
         });
     });
 
+    // Depo Tümünü seç checkbox
+    $('#depoSelectAll').on('change', function () {
+        const isChecked = $(this).is(':checked');
+        $('.depo-row-checkbox').prop('checked', isChecked);
+    });
+
     // Tekil checkbox'lar değiştiğinde - sadece 1 tane seçilebilir
     $(document).on('change', '.row-checkbox', function () {
         if ($(this).is(':checked')) {
@@ -252,6 +304,26 @@ function initializeEventHandlers() {
         }
         // SelectAll checkbox'ını her zaman kapalı tut
         $('#selectAll').prop('checked', false);
+    });
+
+    // Depo checkbox'ları değiştiğinde
+    $(document).on('change', '.depo-row-checkbox', function () {
+        // Tümü seçili mi kontrol et
+        const totalCheckboxes = $('.depo-row-checkbox').length;
+        const checkedCheckboxes = $('.depo-row-checkbox:checked').length;
+        $('#depoSelectAll').prop('checked', totalCheckboxes === checkedCheckboxes && totalCheckboxes > 0);
+    });
+
+    // Custom page length değişikliği - Malzeme Talep
+    $('#malzemeTalepPageLength').on('change', function () {
+        const length = parseInt($(this).val());
+        window.malzemeTalepTable.page.len(length).draw();
+    });
+
+    // Custom page length değişikliği - Depo Hazırlama
+    $('#depoHazirlamaPageLength').on('change', function () {
+        const length = parseInt($(this).val());
+        window.depoHazirlamaTable.page.len(length).draw();
     });
 
     // Detay butonu
@@ -448,64 +520,12 @@ function yeniTalepEkle() {
     const malzemeTalebiEssizID = checkedBoxes.first().data('id');
     $('#malzemeTalebiEssizID').val(malzemeTalebiEssizID);
     
-    // Bildirim tiplerini yükle
-    loadBildirimTipleri();
-    
     // Formu temizle
     $('#sevkEdilenMiktar').val('');
     $('#surecStatuGirilenNot').val('');
-    $('#surecStatuBildirimTipi').val('');
     
     // Modalı aç
     $('#talepEtModal').modal('show');
-}
-
-/**
- * Bildirim tiplerini yükle
- */
-function loadBildirimTipleri() {
-    // Önce selectbox'ı temizle
-    const select = $('#surecStatuBildirimTipi');
-    select.empty();
-    select.append(new Option('Seçiniz', '', false, false));
-    
-    // TabloID 1 ve 2 için bildirim tiplerini yükle
-    Promise.all([
-        $.ajax({
-            url: '/panel/SurecStatuleriBildirimTipleriList/1',
-            type: 'GET',
-            dataType: 'json'
-        }),
-        $.ajax({
-            url: '/panel/SurecStatuleriBildirimTipleriList/2',
-            type: 'GET',
-            dataType: 'json'
-        })
-    ]).then(function(responses) {
-        // Her iki response'u birleştir
-        const allTipler = [];
-        
-        if (responses[0] && responses[0].isSuccess && responses[0].value) {
-            allTipler.push(...responses[0].value);
-        }
-        
-        if (responses[1] && responses[1].isSuccess && responses[1].value) {
-            allTipler.push(...responses[1].value);
-        }
-        
-        // Selectbox'a ekle
-        allTipler.forEach(function(tip) {
-            select.append(new Option(tip.bildirimTipiTanimlama, tip.tabloID));
-        });
-        
-    }).catch(function(error) {
-        console.error('Bildirim tipleri yüklenirken hata:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Hata',
-            text: 'Bildirim tipleri yüklenemedi!'
-        });
-    });
 }
 
 /**
@@ -514,7 +534,6 @@ function loadBildirimTipleri() {
 $(document).on('click', '#btnTalepKaydet', function() {
     // Form validasyonu
     const sevkEdilenMiktar = parseInt($('#sevkEdilenMiktar').val());
-    const surecStatuBildirimTipiID = parseInt($('#surecStatuBildirimTipi').val());
     const surecStatuGirilenNot = $('#surecStatuGirilenNot').val() || '';
     const malzemeTalebiEssizID = parseInt($('#malzemeTalebiEssizID').val());
     
@@ -527,15 +546,6 @@ $(document).on('click', '#btnTalepKaydet', function() {
         return;
     }
     
-    if (!surecStatuBildirimTipiID) {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Uyarı',
-            text: 'Lütfen bildirim tipi seçiniz!'
-        });
-        return;
-    }
-    
     // Request data hazırla
     const requestData = {
         malzemeTalebiEssizID: malzemeTalebiEssizID,
@@ -543,8 +553,7 @@ $(document).on('click', '#btnTalepKaydet', function() {
         sevkTalepEdenKisiID: 1,
         malzemeSevkTalebiYapanDepartmanID: 1,
         malzemeSevkTalebiYapanKisiID: 1,
-        surecStatuGirilenNot: surecStatuGirilenNot,
-        surecStatuBildirimTipiID: surecStatuBildirimTipiID
+        surecStatuGirilenNot: surecStatuGirilenNot
     };
     
     $.ajax({
@@ -795,12 +804,157 @@ function refreshDepoHazirlamaTable() {
  * Excel'e aktarma
  */
 function exportToExcel(type) {
-    Swal.fire({
-        icon: 'info',
-        title: 'Bilgi',
-        text: `${type === 'malzeme' ? 'Malzeme Talep' : 'Depo Hazırlama'} verileri Excel'e aktarılıyor...`
-    });
-    // Excel export işlemi yapılacak
+    try {
+        const table = type === 'malzeme' ? window.malzemeTalepTable : window.depoHazirlamaTable;
+        
+        if (!table) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Hata',
+                text: 'Tablo bulunamadı!'
+            });
+            return;
+        }
+
+        // Tablodan tüm verileri al (filtrelenmiş haliyle)
+        const data = table.rows({ search: 'applied' }).data().toArray();
+
+        if (data.length === 0) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Uyarı',
+                text: 'Aktarılacak veri bulunamadı!'
+            });
+            return;
+        }
+
+        // Excel için veri hazırlama
+        const excelData = [];
+        
+        if (type === 'malzeme') {
+            // Başlık satırı
+            excelData.push([
+                'SAT Seri No',
+                'SAT Sıra No',
+                'Malzeme Talep Kodu',
+                'Proje Kodu',
+                'Malzeme Kodu',
+                'Malzeme İsmi',
+                'Talep Edilen Miktar',
+                'Sevk Edilen Miktar',
+                'Kalan Miktar',
+                'Oluşturma Tarihi'
+            ]);
+
+            // Veri satırları
+            data.forEach(item => {
+                const talepKodu = `${item.malzemeTalep?.satSeriNo || ''}/${item.malzemeTalep?.satSiraNo || ''}`;
+                const olusturmaTarihi = item.malzemeTalep?.satOlusturmaTarihi 
+                    ? new Date(item.malzemeTalep.satOlusturmaTarihi).toLocaleDateString('tr-TR') + ' ' + 
+                      new Date(item.malzemeTalep.satOlusturmaTarihi).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })
+                    : '';
+                
+                excelData.push([
+                    item.malzemeTalep?.satSeriNo || '',
+                    item.malzemeTalep?.satSiraNo || '',
+                    talepKodu,
+                    item.malzemeTalep?.projeKodu || '',
+                    item.malzemeTalep?.malzemeKodu || '',
+                    item.malzemeTalep?.malzemeIsmi || '',
+                    item.malzemeTalep?.malzemeOrijinalTalepEdilenMiktar || 0,
+                    item.toplamSevkEdilenMiktar || 0,
+                    item.kalanMiktar || 0,
+                    olusturmaTarihi
+                ]);
+            });
+        } else {
+            // Depo Hazır Edim için başlık satırı
+            excelData.push([
+                'SAT Seri No',
+                'SAT Sıra No',
+                'Malzeme Talep Kodu',
+                'Proje Kodu',
+                'Malzeme Kodu',
+                'Malzeme İsmi',
+                'Talep Edilen Miktar',
+                'Sevk Edilen Miktar',
+                'Kalan Miktar',
+                'Oluşturma Tarihi'
+            ]);
+
+            // Veri satırları
+            data.forEach(item => {
+                const talepKodu = `${item.malzemeTalep?.satSeriNo || ''}/${item.malzemeTalep?.satSiraNo || ''}`;
+                const olusturmaTarihi = item.malzemeTalep?.satOlusturmaTarihi 
+                    ? new Date(item.malzemeTalep.satOlusturmaTarihi).toLocaleDateString('tr-TR') + ' ' + 
+                      new Date(item.malzemeTalep.satOlusturmaTarihi).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })
+                    : '';
+                
+                excelData.push([
+                    item.malzemeTalep?.satSeriNo || '',
+                    item.malzemeTalep?.satSiraNo || '',
+                    talepKodu,
+                    item.malzemeTalep?.projeKodu || '',
+                    item.malzemeTalep?.malzemeKodu || '',
+                    item.malzemeTalep?.malzemeIsmi || '',
+                    item.malzemeTalep?.malzemeOrijinalTalepEdilenMiktar || 0,
+                    item.toplamSevkEdilenMiktar || 0,
+                    item.kalanMiktar || 0,
+                    olusturmaTarihi
+                ]);
+            });
+        }
+
+        // Excel workbook oluştur
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet(excelData);
+
+        // Sütun genişliklerini ayarla
+        const colWidths = [
+            { wch: 15 },  // SAT Seri No
+            { wch: 15 },  // SAT Sıra No
+            { wch: 20 },  // Malzeme Talep Kodu
+            { wch: 15 },  // Proje Kodu
+            { wch: 15 },  // Malzeme Kodu
+            { wch: 40 },  // Malzeme İsmi
+            { wch: 18 },  // Talep Edilen Miktar
+            { wch: 18 },  // Sevk Edilen Miktar
+            { wch: 15 },  // Kalan Miktar
+            { wch: 20 }   // Oluşturma Tarihi
+        ];
+        ws['!cols'] = colWidths;
+
+        // Worksheet'i workbook'a ekle
+        const sheetName = type === 'malzeme' ? 'Malzeme Talep Et' : 'Depo Hazır Edim';
+        XLSX.utils.book_append_sheet(wb, ws, sheetName);
+
+        // Dosya adını oluştur (tarih ve saat ile)
+        const now = new Date();
+        const dateStr = now.toLocaleDateString('tr-TR').replace(/\./g, '-');
+        const timeStr = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }).replace(/:/g, '-');
+        const fileName = type === 'malzeme' 
+            ? `Malzeme_Talep_Et_${dateStr}_${timeStr}.xlsx`
+            : `Depo_Hazir_Edim_${dateStr}_${timeStr}.xlsx`;
+
+        // Excel dosyasını indir
+        XLSX.writeFile(wb, fileName);
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Başarılı',
+            text: `${data.length} kayıt Excel'e aktarıldı!`,
+            timer: 2000,
+            showConfirmButton: false
+        });
+
+    } catch (error) {
+        console.error('Excel export hatası:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Hata',
+            text: 'Excel dosyası oluşturulurken bir hata oluştu!'
+        });
+    }
 }
 
 /**
@@ -844,17 +998,49 @@ function showDetay(id, type) {
                 text: 'Kayıt bulunamadı!'
             });
         }
-    } else {
-        $('#detayModalLabel').html(`<i class="fas fa-info-circle mr-2"></i>Depo Kayıt Detayı`);
-        $('#detayModalIcerik').html(`
-            <div class="row">
-                <div class="col-12">
-                    <p><strong>ID:</strong> ${id}</p>
-                    <p class="text-muted">Detay bilgileri API'den yüklenecek...</p>
+    } else if (type === 'depo') {
+        // Depo Hazırlama tablosundan ilgili satırı bul
+        const table = window.depoHazirlamaTable;
+        const rowData = table.rows().data().toArray().find(row => row.malzemeTalep.malzemeTalebiEssizID === id);
+        
+        if (rowData) {
+            const malzeme = rowData.malzemeTalep;
+            const tarih = malzeme.satOlusturmaTarihi ? new Date(malzeme.satOlusturmaTarihi).toLocaleString('tr-TR') : '-';
+            
+            $('#detayModalLabel').html(`<i class="fas fa-info-circle mr-2"></i>Depo Hazırlama Detayı`);
+            $('#detayModalIcerik').html(`
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>SAT Seri No:</strong> ${malzeme.satSeriNo || '-'}</p>
+                        <p><strong>SAT Sıra No:</strong> ${malzeme.satSiraNo || '-'}</p>
+                        <p><strong>Oluşturma Tarihi:</strong> ${tarih}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Proje Kodu:</strong> ${malzeme.projeKodu || '-'}</p>
+                        <p><strong>Malzeme Kodu:</strong> ${malzeme.malzemeKodu || '-'}</p>
+                        <p><strong>Malzeme Adı:</strong> ${malzeme.malzemeIsmi || '-'}</p>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <p><strong>Talep Edilen Miktar:</strong> ${malzeme.malzemeOrijinalTalepEdilenMiktar?.toLocaleString('tr-TR') || '-'}</p>
+                        <p><strong>Sevk Edilen Miktar:</strong> ${rowData.toplamSevkEdilenMiktar?.toLocaleString('tr-TR') || '-'}</p>
+                        <p><strong>Kalan Miktar:</strong> ${rowData.kalanMiktar?.toLocaleString('tr-TR') || '-'}</p>
+                    </div>
                 </div>
-            </div>
-        `);
-        $('#detayModal').modal('show');
+            `);
+            $('#detayModal').modal('show');
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Hata',
+                text: 'Kayıt bulunamadı!'
+            });
+        }
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Hata',
+            text: 'Geçersiz tip!'
+        });
     }
 }
 
@@ -895,6 +1081,61 @@ function deleteKayit(id, type) {
             } else {
                 refreshDepoHazirlamaTable();
             }
+        }
+    });
+}
+
+/**
+ * Hazırlandı butonu işlemi
+ */
+function handleHazirlandi() {
+    // Seçili checkbox'ları bul
+    const selectedCheckboxes = $('.depo-row-checkbox:checked');
+    
+    if (selectedCheckboxes.length === 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Uyarı',
+            text: 'Lütfen en az bir kayıt seçiniz!'
+        });
+        return;
+    }
+
+    // Seçili ID'leri topla
+    const selectedIds = [];
+    selectedCheckboxes.each(function () {
+        selectedIds.push($(this).data('id'));
+    });
+
+    // Onay sor
+    Swal.fire({
+        title: 'Emin misiniz?',
+        text: `Seçili ${selectedIds.length} kaydı hazırlandı olarak işaretlemek istediğinizden emin misiniz?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#ff5f00',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Evet, Hazırlandı',
+        cancelButtonText: 'İptal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // API'ye gönderilecek
+            console.log('Hazırlandı olarak işaretlenecek ID\'ler:', selectedIds);
+            
+            Swal.fire({
+                icon: 'success',
+                title: 'Başarılı',
+                text: `${selectedIds.length} kayıt hazırlandı olarak işaretlendi!`,
+                timer: 2000,
+                showConfirmButton: false
+            }).then(() => {
+                // Checkbox'ları temizle
+                $('.depo-row-checkbox').prop('checked', false);
+                $('#depoSelectAll').prop('checked', false);
+                
+                // Tabloyu yenile
+                refreshDepoHazirlamaTable();
+            });
         }
     });
 }

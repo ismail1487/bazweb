@@ -326,12 +326,6 @@ namespace BazWebApp.Services
                 malzemeTalepEtGetir = malzemeTalepEtGetir
             };
             
-            Console.WriteLine("Gönderilen İstek Verisi:");
-            Console.WriteLine($"Proje Kodu: {requestData.projeKodu}");
-            Console.WriteLine($"Talep Süreç Statu IDs: {string.Join(", ", requestData.talepSurecStatuIDs)}");
-            Console.WriteLine($"Search Text: {requestData.searchText}");
-            Console.WriteLine($"Malzeme Talep Et Getir: {requestData.malzemeTalepEtGetir}");
-            
             var request = _requestHelper.Post<Result<List<MalzemeTalepVM>>>(
                 LocalPortlar.IYSService + "/api/MalzemeTalepGenelBilgiler/MalzemeTalepleriniGetir", 
                 requestData);

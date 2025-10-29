@@ -2,6 +2,7 @@
 <link href="~/css/All/MalzemeTalepEt.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="~/js/MalzemeTalepEt.js" asp-append-version="true"></script>
 
 <div class="container-fluid">
@@ -45,30 +46,44 @@
                             <div class="tab-pane fade active show" id="malzemeTalepTabContent" role="tabpanel" aria-labelledby="talepTab-malzeme-tab">
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="card-header mb-3">
-                                            <div class="row">
-                                                <div class="col-md-2">
-                                                    <label for="projeFilter">Proje</label>
-                                                    <select class="form-control select2" id="projeFilter" style="width: 100%;">
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <label for="statuFilter">Durum</label>
-                                                    <select class="form-control select2" id="statuFilter" style="width: 100%;">
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-8 text-right" style="padding-top: 32px;">
-                                                    <button type="button" class="btn add-buttons" id="btnYeniTalep" style="height: 38px; margin-right: 4px;">
-                                                        <i class="fas fa-plus mr-2"></i>Talep Et
-                                                    </button>
-                                                    <button type="button" class="btn btn-success" id="btnExcelAktarMalzeme" style="height: 38px; margin-right: 4px;">
-                                                        <i class="fas fa-file-excel mr-2"></i>Excel'e Aktar
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="table-responsive">
+                        <div class="card-header mb-3">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label for="malzemeTalepPageLength">Sayfadaki Kayıt Sayısı</label>
+                                    <select class="form-control" id="malzemeTalepPageLength">
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                        <option value="-1">Tümü</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="projeFilter">Proje</label>
+                                    <select class="form-control select2" id="projeFilter" style="width: 100%;">
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="statuFilter">Durum</label>
+                                    <select class="form-control select2" id="statuFilter" style="width: 100%;">
+                                    </select>
+                                </div>
+                                <div class="col-md-6 text-right" style="padding-top: 32px;">
+                                    <button type="button" class="btn add-buttons" id="btnYeniTalep" style="height: 38px; margin-right: 4px;">
+                                        <i class="fas fa-plus mr-2"></i>Talep Et
+                                    </button>
+                                    <button type="button" class="btn btn-success" id="btnExcelAktarMalzeme" style="height: 38px; margin-right: 4px;">
+                                        <i class="fas fa-file-excel mr-2"></i>Excel'e Aktar
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <label for="malzemeSearchInput">Arama</label>
+                                    <input type="text" class="form-control" id="malzemeSearchInput" placeholder="Malzeme ara...">
+                                </div>
+                            </div>
+                        </div>                                        <div class="table-responsive">
                                             <table id="malzemeTalepTable" class="table table-bordered table-hover table-striped">
                                                 <thead class="table-head-custom">
                                                     <tr>
@@ -79,52 +94,70 @@
                                                         <th>Proje Kodu</th>
                                                         <th>Malzeme Kodu</th>
                                                         <th>Malzeme Adı</th>
-                                                        <th>Talep Edilen</th>
-                                                        <th>Sevk Edilen</th>
-                                                        <th>Kalan</th>
+                                                        <th>Orijinal Miktar</th>
+                                                        <th>Sevk Edilen Miktar</th>
+                                                        <th>Kalan Miktar</th>
                                                         <th>Oluşturma Tarihi</th>
                                                         <th class="action-column">İşlem</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <!-- DataTable ile doldurulacak -->
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Depo Hazırlama Tab -->
+                        </div>                            <!-- Depo Hazırlama Tab -->
                             <div class="tab-pane fade" id="depoHazirlamaTabContent" role="tabpanel" aria-labelledby="talepTab-depo-tab">
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="card-header mb-3">
-                                            <div class="row">
-                                                <div class="col-md-2">
-                                                    <label for="depoProjeFilter">Proje</label>
-                                                    <select class="form-control select2" id="depoProjeFilter" style="width: 100%;">
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-10 text-right" style="padding-top: 32px;">
-                                                    <button type="button" class="btn btn-success" id="btnExcelAktarDepo" style="height: 38px; margin-right: 4px;">
-                                                        <i class="fas fa-file-excel mr-2"></i>Excel'e Aktar
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="table-responsive">
+                        <div class="card-header mb-3">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label for="depoHazirlamaPageLength">Sayfadaki Kayıt Sayısı</label>
+                                    <select class="form-control" id="depoHazirlamaPageLength">
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                        <option value="-1">Tümü</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="depoProjeFilter">Proje</label>
+                                    <select class="form-control select2" id="depoProjeFilter" style="width: 100%;">
+                                    </select>
+                                </div>
+                                <div class="col-md-8 text-right" style="padding-top: 32px;">
+                                    <button type="button" class="btn btn-success" id="btnExcelAktarDepo" style="height: 38px; margin-right: 4px;">
+                                        <i class="fas fa-file-excel mr-2"></i>Excel'e Aktar
+                                    </button>
+                                    <button type="button" class="btn btn-primary" id="btnHazirlandi" style="height: 38px; margin-right: 4px;">
+                                        <i class="fas fa-check-circle mr-2"></i>Hazırlandı
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <label for="depoSearchInput">Arama</label>
+                                    <input type="text" class="form-control" id="depoSearchInput" placeholder="Malzeme ara...">
+                                </div>
+                            </div>
+                        </div>                                        <div class="table-responsive">
                                             <table id="depoHazirlamaTable" class="table table-bordered table-hover table-striped">
                                                 <thead class="table-head-custom">
                                                     <tr>
+                                                        <th style="width: 30px;">
+                                                            <input type="checkbox" id="depoSelectAll" />
+                                                        </th>
                                                         <th>SAT Seri/Sıra</th>
                                                         <th>Proje Kodu</th>
                                                         <th>Malzeme Kodu</th>
                                                         <th>Malzeme Adı</th>
-                                                        <th>Talep Edilen</th>
-                                                        <th>Sevk Edilen</th>
-                                                        <th>Kalan</th>
+                                                        <th>Orijinal Miktar</th>
+                                                        <th>Sevk Edilen Miktar</th>
+                                                        <th>Kalan Miktar</th>
                                                         <th>Oluşturma Tarihi</th>
                                                         <th class="action-column">İşlem</th>
                                                     </tr>
@@ -185,18 +218,10 @@
             <div class="modal-body">
                 <form id="talepEtForm">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label for="sevkEdilenMiktar">Sevk Edilen Miktar <span class="text-danger">*</span></label>
                                 <input type="number" class="form-control" id="sevkEdilenMiktar" placeholder="Miktar giriniz" min="1" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="surecStatuBildirimTipi">Bildirim Tipi <span class="text-danger">*</span></label>
-                                <select class="form-control" id="surecStatuBildirimTipi" required>
-                                    <option value="">Seçiniz</option>
-                                </select>
                             </div>
                         </div>
                         <div class="col-12">
@@ -213,7 +238,7 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                     <i class="fas fa-times mr-2"></i>İptal
                 </button>
-                <button type="button" class="btn add-buttons" id="btnTalepKaydet">
+                <button type="button" class="btn add-buttons" id="btnTalepKaydet" style="padding: 0.375rem 0.75rem;">
                     <i class="fas fa-save mr-2"></i>Kaydet
                 </button>
             </div>
