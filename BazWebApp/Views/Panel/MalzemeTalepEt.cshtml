@@ -1,0 +1,222 @@
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Labels> localizator
+<link href="~/css/All/MalzemeTalepEt.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="~/js/MalzemeTalepEt.js" asp-append-version="true"></script>
+
+<div class="container-fluid">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="liste-baslik">Malzeme Talep Yönetimi</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="tabbable-line">
+                            <ul class="nav nav-tabs" id="malzemeTalepTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="talepTab-malzeme-tab" data-toggle="tab" href="#malzemeTalepTabContent" role="tab" aria-controls="malzemeTalepTabContent" aria-selected="true">
+                                        <i class="fas fa-clipboard-list mr-2"></i>Malzeme Talep Et
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="talepTab-depo-tab" data-toggle="tab" href="#depoHazirlamaTabContent" role="tab" aria-controls="depoHazirlamaTabContent" aria-selected="false">
+                                        <i class="fas fa-warehouse mr-2"></i>Depo Hazır Edim
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="tab-content" id="malzemeTalepTabsContent">
+                            
+                            <!-- Malzeme Talep Et Tab -->
+                            <div class="tab-pane fade active show" id="malzemeTalepTabContent" role="tabpanel" aria-labelledby="talepTab-malzeme-tab">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card-header mb-3">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <label for="projeFilter">Proje</label>
+                                                    <select class="form-control select2" id="projeFilter" style="width: 100%;">
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="statuFilter">Durum</label>
+                                                    <select class="form-control select2" id="statuFilter" style="width: 100%;">
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-8 text-right" style="padding-top: 32px;">
+                                                    <button type="button" class="btn add-buttons" id="btnYeniTalep" style="height: 38px; margin-right: 4px;">
+                                                        <i class="fas fa-plus mr-2"></i>Talep Et
+                                                    </button>
+                                                    <button type="button" class="btn btn-success" id="btnExcelAktarMalzeme" style="height: 38px; margin-right: 4px;">
+                                                        <i class="fas fa-file-excel mr-2"></i>Excel'e Aktar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="table-responsive">
+                                            <table id="malzemeTalepTable" class="table table-bordered table-hover table-striped">
+                                                <thead class="table-head-custom">
+                                                    <tr>
+                                                        <th style="width: 40px;">
+                                                            <input type="checkbox" id="selectAll" />
+                                                        </th>
+                                                        <th>SAT Seri/Sıra</th>
+                                                        <th>Proje Kodu</th>
+                                                        <th>Malzeme Kodu</th>
+                                                        <th>Malzeme Adı</th>
+                                                        <th>Talep Edilen</th>
+                                                        <th>Sevk Edilen</th>
+                                                        <th>Kalan</th>
+                                                        <th>Oluşturma Tarihi</th>
+                                                        <th class="action-column">İşlem</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- DataTable ile doldurulacak -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Depo Hazırlama Tab -->
+                            <div class="tab-pane fade" id="depoHazirlamaTabContent" role="tabpanel" aria-labelledby="talepTab-depo-tab">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card-header mb-3">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <label for="depoProjeFilter">Proje</label>
+                                                    <select class="form-control select2" id="depoProjeFilter" style="width: 100%;">
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-10 text-right" style="padding-top: 32px;">
+                                                    <button type="button" class="btn btn-success" id="btnExcelAktarDepo" style="height: 38px; margin-right: 4px;">
+                                                        <i class="fas fa-file-excel mr-2"></i>Excel'e Aktar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="table-responsive">
+                                            <table id="depoHazirlamaTable" class="table table-bordered table-hover table-striped">
+                                                <thead class="table-head-custom">
+                                                    <tr>
+                                                        <th>SAT Seri/Sıra</th>
+                                                        <th>Proje Kodu</th>
+                                                        <th>Malzeme Kodu</th>
+                                                        <th>Malzeme Adı</th>
+                                                        <th>Talep Edilen</th>
+                                                        <th>Sevk Edilen</th>
+                                                        <th>Kalan</th>
+                                                        <th>Oluşturma Tarihi</th>
+                                                        <th class="action-column">İşlem</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- DataTable ile doldurulacak -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Detay Modal -->
+<div class="modal fade" id="detayModal" tabindex="-1" role="dialog" aria-labelledby="detayModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detayModalLabel">
+                    <i class="fas fa-info-circle mr-2"></i>Detay Bilgileri
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="detayModalIcerik">
+                <!-- Detay bilgileri buraya gelecek -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fas fa-times mr-2"></i>Kapat
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Talep Et Modal -->
+<div class="modal fade" id="talepEtModal" tabindex="-1" role="dialog" aria-labelledby="talepEtModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="talepEtModalLabel">
+                    <i class="fas fa-plus-circle mr-2"></i>Malzeme Talep Et
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="talepEtForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="sevkEdilenMiktar">Sevk Edilen Miktar <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="sevkEdilenMiktar" placeholder="Miktar giriniz" min="1" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="surecStatuBildirimTipi">Bildirim Tipi <span class="text-danger">*</span></label>
+                                <select class="form-control" id="surecStatuBildirimTipi" required>
+                                    <option value="">Seçiniz</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="surecStatuGirilenNot">Not</label>
+                                <textarea class="form-control" id="surecStatuGirilenNot" rows="3" placeholder="Varsa not giriniz..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="malzemeTalebiEssizID">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fas fa-times mr-2"></i>İptal
+                </button>
+                <button type="button" class="btn add-buttons" id="btnTalepKaydet">
+                    <i class="fas fa-save mr-2"></i>Kaydet
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

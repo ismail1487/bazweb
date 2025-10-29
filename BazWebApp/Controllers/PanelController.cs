@@ -48,6 +48,7 @@ namespace BazWebApp.Controllers
         private readonly ISearchService _searchService;
         private readonly IKurumMesajlasmaModuluIzinIslemleriService _kurumMesajlasmaModuluIzinIslemleriService;
         private readonly IExcelReadWriteHandler _excelReadWriteHandler;
+        private readonly IIYSService _iysService;
 
         /// <summary>
         /// Panel kontrol methodlarının olduğu konst.
@@ -70,6 +71,7 @@ namespace BazWebApp.Controllers
         /// <param name="serviceProvider"></param>
         /// <param name="kurumMesajlasmaModuluIzinIslemleriService"></param>
         /// <param name="excelReadWriteHandler"></param>
+        /// <param name="iysService"></param>
         public PanelController(ILocalizationService localizationService, IBazCookieService bazCookieService,
             IKisiService kisiService, IMedyaKutuphanesiService medyaKutuphanesiService, IMenuService menuService,
             IParamOrganizasyonBirimleriService paramOrganizasyonBirimleriService,
@@ -78,7 +80,7 @@ namespace BazWebApp.Controllers
             IDilService dilService, ILoginRegisterService loginRegisterService,
             IKurumIliskiService kurumIliskiService, IKisiIliskiService kisiIliskiService,
             ISearchService searchService,
-            INotificationService notificationService, IServiceProvider serviceProvider, IKurumMesajlasmaModuluIzinIslemleriService kurumMesajlasmaModuluIzinIslemleriService, IExcelReadWriteHandler excelReadWriteHandler)
+            INotificationService notificationService, IServiceProvider serviceProvider, IKurumMesajlasmaModuluIzinIslemleriService kurumMesajlasmaModuluIzinIslemleriService, IExcelReadWriteHandler excelReadWriteHandler, IIYSService iysService)
         {
             _localizationService = localizationService;
             _bazCookieService = bazCookieService;
@@ -99,6 +101,7 @@ namespace BazWebApp.Controllers
             _searchService = searchService;
             _kurumMesajlasmaModuluIzinIslemleriService = kurumMesajlasmaModuluIzinIslemleriService;
             _excelReadWriteHandler = excelReadWriteHandler;
+            _iysService = iysService;
         }
 
         #region View Methods
@@ -402,6 +405,80 @@ namespace BazWebApp.Controllers
         public IActionResult MemberList()
         {
             return View("MemberList");
+        }
+
+        /// <summary>
+        /// Malzeme Talep Et sayfasına yönlendiren metod
+        /// </summary>
+        /// <returns></returns>
+        [Handlers.PolicyBasedAuthorize(yetkiKimlikAdi: "/MalzemeTalepEt")]
+        [Route("/MalzemeTalepEt")]
+        public IActionResult MalzemeTalepEt()
+        {
+            return View("MalzemeTalepEt");
+        }
+
+        /// <summary>
+        /// Proje Genel Bilgileri listesini getiren metod
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("/panel/ProjeGenelBilgilerList")]
+        public Result<List<ProjeGenelBilgilerVM>> ProjeGenelBilgilerList()
+        {
+            var result = _iysService.ProjeGenelBilgilerList();
+            return result;
+        }
+
+        /// <summary>
+        /// Talep Süreç Statüleri listesini getiren metod
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("/panel/TalepSurecStatuleriList")]
+        public Result<List<TalepSurecStatuleriVM>> TalepSurecStatuleriList()
+        {
+            var result = _iysService.TalepSurecStatuleriList();
+            return result;
+        }
+
+        /// <summary>
+        /// Malzeme taleplerini getiren metod
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("/panel/MalzemeTalepleriniGetir")]
+        public Result<List<MalzemeTalepVM>> MalzemeTalepleriniGetir([FromBody] MalzemeTalepFilterModel model)
+        {
+            var result = _iysService.MalzemeTalepleriniGetir(model);
+            return result;
+        }
+
+        /// <summary>
+        /// Süreç Statüleri Bildirim Tiplerini getiren metod
+        /// </summary>
+        /// <param name="tabloID"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("/panel/SurecStatuleriBildirimTipleriList/{tabloID}")]
+        public Result<List<SurecStatuleriBildirimTipleriVM>> SurecStatuleriBildirimTipleriList(int tabloID)
+        {
+            var result = _iysService.SurecStatuleriBildirimTipleriList(tabloID);
+            return result;
+        }
+
+        /// <summary>
+        /// Malzeme talep et metodu
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("/panel/MalzemeTalepEt")]
+        public Result<bool> MalzemeTalepEt([FromBody] MalzemeTalepEtModel model)
+        {
+            var result = _iysService.MalzemeTalepEt(model);
+            return result;
         }
 
         #endregion View Methods

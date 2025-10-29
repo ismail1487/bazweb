@@ -1,0 +1,396 @@
+/* Malzeme Talep Et Sayfası - Özel Stiller */
+
+/* Genel Form Stilleri */
+.malzeme-talep-form {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-section-title {
+    font-family: 'Encode Sans', sans-serif;
+    color: #18203f;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.section-divider {
+    border: 0;
+    border-top: 2px solid #e1e4e9;
+    margin-bottom: 2rem;
+}
+
+.required-field {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* Buton Stilleri */
+.add-buttons {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    background-color: #ff5f00;
+    border: none;
+    color: #ffffff;
+    font-family: 'Encode Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.add-buttons:hover {
+    background-color: #e65500;
+    color: #ffffff;
+    box-shadow: 0 4px 8px rgba(255, 95, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+.add-buttons:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(255, 95, 0, 0.2);
+}
+
+/* Tab Stilleri */
+.nav-tabs {
+    border-bottom: 2px solid #e1e4e9;
+    margin-bottom: 0;
+}
+
+.nav-tabs .nav-item {
+    margin-bottom: -2px;
+}
+
+.nav-tabs .nav-link {
+    border: none;
+    color: #516180;
+    font-family: 'Encode Sans', sans-serif;
+    font-weight: 500;
+    padding: 1rem 1.5rem;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+}
+
+.nav-tabs .nav-link:hover {
+    color: #ff5f00;
+    background-color: rgba(255, 95, 0, 0.05);
+    border-color: transparent;
+}
+
+.nav-tabs .nav-link.active {
+    color: #ff5f00;
+    background-color: transparent;
+    border-color: transparent;
+    border-bottom: 3px solid #ff5f00;
+    font-weight: 600;
+}
+
+.nav-tabs .nav-link i {
+    font-size: 1rem;
+}
+
+/* Tablo Stilleri */
+.table-head-custom {
+    background-color: #f8f9fa;
+    color: #18203f;
+    font-family: 'Encode Sans', sans-serif;
+    font-weight: 600;
+}
+
+.table-head-custom th {
+    border-bottom: 2px solid #e1e4e9;
+    padding: 1rem;
+    vertical-align: middle;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(255, 95, 0, 0.05);
+    cursor: pointer;
+}
+
+.action-column {
+    width: 150px;
+    text-align: center;
+}
+
+/* Form Input Stilleri */
+.form-control {
+    border: 1px solid #e1e4e9;
+    border-radius: 4px;
+    padding: 0.75rem;
+    font-family: 'Encode Sans', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #ff5f00;
+    box-shadow: 0 0 0 0.2rem rgba(255, 95, 0, 0.15);
+}
+
+.form-group label {
+    font-family: 'Encode Sans', sans-serif;
+    font-weight: 500;
+    color: #18203f;
+    margin-bottom: 0.5rem;
+}
+
+/* Info Box Stilleri */
+.info-box {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+
+.info-box-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    font-size: 2rem;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.info-box-content {
+    flex: 1;
+    padding-left: 1rem;
+}
+
+.info-box-text {
+    display: block;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-family: 'Encode Sans', sans-serif;
+}
+
+.info-box-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    font-family: 'Encode Sans', sans-serif;
+}
+
+.bg-info {
+    background-color: #17a2b8 !important;
+    color: #ffffff;
+}
+
+.bg-success {
+    background-color: #28a745 !important;
+    color: #ffffff;
+}
+
+.bg-warning {
+    background-color: #ffc107 !important;
+    color: #ffffff;
+}
+
+.bg-danger {
+    background-color: #dc3545 !important;
+    color: #ffffff;
+}
+
+/* Card Stilleri */
+.card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    background-color: #ffffff;
+    border-bottom: 2px solid #e1e4e9;
+    padding: 1.5rem;
+    border-radius: 8px 8px 0 0;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-title {
+    font-family: 'Encode Sans', sans-serif;
+    font-weight: 600;
+    color: #18203f;
+    margin-bottom: 0;
+}
+
+/* Alert Stilleri */
+.alert {
+    border-radius: 8px;
+    border: none;
+    padding: 1rem 1.5rem;
+    font-family: 'Encode Sans', sans-serif;
+}
+
+.alert-info {
+    background-color: rgba(23, 162, 184, 0.1);
+    color: #117a8b;
+    border-left: 4px solid #17a2b8;
+}
+
+/* Modal Stilleri */
+.modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #e1e4e9;
+    padding: 1.5rem;
+}
+
+.modal-title {
+    font-family: 'Encode Sans', sans-serif;
+    font-weight: 600;
+    color: #18203f;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.modal-footer {
+    background-color: #f8f9fa;
+    border-top: 2px solid #e1e4e9;
+    padding: 1rem 1.5rem;
+}
+
+/* Liste Başlık */
+.liste-baslik {
+    font-family: 'Encode Sans', sans-serif;
+    color: #18203f;
+    font-weight: 700;
+    font-size: 2rem;
+}
+
+/* Responsive Tasarım */
+@media (max-width: 768px) {
+    .nav-tabs .nav-link {
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+    }
+
+    .nav-tabs .nav-link i {
+        display: none;
+    }
+
+    .form-section-title {
+        font-size: 1.25rem;
+    }
+
+    .info-box {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .info-box-icon {
+        margin-bottom: 0.5rem;
+    }
+
+    .info-box-content {
+        padding-left: 0;
+    }
+
+    .malzeme-talep-form {
+        padding: 1rem;
+    }
+
+    .action-column {
+        width: 100px;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-header .btn {
+        margin-bottom: 0.5rem;
+        width: 100%;
+    }
+
+    .nav-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+
+    .nav-tabs .nav-item {
+        flex: 0 0 auto;
+    }
+}
+
+/* Özel Animasyonlar */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tab-pane.active {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Select2 Özelleştirme */
+.select2-container--default .select2-selection--single {
+    border: 1px solid #e1e4e9;
+    border-radius: 4px;
+    height: calc(2.25rem + 2px);
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 2.25rem;
+    padding-left: 0.75rem;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--single {
+    border-color: #ff5f00;
+    box-shadow: 0 0 0 0.2rem rgba(255, 95, 0, 0.15);
+}
+
+/* DataTables Özelleştirme */
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background-color: #ff5f00 !important;
+    border-color: #ff5f00 !important;
+    color: #ffffff !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background-color: #e65500 !important;
+    border-color: #e65500 !important;
+    color: #ffffff !important;
+}
+
+/* Durum Badge'leri */
+.badge-beklemede {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.badge-onaylandi {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.badge-reddedildi {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.badge-tamamlandi {
+    background-color: #17a2b8;
+    color: #fff;
+}
