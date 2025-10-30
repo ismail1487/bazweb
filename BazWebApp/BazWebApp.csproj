@@ -7,13 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Baz.AOP.Logger.ExceptionLog" Version="1.1.37" />
-    <PackageReference Include="Baz.AOP.Logger.Http" Version="1.0.98" />
+    <PackageReference Include="Baz.AOP.Logger.ExceptionLog" Version="1.1.41" />
+    <PackageReference Include="Baz.AOP.Logger.Http" Version="1.0.101" />
     <PackageReference Include="Baz.Attributes" Version="1.0.1" />
-    <PackageReference Include="Baz.Model.Entity" Version="1.20.37" />
-    <PackageReference Include="Baz.Model.Pattern" Version="1.0.11" />
+    <PackageReference Include="Baz.Model.Entity" Version="1.20.41" />
+    <PackageReference Include="Baz.Model.Pattern" Version="1.0.12" />
     <PackageReference Include="Baz.ProcessResult" Version="1.0.13" />
-    <PackageReference Include="Baz.RequestManager" Version="1.1.29" />
+    <PackageReference Include="Baz.RequestManager" Version="1.1.32" />
     <PackageReference Include="DotNetCore.NPOI" Version="1.2.3" />
     <PackageReference Include="Elasticsearch.Net" Version="7.17.5" />
     <PackageReference Include="googlemaps.TypeScript.DefinitelyTyped" Version="0.7.9" />
@@ -35,7 +35,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.14" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="SharedSession" Version="1.2.11" />
+    <PackageReference Include="SharedSession" Version="1.2.15" />
 
     <PackageReference Include="WebEssentials.AspNetCore.PWA" Version="1.0.65" />
   </ItemGroup>
