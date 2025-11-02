@@ -481,6 +481,72 @@ namespace BazWebApp.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Malzemeleri hazırla metodu
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("/panel/MalzemeleriHazirla/{id}")]
+        public Result<bool> MalzemeleriHazirla(int id)
+        {
+            var result = _iysService.MalzemeleriHazirla(id);
+            return result;
+        }
+
+        /// <summary>
+        /// Malzeme iade et metodu
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("/api/MalzemeTalepGenelBilgiler/MalzemeIadeEt")]
+        public Result<bool> MalzemeIadeEt([FromBody] MalzemeIadeEtModel model)
+        {
+            var result = _iysService.MalzemeIadeEt(model);
+            return result;
+        }
+
+        /// <summary>
+        /// Malzeme mal kabul et API metodu
+        /// </summary>
+        /// <param name="malzemeTalebiEssizID">Malzeme talebi essiz ID</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("/api/MalzemeTalepGenelBilgiler/MalKabulEt/{malzemeTalebiEssizID}")]
+        public Result<bool> MalKabulEt(int malzemeTalebiEssizID)
+        {
+            var result = _iysService.MalKabulEt(malzemeTalebiEssizID);
+            return result;
+        }
+
+        /// <summary>
+        /// Malzeme hasarlı olarak işaretle API metodu
+        /// </summary>
+        /// <param name="model">Hasarlı işaretleme modeli</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("/api/MalzemeTalepGenelBilgiler/HasarliOlarakIsaretle")]
+        public Result<bool> HasarliOlarakIsaretle([FromBody] MalzemeIadeEtModel model)
+        {
+            var result = _iysService.HasarliOlarakIsaretle(model);
+            return result;
+        }
+
+        /// <summary>
+        /// Süreç statüleri bildirim tipleri API metodu
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("/api/SurecStatusleriBildirimTipleri")]
+        public Result<List<SurecStatuleriBildirimTipleriVM>> SurecStatuleriBildirimTipleriAPI([FromBody] dynamic model)
+        {
+            int tabloId = model.tabloId;
+            var result = _iysService.SurecStatuleriBildirimTipleriList(tabloId);
+            return result;
+        }
+
         #endregion View Methods
 
         #region Api Methods

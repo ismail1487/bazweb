@@ -68,6 +68,16 @@ namespace BazWebApp.Services
     }
 
     /// <summary>
+    /// Malzeme İade Et Model
+    /// </summary>
+    public class MalzemeIadeEtModel
+    {
+        public int MalzemeTalebiEssizID { get; set; }
+        public int SurecStatuBildirimTipiID { get; set; }
+        public string SurecStatuGirilenNot { get; set; }
+    }
+
+    /// <summary>
     /// Malzeme Talep Filter Model
     /// </summary>
     public class MalzemeTalepFilterModel
@@ -83,9 +93,40 @@ namespace BazWebApp.Services
     /// </summary>
     public class MalzemeTalepVM
     {
+        /// <summary>
+        /// Malzeme talep detay bilgileri
+        /// </summary>
         public MalzemeTalepDetay MalzemeTalep { get; set; }
+        
+        /// <summary>
+        /// Toplam sevk edilen miktar
+        /// </summary>
         public int ToplamSevkEdilenMiktar { get; set; }
+        
+        /// <summary>
+        /// Kalan miktar
+        /// </summary>
         public int KalanMiktar { get; set; }
+        
+        /// <summary>
+        /// Talep süreç statü ID
+        /// </summary>
+        public int ParamTalepSurecStatuID { get; set; }
+        
+        /// <summary>
+        /// Süreç statüsü için girilen not
+        /// </summary>
+        public string SurecStatuGirilenNot { get; set; }
+        
+        /// <summary>
+        /// Süreç statüsü bildirim tipi ID
+        /// </summary>
+        public int? SurecStatuBildirimTipiID { get; set; }
+        
+        /// <summary>
+        /// Bildirim tipi tanımlama
+        /// </summary>
+        public string BildirimTipiTanimlama { get; set; }
     }
 
     /// <summary>
@@ -178,6 +219,34 @@ namespace BazWebApp.Services
         /// <param name="model"></param>
         /// <returns></returns>
         public Result<bool> MalzemeTalepEt(MalzemeTalepEtModel model);
+        
+        /// <summary>
+        /// Malzemeleri Hazırla.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Result<bool> MalzemeleriHazirla(int id);
+        
+        /// <summary>
+        /// Malzeme İade Et.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public Result<bool> MalzemeIadeEt(MalzemeIadeEtModel model);
+        
+        /// <summary>
+        /// Malzeme Mal Kabul Et.
+        /// </summary>
+        /// <param name="malzemeTalebiEssizID">Malzeme talebi essiz ID</param>
+        /// <returns></returns>
+        public Result<bool> MalKabulEt(int malzemeTalebiEssizID);
+        
+        /// <summary>
+        /// Malzeme Hasarlı Olarak İşaretle.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public Result<bool> HasarliOlarakIsaretle(MalzemeIadeEtModel model);
     }
     public class  IYSService : IIYSService
     {
@@ -345,6 +414,52 @@ namespace BazWebApp.Services
         {
             var request = _requestHelper.Post<Result<bool>>(
                 LocalPortlar.IYSService + "/api/MalzemeTalepGenelBilgiler/MalzemeTalepEt", 
+                model);
+            
+            return request.Result;
+        }
+
+        public Result<bool> MalzemeleriHazirla(int id)
+        {
+            var request = _requestHelper.Post<Result<bool>>(
+                LocalPortlar.IYSService + $"/api/MalzemeTalepGenelBilgiler/MalzemeleriHazirla/{id}", 
+                id);
+            
+            return request.Result;
+        }
+
+        public Result<bool> MalzemeIadeEt(MalzemeIadeEtModel model)
+        {
+            var request = _requestHelper.Post<Result<bool>>(
+                LocalPortlar.IYSService + "/api/MalzemeTalepGenelBilgiler/MalzemeIadeEt", 
+                model);
+            
+            return request.Result;
+        }
+
+        /// <summary>
+        /// Malzeme mal kabul işlemi
+        /// </summary>
+        /// <param name="malzemeTalebiEssizID">Malzeme talebi essiz ID</param>
+        /// <returns></returns>
+        public Result<bool> MalKabulEt(int malzemeTalebiEssizID)
+        {
+            var request = _requestHelper.Post<Result<bool>>(
+                LocalPortlar.IYSService + $"/api/MalzemeTalepGenelBilgiler/MalKabulEt/{malzemeTalebiEssizID}", 
+                malzemeTalebiEssizID);
+            
+            return request.Result;
+        }
+
+        /// <summary>
+        /// Malzeme hasarlı olarak işaretleme işlemi
+        /// </summary>
+        /// <param name="model">Hasarlı işaretleme modeli</param>
+        /// <returns></returns>
+        public Result<bool> HasarliOlarakIsaretle(MalzemeIadeEtModel model)
+        {
+            var request = _requestHelper.Post<Result<bool>>(
+                LocalPortlar.IYSService + "/api/MalzemeTalepGenelBilgiler/HasarliOlarakIsaretle", 
                 model);
             
             return request.Result;

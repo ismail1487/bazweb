@@ -394,3 +394,18 @@
     background-color: #17a2b8;
     color: #fff;
 }
+
+/* İade Edilmiş Satır Stili */
+.iade-edilmis-satir {
+    background-color: #d4a574 !important;
+    color: #5a3825 !important;
+}
+
+.iade-edilmis-satir:hover {
+    background-color: #c49464 !important;
+}
+
+.iade-edilmis-satir td {
+    background-color: transparent !important;
+    color: #5a3825 !important;
+}
