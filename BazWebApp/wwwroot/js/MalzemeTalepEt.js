@@ -73,7 +73,7 @@ function initializeDataTables() {
                 "data": null,
                 "orderable": false,
                 "render": function (data, type, row) {
-                    return `<input type="checkbox" class="row-checkbox" data-id="${row.malzemeTalep.malzemeTalebiEssizID}" />`;
+                    return `<input type="checkbox" class="row-checkbox" data-id="${row.malzemeTalebiEssizID}" data-surecid="${row.malzemeTalepSurecTakipID}" />`;
                 }
             },
             {
@@ -156,14 +156,14 @@ function initializeDataTables() {
         "lengthChange": false,
         "autoWidth": false,
         "pageLength": 10,
-        "order": [[8, "desc"]], // Oluşturma tarihine göre sırala
+        "order": [[9, "desc"]], // Oluşturma tarihine göre sırala
         "data": [], // Başlangıçta boş veri
         "columns": [
             {
                 "data": null,
                 "orderable": false,
                 "render": function (data, type, row) {
-                    return `<input type="checkbox" class="depo-row-checkbox" data-id="${row.malzemeTalep.malzemeTalebiEssizID}" />`;
+                    return `<input type="checkbox" class="depo-row-checkbox" data-id="${row.malzemeTalebiEssizID}" data-surecid="${row.malzemeTalepSurecTakipID}" />`;
                 }
             },
             {
@@ -185,6 +185,12 @@ function initializeDataTables() {
                 "data": "malzemeTalep.malzemeOrijinalTalepEdilenMiktar",
                 "render": function (data, type, row) {
                     return data.toLocaleString('tr-TR');
+                }
+            },
+            {
+                "data": "talepEdilenMiktar",
+                "render": function (data, type, row) {
+                    return data ? data.toLocaleString('tr-TR') : '-';
                 }
             },
             {
@@ -246,7 +252,7 @@ function initializeDataTables() {
         "lengthChange": false,
         "autoWidth": false,
         "pageLength": 10,
-        "order": [[8, "desc"]], // Oluşturma tarihine göre sırala
+        "order": [[9, "desc"]], // Oluşturma tarihine göre sırala
         "data": [], // Başlangıçta boş veri
         "rowCallback": function(row, data) {
             // paramTalepSurecStatuID === 7 ise satırı kahverengi yap
@@ -267,7 +273,7 @@ function initializeDataTables() {
                 "data": null,
                 "orderable": false,
                 "render": function (data, type, row) {
-                    return `<input type="checkbox" class="uretim-row-checkbox" data-id="${row.malzemeTalep.malzemeTalebiEssizID}" />`;
+                    return `<input type="checkbox" class="uretim-row-checkbox" data-id="${row.malzemeTalebiEssizID}" data-surecid="${row.malzemeTalepSurecTakipID}" />`;
                 }
             },
             {
@@ -289,6 +295,12 @@ function initializeDataTables() {
                 "data": "malzemeTalep.malzemeOrijinalTalepEdilenMiktar",
                 "render": function (data, type, row) {
                     return data.toLocaleString('tr-TR');
+                }
+            },
+            {
+                "data": "talepEdilenMiktar",
+                "render": function (data, type, row) {
+                    return data ? data.toLocaleString('tr-TR') : '-';
                 }
             },
             {
@@ -350,14 +362,14 @@ function initializeDataTables() {
         "lengthChange": false,
         "autoWidth": false,
         "pageLength": 10,
-        "order": [[8, "desc"]], // Oluşturma tarihine göre sırala
+        "order": [[9, "desc"]], // Oluşturma tarihine göre sırala
         "data": [], // Başlangıçta boş veri
         "columns": [
             {
                 "data": null,
                 "orderable": false,
                 "render": function (data, type, row) {
-                    return `<input type="checkbox" class="kalite-row-checkbox" data-id="${row.malzemeTalep.malzemeTalebiEssizID}" />`;
+                    return `<input type="checkbox" class="kalite-row-checkbox" data-id="${row.malzemeTalebiEssizID}" data-surecid="${row.malzemeTalepSurecTakipID}" />`;
                 }
             },
             {
@@ -379,6 +391,12 @@ function initializeDataTables() {
                 "data": "malzemeTalep.malzemeOrijinalTalepEdilenMiktar",
                 "render": function (data, type, row) {
                     return data.toLocaleString('tr-TR');
+                }
+            },
+            {
+                "data": "talepEdilenMiktar",
+                "render": function (data, type, row) {
+                    return data ? data.toLocaleString('tr-TR') : '-';
                 }
             },
             {
@@ -440,14 +458,14 @@ function initializeDataTables() {
         "lengthChange": false,
         "autoWidth": false,
         "pageLength": 10,
-        "order": [[8, "desc"]], // Oluşturma tarihine göre sırala
+        "order": [[9, "desc"]], // Oluşturma tarihine göre sırala
         "data": [], // Başlangıçta boş veri
         "columns": [
             {
                 "data": null,
                 "orderable": false,
                 "render": function (data, type, row) {
-                    return `<input type="checkbox" class="depo-kabul-row-checkbox" data-id="${row.malzemeTalep.malzemeTalebiEssizID}" />`;
+                    return `<input type="checkbox" class="depo-kabul-row-checkbox" data-id="${row.malzemeTalebiEssizID}" data-surecid="${row.malzemeTalepSurecTakipID}" />`;
                 }
             },
             {
@@ -478,6 +496,12 @@ function initializeDataTables() {
                 "data": "malzemeTalep.malzemeOrijinalTalepEdilenMiktar",
                 "render": function (data, type, row) {
                     return data || '0';
+                }
+            },
+            {
+                "data": "talepEdilenMiktar",
+                "render": function (data, type, row) {
+                    return data ? data.toLocaleString('tr-TR') : '-';
                 }
             },
             {
@@ -933,9 +957,6 @@ function loadStatuList() {
 function loadInitialData() {
     // İlk yükleme için bayrak
     window.isInitialLoad = true;
-    
-    // Proje ve statü listesi yüklendikten sonra veri çekilecek
-    // refreshMalzemeTalepTable() artık burada çağrılmıyor
 }
 
 /**
@@ -1989,8 +2010,8 @@ function handleHazirlandi() {
         return;
     }
 
-    // Seçili ID'yi al
-    const selectedId = selectedCheckboxes.first().data('id');
+    // Seçili Süreç ID'yi al
+    const selectedSurecId = selectedCheckboxes.first().data('surecid');
 
     // Onay sor
     Swal.fire({
@@ -2006,7 +2027,7 @@ function handleHazirlandi() {
         if (result.isConfirmed) {
             // API'ye POST isteği gönder
             $.ajax({
-                url: `/panel/MalzemeleriHazirla/${selectedId}`,
+                url: `/panel/MalzemeleriHazirla/${selectedSurecId}`,
                 type: 'POST',
                 contentType: 'application/json',
                 success: function(response) {
@@ -2081,8 +2102,8 @@ function handleMalKabul() {
         return;
     }
 
-    // Seçili ID'yi al
-    const selectedId = selectedCheckboxes.first().data('id');
+    // Seçili Süreç ID'yi al
+    const selectedSurecId = selectedCheckboxes.first().data('surecid');
 
     // Onay sor
     Swal.fire({
@@ -2098,7 +2119,7 @@ function handleMalKabul() {
         if (result.isConfirmed) {
             // API çağrısı yap
             $.ajax({
-                url: `/api/MalzemeTalepGenelBilgiler/MalKabulEt/${selectedId}`,
+                url: `/api/MalzemeTalepGenelBilgiler/MalKabulEt/${selectedSurecId}`,
                 type: 'POST',
                 contentType: 'application/json',
                 success: function (response) {
@@ -2163,11 +2184,11 @@ function handleIadeEt() {
         return;
     }
 
-    // Seçili ID'yi al
-    const selectedId = selectedCheckboxes.first().data('id');
+    // Seçili Süreç ID'yi al
+    const selectedSurecId = selectedCheckboxes.first().data('surecid');
     
-    // Modal'a ID'yi set et
-    $('#iadeMalzemeTalebiEssizID').val(selectedId);
+    // Modal'a Süreç ID'yi set et
+    $('#iadeMalzemeTalepSurecTakipID').val(selectedSurecId);
     
     // Bildirim tipleri dropdown'ını yükle
     loadBildirimTipleri();
@@ -2217,7 +2238,7 @@ function loadBildirimTipleri() {
 
 // İade Et modal kaydet buton eventi
 $(document).on('click', '#btnIadeKaydet', function() {
-    const malzemeTalebiEssizID = $('#iadeMalzemeTalebiEssizID').val();
+    const malzemeTalepSurecTakipID = $('#iadeMalzemeTalepSurecTakipID').val();
     const surecStatuBildirimTipiID = $('#surecStatuBildirimTipiID').val();
     const surecStatuGirilenNot = $('#iadeEtNot').val().trim();
     
@@ -2249,7 +2270,7 @@ $(document).on('click', '#btnIadeKaydet', function() {
             'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
         },
         data: JSON.stringify({
-            malzemeTalebiEssizID: malzemeTalebiEssizID,
+            malzemeTalepSurecTakipID: malzemeTalepSurecTakipID,
             surecStatuBildirimTipiID: surecStatuBildirimTipiID,
             surecStatuGirilenNot: surecStatuGirilenNot
         }),
@@ -2311,11 +2332,11 @@ function handleHasarli() {
         return;
     }
 
-    // Seçili ID'yi al
-    const selectedId = selectedCheckboxes.first().data('id');
+    // Seçili Süreç ID'yi al
+    const selectedSurecId = selectedCheckboxes.first().data('surecid');
     
-    // Modal'a ID'yi set et
-    $('#hasarliMalzemeTalebiEssizID').val(selectedId);
+    // Modal'a Süreç ID'yi set et
+    $('#hasarliMalzemeTalepSurecTakipID').val(selectedSurecId);
     
     // Bildirim tipleri dropdown'ını yükle
     loadHasarliBildirimTipleri();
@@ -2367,7 +2388,7 @@ function loadHasarliBildirimTipleri() {
 
 // Hasarlı modal kaydet buton eventi
 $(document).on('click', '#btnHasarliKaydet', function() {
-    const malzemeTalebiEssizID = $('#hasarliMalzemeTalebiEssizID').val();
+    const malzemeTalepSurecTakipID = $('#hasarliMalzemeTalepSurecTakipID').val();
     const surecStatuBildirimTipiID = $('#hasarliSurecStatuBildirimTipiID').val();
     const surecStatuGirilenNot = $('#hasarliNot').val().trim();
     
@@ -2399,7 +2420,7 @@ $(document).on('click', '#btnHasarliKaydet', function() {
             'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
         },
         data: JSON.stringify({
-            malzemeTalebiEssizID: malzemeTalebiEssizID,
+            malzemeTalepSurecTakipID: malzemeTalepSurecTakipID,
             surecStatuBildirimTipiID: surecStatuBildirimTipiID,
             surecStatuGirilenNot: surecStatuGirilenNot
         }),
@@ -2471,8 +2492,8 @@ function handleKaliteMalKabul() {
         return;
     }
 
-    // Seçili ID'yi al
-    const selectedId = selectedCheckboxes.first().data('id');
+    // Seçili Süreç ID'yi al
+    const selectedSurecId = selectedCheckboxes.first().data('surecid');
 
     // Onay sor
     Swal.fire({
@@ -2488,7 +2509,7 @@ function handleKaliteMalKabul() {
         if (result.isConfirmed) {
             // API çağrısı yap
             $.ajax({
-                url: `/api/MalzemeTalepGenelBilgiler/MalKabulEt/${selectedId}`,
+                url: `/api/MalzemeTalepGenelBilgiler/MalKabulEt/${selectedSurecId}`,
                 type: 'POST',
                 contentType: 'application/json',
                 success: function (response) {

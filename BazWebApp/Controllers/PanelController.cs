@@ -484,13 +484,13 @@ namespace BazWebApp.Controllers
         /// <summary>
         /// Malzemeleri hazırla metodu
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="malzemeTalepSurecTakipID">Malzeme talep süreç takip ID</param>
         /// <returns></returns>
         [HttpPost]
-        [Route("/panel/MalzemeleriHazirla/{id}")]
-        public Result<bool> MalzemeleriHazirla(int id)
+        [Route("/panel/MalzemeleriHazirla/{malzemeTalepSurecTakipID}")]
+        public Result<bool> MalzemeleriHazirla(int malzemeTalepSurecTakipID)
         {
-            var result = _iysService.MalzemeleriHazirla(id);
+            var result = _iysService.MalzemeleriHazirla(malzemeTalepSurecTakipID);
             return result;
         }
 
@@ -510,13 +510,13 @@ namespace BazWebApp.Controllers
         /// <summary>
         /// Malzeme mal kabul et API metodu
         /// </summary>
-        /// <param name="malzemeTalebiEssizID">Malzeme talebi essiz ID</param>
+        /// <param name="malzemeTalepSurecTakipID">Malzeme talep süreç takip ID</param>
         /// <returns></returns>
         [HttpPost]
-        [Route("/api/MalzemeTalepGenelBilgiler/MalKabulEt/{malzemeTalebiEssizID}")]
-        public Result<bool> MalKabulEt(int malzemeTalebiEssizID)
+        [Route("/api/MalzemeTalepGenelBilgiler/MalKabulEt/{malzemeTalepSurecTakipID}")]
+        public Result<bool> MalKabulEt(int malzemeTalepSurecTakipID)
         {
-            var result = _iysService.MalKabulEt(malzemeTalebiEssizID);
+            var result = _iysService.MalKabulEt(malzemeTalepSurecTakipID);
             return result;
         }
 
