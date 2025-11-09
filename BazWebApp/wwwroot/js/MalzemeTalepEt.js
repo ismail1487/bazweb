@@ -66,7 +66,7 @@ function initializeDataTables() {
         "lengthChange": false,
         "autoWidth": false,
         "pageLength": 10,
-        "order": [[8, "desc"]], // Oluşturma tarihine göre sırala
+        "order": [[7, "desc"]], // Kayıt tarihine göre sırala
         "data": [], // Başlangıçta boş veri
         "columns": [
             {
@@ -74,12 +74,6 @@ function initializeDataTables() {
                 "orderable": false,
                 "render": function (data, type, row) {
                     return `<input type="checkbox" class="row-checkbox" data-id="${row.malzemeTalebiEssizID}" data-surecid="${row.malzemeTalepSurecTakipID}" />`;
-                }
-            },
-            {
-                "data": null,
-                "render": function (data, type, row) {
-                    return `${row.malzemeTalep.satSeriNo}/${row.malzemeTalep.satSiraNo}`;
                 }
             },
             {
@@ -92,25 +86,39 @@ function initializeDataTables() {
                 "data": "malzemeTalep.malzemeIsmi"
             },
             {
-                "data": "malzemeTalep.malzemeOrijinalTalepEdilenMiktar",
-                "render": function (data, type, row) {
-                    return data.toLocaleString('tr-TR');
-                }
-            },
-            {
-                "data": "toplamSevkEdilenMiktar",
-                "render": function (data, type, row) {
-                    return data.toLocaleString('tr-TR');
-                }
-            },
-            {
                 "data": "kalanMiktar",
                 "render": function (data, type, row) {
-                    return data.toLocaleString('tr-TR');
+                    return data ? data.toLocaleString('tr-TR') : '-';
                 }
             },
             {
-                "data": "malzemeTalep.satOlusturmaTarihi",
+                "data": null,
+                "orderable": false,
+                "render": function (data, type, row) {
+                    const kalanMiktar = Math.floor(row.kalanMiktar || 0);
+                    return `<input type="number" class="form-control form-control-sm talep-miktar-input" 
+                                   data-surecid="${row.malzemeTalepSurecTakipID}" 
+                                   data-max="${kalanMiktar}"
+                                   value="${kalanMiktar}" 
+                                   min="0" 
+                                   step="1" 
+                                   style="width: 100px; padding: 2px 5px; font-size: 13px;" />`;
+                }
+            },
+            {
+                "data": "malzemeTalep.aciklama",
+                "render": function (data, type, row) {
+                    return data || '-';
+                }
+            },
+            {
+                "data": "malzemeTalep.satCariHesap",
+                "render": function (data, type, row) {
+                    return data || '-';
+                }
+            },
+            {
+                "data": "malzemeTalep.kayitTarihi",
                 "render": function (data, type, row) {
                     if (!data) return '-';
                     const date = new Date(data);
@@ -166,53 +174,16 @@ function initializeDataTables() {
                     return `<input type="checkbox" class="depo-row-checkbox" data-id="${row.malzemeTalebiEssizID}" data-surecid="${row.malzemeTalepSurecTakipID}" />`;
                 }
             },
-            {
-                "data": null,
-                "render": function (data, type, row) {
-                    return `${row.malzemeTalep.satSeriNo}/${row.malzemeTalep.satSiraNo}`;
-                }
-            },
-            {
-                "data": "malzemeTalep.projeKodu"
-            },
-            {
-                "data": "malzemeTalep.malzemeKodu"
-            },
-            {
-                "data": "malzemeTalep.malzemeIsmi"
-            },
-            {
-                "data": "malzemeTalep.malzemeOrijinalTalepEdilenMiktar",
-                "render": function (data, type, row) {
-                    return data.toLocaleString('tr-TR');
-                }
-            },
-            {
-                "data": "talepEdilenMiktar",
-                "render": function (data, type, row) {
-                    return data ? data.toLocaleString('tr-TR') : '-';
-                }
-            },
-            {
-                "data": "toplamSevkEdilenMiktar",
-                "render": function (data, type, row) {
-                    return data.toLocaleString('tr-TR');
-                }
-            },
-            {
-                "data": "kalanMiktar",
-                "render": function (data, type, row) {
-                    return data.toLocaleString('tr-TR');
-                }
-            },
-            {
-                "data": "malzemeTalep.satOlusturmaTarihi",
-                "render": function (data, type, row) {
-                    if (!data) return '-';
-                    const date = new Date(data);
-                    return date.toLocaleDateString('tr-TR') + ' ' + date.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
-                }
-            },
+            { "data": "malzemeTalep.projeKodu" },
+            { "data": "malzemeTalep.malzemeKodu" },
+            { "data": "malzemeTalep.malzemeIsmi" },
+            { "data": "kalanMiktar", "render": function (data) { return data.toLocaleString('tr-TR'); } },
+            { "data": "talepEdilenMiktar", "render": function (data) { return data ? data.toLocaleString('tr-TR') : '-'; } },
+            { "data": "malzemeTalep.aciklama" },
+            { "data": "malzemeTalep.satCariHesap" },
+            { "data": "malzemeTalep.kayitTarihi", "render": function (data) { if (!data) return '-'; const date = new Date(data); return date.toLocaleDateString('tr-TR') + ' ' + date.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }); } },
+            { "data": "surecOlusturmaTarihi", "render": function (data) { if (!data) return '-'; const date = new Date(data); return date.toLocaleDateString('tr-TR') + ' ' + date.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }); } },
+            { "data": "sevkID" },
             {
                 "data": null,
                 "orderable": false,
@@ -682,12 +653,114 @@ function initializeEventHandlers() {
         handleTabChange(targetTab);
     });
 
-    // Tekil checkbox'lar değiştiğinde - sadece 1 tane seçilebilir
-    $(document).on('change', '.row-checkbox', function () {
-        if ($(this).is(':checked')) {
-            // Diğer tüm checkbox'ları kaldır
-            $('.row-checkbox').not(this).prop('checked', false);
+    // Tümünü seç checkbox'ı - Malzeme Talep Et tablosu
+    // Sadece kalan miktar ile talep edilen miktar TAMAMEN AYNI olan satırları seç
+    $('#selectAllMalzemeTalep').on('change', function () {
+        const isChecked = $(this).is(':checked');
+        let eligibleCount = 0;
+        
+        $('.row-checkbox').each(function() {
+            const row = $(this).closest('tr');
+            const talepMiktarInput = row.find('.talep-miktar-input');
+            const talepMiktar = parseInt(talepMiktarInput.val()) || 0;
+            const kalanMiktar = parseInt(talepMiktarInput.data('max')) || 0;
+            const isEqual = talepMiktar === kalanMiktar && kalanMiktar > 0;
+            
+            if (isEqual) {
+                // Eşit olan satırları seç/kaldır
+                $(this).prop('checked', isChecked);
+                eligibleCount++;
+            } else {
+                // Eşit olmayan satırların seçimini KALDIR
+                $(this).prop('checked', false);
+            }
+        });
+        
+        // Eğer seçilebilir satır yoksa "Tümünü Seç"i kaldır
+        if (eligibleCount === 0 && isChecked) {
+            $(this).prop('checked', false);
+            Swal.fire({
+                icon: 'info',
+                title: 'Bilgi',
+                text: 'Tümünü seç özelliği sadece kalan miktar ile talep edilen miktar eşit olan satırlar için geçerlidir.',
+                confirmButtonText: 'Tamam'
+            });
         }
+    });
+
+    // Tekil checkbox'lar değiştiğinde - seçim uyumluluğu kontrolü
+    $(document).on('change', '.row-checkbox', function () {
+        const isChecked = $(this).is(':checked');
+        
+        if (isChecked) {
+            // Checkbox işaretlenmeye çalışılıyor, kontrol et
+            const row = $(this).closest('tr');
+            const talepMiktarInput = row.find('.talep-miktar-input');
+            const talepMiktar = parseInt(talepMiktarInput.val()) || 0;
+            const kalanMiktar = parseInt(talepMiktarInput.data('max')) || 0;
+            const isCurrentEqual = talepMiktar === kalanMiktar;
+            
+            // Eğer başka seçili satırlar varsa kontrol et
+            const otherCheckedBoxes = $('.row-checkbox:checked').not(this);
+            
+            if (otherCheckedBoxes.length > 0) {
+                // En az bir tane daha seçili satır var
+                let hasEqualRows = false;
+                let hasDifferentRows = false;
+                
+                otherCheckedBoxes.each(function() {
+                    const otherRow = $(this).closest('tr');
+                    const otherTalepMiktarInput = otherRow.find('.talep-miktar-input');
+                    const otherTalepMiktar = parseInt(otherTalepMiktarInput.val()) || 0;
+                    const otherKalanMiktar = parseInt(otherTalepMiktarInput.data('max')) || 0;
+                    
+                    if (otherTalepMiktar === otherKalanMiktar) {
+                        hasEqualRows = true;
+                    } else {
+                        hasDifferentRows = true;
+                    }
+                });
+                
+                // KURAL: Eşit (kalan=talep) ve Farklı (kalan≠talep) satırlar KARIŞTIRILAMAZ
+                if (isCurrentEqual && hasDifferentRows) {
+                    // Şu an seçilmeye çalışılan satır eşit, ama zaten farklı satırlar seçili
+                    $(this).prop('checked', false);
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Uyarı',
+                        text: 'Talep miktarı farklı olan satırlar seçiliyken, eşit olan satırlar seçilemez. Önce diğer seçimleri kaldırın.',
+                        confirmButtonText: 'Tamam',
+                        timer: 3000
+                    });
+                    return;
+                } else if (!isCurrentEqual && hasEqualRows) {
+                    // Şu an seçilmeye çalışılan satır farklı, ama zaten eşit satırlar seçili
+                    $(this).prop('checked', false);
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Uyarı',
+                        text: 'Talep miktarı eşit olan satırlar seçiliyken, farklı olan satırlar seçilemez. Önce diğer seçimleri kaldırın.',
+                        confirmButtonText: 'Tamam',
+                        timer: 3000
+                    });
+                    return;
+                } else if (!isCurrentEqual && hasDifferentRows) {
+                    // Şu an seçilmeye çalışılan satır farklı, ve zaten farklı satırlar var
+                    // SADECE 1 TANE farklı satır seçilebilir
+                    $(this).prop('checked', false);
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Uyarı',
+                        text: 'Talep miktarı farklı olan satırlardan sadece 1 tane seçilebilir.',
+                        confirmButtonText: 'Tamam',
+                        timer: 3000
+                    });
+                    return;
+                }
+            }
+        }
+        
+        updateSelectAllCheckbox();
     });
 
     // Depo checkbox'ları değiştiğinde - sadece 1 tane seçilebilir
@@ -772,6 +845,74 @@ function initializeEventHandlers() {
         const type = $(this).data('type');
         deleteKayit(id, type);
     });
+
+    // Talep Edilen Miktar input değişikliği - blur event'inde kontrol
+    $(document).on('blur', '.talep-miktar-input', function () {
+        const maxValue = parseInt($(this).data('max'));
+        let currentValue = parseInt($(this).val());
+        
+        // NaN kontrolü
+        if (isNaN(currentValue)) {
+            currentValue = 0;
+            $(this).val(0);
+        }
+        
+        // Negatif değer kontrolü
+        if (currentValue < 0) {
+            $(this).val(0);
+            currentValue = 0;
+        }
+        
+        // Eğer talep edilen miktar kalan miktardan farklıysa, checkbox'ı kaldır ve tümünü seç'i kaldır
+        const row = $(this).closest('tr');
+        const checkbox = row.find('.row-checkbox');
+        
+        if (currentValue !== maxValue) {
+            checkbox.prop('checked', false);
+            // Input değiştiğinde tümünü seç'i MUTLAKA kaldır
+            $('#selectAllMalzemeTalep').prop('checked', false);
+        } else {
+            // Değer tekrar kalan miktara eşit oldu, tümünü seç'i kontrol et
+            setTimeout(function() {
+                updateSelectAllCheckbox();
+            }, 0);
+        }
+    });
+}
+
+/**
+ * Tümünü seç checkbox'ını güncelle
+ * Sadece kalan miktar = talep edilen miktar olan satırlar kontrol edilir
+ */
+function updateSelectAllCheckbox() {
+    let eligibleCount = 0; // Seçilebilir satır sayısı (kalan = talep)
+    let selectedEligibleCount = 0; // Seçilebilir satırlardan seçili olanlar
+    
+    $('.row-checkbox').each(function() {
+        const row = $(this).closest('tr');
+        const talepMiktarInput = row.find('.talep-miktar-input');
+        
+        if (talepMiktarInput.length === 0) return; // Input yoksa atla
+        
+        const talepMiktar = parseInt(talepMiktarInput.val()) || 0;
+        const kalanMiktar = parseInt(talepMiktarInput.data('max')) || 0;
+        
+        // Sadece kalan miktar = talep edilen miktar olan satırları say
+        if (talepMiktar === kalanMiktar && kalanMiktar > 0) {
+            eligibleCount++;
+            if ($(this).is(':checked')) {
+                selectedEligibleCount++;
+            }
+        }
+    });
+    
+    // Tümünü seç checkbox'ını güncelle:
+    // - Seçilebilir satır yoksa → kaldır
+    // - Seçilebilir satırların hepsi seçili → işaretle
+    // - Seçilebilir satırlardan biri bile seçili değil → kaldır
+    const shouldBeChecked = eligibleCount > 0 && selectedEligibleCount === eligibleCount;
+    
+    $('#selectAllMalzemeTalep').prop('checked', shouldBeChecked);
 }
 
 /**
@@ -781,12 +922,6 @@ function initializeSelect2() {
     $('#projeFilter').select2({
         theme: 'bootstrap4',
         placeholder: 'Tümü',
-        allowClear: false
-    });
-    
-    $('#statuFilter').select2({
-        theme: 'bootstrap4',
-        placeholder: 'Tüm Statüler',
         allowClear: false
     });
     
@@ -915,40 +1050,17 @@ function loadProjeList() {
 }
 
 /**
- * Statü listesini API'den yükle
+ * Statü listesini yükle
  */
 function loadStatuList() {
-    $.ajax({
-        url: '/panel/TalepSurecStatuleriList',
-        type: 'GET',
-        dataType: 'json',
-        success: function (response) {
-            if (response.isSuccess && response.value) {
-                const select = $('#statuFilter');
-                
-                // API'den gelen tüm verileri ekle (Tümü dahil)
-                response.value.forEach(function (statu) {
-                    const option = new Option(
-                        statu.statu,
-                        statu.tabloID,
-                        statu.tabloID === 0, // Tümü seçili olsun
-                        statu.tabloID === 0
-                    );
-                    select.append(option);
-                });
-                
-                select.trigger('change');
-            }
-        },
-        error: function (error) {
-            console.error('Statü listesi yüklenirken hata:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Hata',
-                text: 'Statü listesi yüklenemedi!'
-            });
-        }
-    });
+    const select = $('#statuFilter');
+    
+    // Sabit statü seçeneklerini ekle
+    select.append(new Option('Tümü', '0', true, true));
+    select.append(new Option('Geldi', '1', false, false));
+    select.append(new Option('Gelmedi', '2', false, false));
+    
+    select.trigger('change');
 }
 
 /**
@@ -1009,114 +1121,180 @@ function yeniTalepEkle() {
         Swal.fire({
             icon: 'warning',
             title: 'Uyarı',
-            text: 'Lütfen bir kayıt seçiniz!'
+            text: 'Lütfen en az bir kayıt seçiniz!'
         });
         return;
     }
     
-    if (checkedBoxes.length > 1) {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Uyarı',
-            text: 'Lütfen sadece bir kayıt seçiniz!'
+    // Her seçili satır için talep edilen miktarı topla
+    const items = [];
+    const projeGroups = {}; // Proje bazlı gruplama için
+    const overRequestedItems = []; // Fazla talep edilen malzemeler
+    let hasError = false;
+    
+    checkedBoxes.each(function() {
+        const malzemeTalebiEssizID = $(this).data('id');
+        const row = $(this).closest('tr');
+        const talepMiktarInput = row.find('.talep-miktar-input');
+        const talepMiktar = parseInt(talepMiktarInput.val());
+        const maxMiktar = parseInt(talepMiktarInput.data('max'));
+        
+        // Proje kodunu DataTable'dan al
+        const rowData = window.malzemeTalepTable.row(row).data();
+        const projeKodu = rowData.malzemeTalep.projeKodu;
+        const malzemeKodu = rowData.malzemeTalep.malzemeKodu;
+        
+        if (!talepMiktar || talepMiktar <= 0) {
+            hasError = true;
+            Swal.fire({
+                icon: 'warning',
+                title: 'Uyarı',
+                text: 'Lütfen geçerli bir talep miktarı giriniz!'
+            });
+            return false; // Break the loop
+        }
+        
+        if (talepMiktar > maxMiktar) {
+            overRequestedItems.push({
+                malzemeKodu: malzemeKodu,
+                projeKodu: projeKodu,
+                talepMiktar: talepMiktar,
+                kalanMiktar: maxMiktar
+            });
+            // Fazla talep olsa bile listeye ekle, sonra topluca uyarı göstereceğiz
+        }
+        
+        items.push({
+            malzemeTalebiEssizID: malzemeTalebiEssizID,
+            sevkEdilenMiktar: talepMiktar
         });
-        return;
-    }
+        
+        // Proje bazlı gruplama
+        if (!projeGroups[projeKodu]) {
+            projeGroups[projeKodu] = 0;
+        }
+        projeGroups[projeKodu]++;
+    });
     
-    // Seçili kaydın ID'sini al
-    const malzemeTalebiEssizID = checkedBoxes.first().data('id');
-    $('#malzemeTalebiEssizID').val(malzemeTalebiEssizID);
-    
-    // Formu temizle
-    $('#sevkEdilenMiktar').val('');
-    $('#surecStatuGirilenNot').val('');
-    
-    // Modalı aç
-    $('#talepEtModal').modal('show');
-}
-
-/**
- * Talep kaydet butonu
- */
-$(document).on('click', '#btnTalepKaydet', function() {
-    // Form validasyonu
-    const sevkEdilenMiktar = parseInt($('#sevkEdilenMiktar').val());
-    const surecStatuGirilenNot = $('#surecStatuGirilenNot').val() || '';
-    const malzemeTalebiEssizID = parseInt($('#malzemeTalebiEssizID').val());
-    
-    if (!sevkEdilenMiktar || sevkEdilenMiktar <= 0) {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Uyarı',
-            text: 'Lütfen geçerli bir miktar giriniz!'
-        });
+    if (hasError) {
         return;
     }
     
     // Request data hazırla
     const requestData = {
-        malzemeTalebiEssizID: malzemeTalebiEssizID,
-        sevkEdilenMiktar: sevkEdilenMiktar,
-        sevkTalepEdenKisiID: 1,
-        malzemeSevkTalebiYapanDepartmanID: 1,
-        malzemeSevkTalebiYapanKisiID: 1,
-        surecStatuGirilenNot: surecStatuGirilenNot
+        talepItems: items
     };
     
-    $.ajax({
-        url: '/panel/MalzemeTalepEt',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(requestData),
-        success: function(response) {
-            $('#talepEtModal').modal('hide');
-            
-            if (response.isSuccess) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Başarılı',
-                    text: 'Malzeme talebi başarıyla kaydedildi!',
-                    confirmButtonColor: '#007bff'
-                }).then(() => {
-                    // Checkbox'ları temizle
-                    $('.row-checkbox').prop('checked', false);
-                    $('#selectAll').prop('checked', false);
+    // Onay mesajını oluştur
+    let confirmMessage = '';
+    const projeKeys = Object.keys(projeGroups);
+    
+    if (projeKeys.length === 1) {
+        // Tek proje
+        const projeKodu = projeKeys[0];
+        const kalemSayisi = projeGroups[projeKodu];
+        confirmMessage = `${kalemSayisi} kalem ${projeKodu} projesine talep edilecektir. Emin misiniz?`;
+    } else {
+        // Birden fazla proje
+        const projeListesi = projeKeys.map(proje => `${projeGroups[proje]} kalem ${proje}`).join(', ');
+        confirmMessage = `${projeListesi} projesine talep edilecektir. Emin misiniz?`;
+    }
+    
+    // Fazla talep edilen malzemeler varsa uyarı ekle
+    if (overRequestedItems.length > 0) {
+        confirmMessage += '\n\n⚠️ UYARI: Aşağıdaki malzemeler kalan miktardan fazla talep edilmiştir:\n\n';
+        overRequestedItems.forEach(function(item) {
+            confirmMessage += `• ${item.malzemeKodu} (Proje: ${item.projeKodu}) - Talep: ${item.talepMiktar}, Kalan: ${item.kalanMiktar}\n`;
+        });
+        confirmMessage += '\nYine de devam etmek istiyor musunuz?';
+    }
+    
+    // Onay modalı göster
+    Swal.fire({
+        title: overRequestedItems.length > 0 ? 'Dikkat!' : 'Onay',
+        text: confirmMessage,
+        icon: overRequestedItems.length > 0 ? 'warning' : 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Evet, Talep Et',
+        cancelButtonText: 'İptal',
+        confirmButtonColor: overRequestedItems.length > 0 ? '#ff9800' : '#007bff',
+        cancelButtonColor: '#6c757d'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // API çağrısı yap
+            $.ajax({
+                url: '/panel/MalzemeTalepEt',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(requestData),
+                success: function(response) {
+                    if (response.isSuccess) {
+                        // Servisten gelen mesajı göster (value string olarak dönüyor)
+                        const successMessage = response.value || 'Malzeme talepleri başarıyla oluşturuldu!';
+                        
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Başarılı',
+                            text: successMessage,
+                            confirmButtonColor: '#007bff'
+                        }).then(() => {
+                            // Checkbox'ları temizle
+                            $('.row-checkbox').prop('checked', false);
+                            $('#selectAllMalzemeTalep').prop('checked', false);
+                            
+                            // Tabloyu mevcut filtreler ile yenile
+                            refreshMalzemeTalepTable();
+                        });
+                    } else {
+                        // Hata durumunda da servisten gelen mesajı göster
+                        let errorMessage = 'Talepler oluşturulamadı!';
+                        
+                        if (response.value && typeof response.value === 'string') {
+                            errorMessage = response.value;
+                        } else if (response.errors && response.errors.length > 0) {
+                            errorMessage = response.errors.join(', ');
+                        }
+                        
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Hata',
+                            text: errorMessage,
+                            confirmButtonColor: '#dc3545'
+                        });
+                    }
+                },
+                error: function(error) {
+                    console.error('Talep Et - Error Response:', error);
                     
-                    // Tabloyu mevcut filtreler ile yenile
-                    refreshMalzemeTalepTable();
-                });
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Hata',
-                    text: response.errors && response.errors.length > 0 
-                        ? response.errors.join(', ') 
-                        : 'Talep kaydedilemedi!',
-                    confirmButtonColor: '#dc3545'
-                });
-            }
-        },
-        error: function(error) {
-            console.error('Talep Et - Error Response:', error);
-            
-            $('#talepEtModal').modal('hide');
-            
-            let errorMessage = 'Talep kaydedilemedi!';
-            if (error.responseJSON && error.responseJSON.errors && error.responseJSON.errors.length > 0) {
-                errorMessage = error.responseJSON.errors.join(', ');
-            } else if (error.responseText) {
-                errorMessage = error.responseText;
-            }
-            
-            Swal.fire({
-                icon: 'error',
-                title: 'Hata',
-                text: errorMessage,
-                confirmButtonColor: '#dc3545'
+                    let errorMessage = 'Talepler oluşturulamadı!';
+                    
+                    // Servisten string mesaj dönebilir
+                    if (error.responseJSON) {
+                        if (error.responseJSON.value && typeof error.responseJSON.value === 'string') {
+                            errorMessage = error.responseJSON.value;
+                        } else if (error.responseJSON.errors && error.responseJSON.errors.length > 0) {
+                            errorMessage = error.responseJSON.errors.join(', ');
+                        }
+                    } else if (error.responseText) {
+                        errorMessage = error.responseText;
+                    }
+                    
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata',
+                        text: errorMessage,
+                        confirmButtonColor: '#dc3545'
+                    });
+                }
             });
         }
     });
-});
+}
+
+/**
+ * Talep kaydet butonu - ARTIK KULLANILMIYOR (Direkt yeniTalepEkle fonksiyonu içinde yapılıyor)
+ */
+// $(document).on('click', '#btnTalepKaydet', function() { ... });
 
 /**
  * Yeni Depo Kaydı Ekleme

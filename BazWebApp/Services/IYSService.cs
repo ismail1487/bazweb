@@ -29,13 +29,32 @@ namespace BazWebApp.Services
     /// </summary>
     public class TalepSurecStatuleriVM
     {
-        public string Statu { get; set; }
+        public bool SistemParamMi { get; set; }
+        public string ParamTanim { get; set; }
+        public int UstId { get; set; }
+        public string ParamKod { get; set; }
+        public int ParamIkonId { get; set; }
+        public int ParamSira { get; set; }
+        public int ParamIlgiliKurumId { get; set; }
+        public int ParamIlgiliKisiId { get; set; }
+        public int ParamIlgiliUlkeId { get; set; }
+        public int EsDilID { get; set; }
         public int TabloID { get; set; }
         public int DilID { get; set; }
         public int KurumID { get; set; }
         public int KisiID { get; set; }
         public int AktifMi { get; set; }
         public int SilindiMi { get; set; }
+        public DateTime KayitTarihi { get; set; }
+        public int KayitEdenID { get; set; }
+        public DateTime GuncellenmeTarihi { get; set; }
+        public int GuncelleyenKisiID { get; set; }
+        public DateTime? AktiflikTarihi { get; set; }
+        public int? AktifEdenKisiID { get; set; }
+        public int? PasifEdenKisiID { get; set; }
+        public DateTime? PasiflikTarihi { get; set; }
+        public int? SilenKisiID { get; set; }
+        public DateTime? SilinmeTarihi { get; set; }
     }
 
     /// <summary>
@@ -58,13 +77,16 @@ namespace BazWebApp.Services
     /// </summary>
     public class MalzemeTalepEtModel
     {
+        public List<MalzemeTalepEtItem> TalepItems { get; set; }
+    }
+
+    /// <summary>
+    /// Malzeme Talep Et Item (Her bir satır için)
+    /// </summary>
+    public class MalzemeTalepEtItem
+    {
         public int MalzemeTalebiEssizID { get; set; }
         public int SevkEdilenMiktar { get; set; }
-        public int SevkTalepEdenKisiID { get; set; }
-        public int MalzemeSevkTalebiYapanDepartmanID { get; set; }
-        public int MalzemeSevkTalebiYapanKisiID { get; set; }
-        public string SurecStatuGirilenNot { get; set; }
-        public int SurecStatuBildirimTipiID { get; set; }
     }
 
     /// <summary>
@@ -145,6 +167,16 @@ namespace BazWebApp.Services
         /// Bildirim tipi tanımlama
         /// </summary>
         public string BildirimTipiTanimlama { get; set; }
+
+        /// <summary>
+        /// Süreç oluşturma tarihi (DepoHazirlama tablosu için)
+        /// </summary>
+        public DateTime? SurecOlusturmaTarihi { get; set; }
+
+        /// <summary>
+        /// Sevk ID (DepoHazirlama tablosu için)
+        /// </summary>
+        public string SevkID { get; set; }
     }
 
     /// <summary>
@@ -153,6 +185,7 @@ namespace BazWebApp.Services
     public class MalzemeTalepDetay
     {
         public int MalzemeTalebiEssizID { get; set; }
+        public string Kod { get; set; }
         public int ProjeKodu { get; set; }
         public int TalepGirenKisiKod { get; set; }
         public int ParamDepoID { get; set; }
@@ -161,6 +194,8 @@ namespace BazWebApp.Services
         public string SatOlusturmaTarihi { get; set; }
         public string SatSeriNo { get; set; }
         public string SatSiraNo { get; set; }
+        public string SatCariHesap { get; set; }
+        public string Aciklama { get; set; }
         public int MalzemeOrijinalTalepEdilenMiktar { get; set; }
         public int BaglantiliMalzemeTalebiEssizID { get; set; }
         public string BuTalebiKarsilayanSATSeriNo { get; set; }
@@ -236,7 +271,7 @@ namespace BazWebApp.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public Result<bool> MalzemeTalepEt(MalzemeTalepEtModel model);
+        public Result<string> MalzemeTalepEt(MalzemeTalepEtModel model);
         
         /// <summary>
         /// Malzemeleri Hazırla.
@@ -355,13 +390,13 @@ namespace BazWebApp.Services
             {
                 // Sadece TabloID 1 ve 2 olanları filtrele
                 request.Result.Value = request.Result.Value
-                    .Where(x => x.TabloID == 1 || x.TabloID == 2)
+                    .Where(t => t.TabloID == 1 || t.TabloID == 2)
                     .ToList();
                 
                 // "Tümü" seçeneğini listenin başına ekle
                 var tumuOption = new TalepSurecStatuleriVM
                 {
-                    Statu = "Tümü",
+                    ParamTanim = "Tümü",
                     TabloID = 0,
                     DilID = 0,
                     KurumID = 0,
@@ -428,9 +463,9 @@ namespace BazWebApp.Services
             return request.Result;
         }
 
-        public Result<bool> MalzemeTalepEt(MalzemeTalepEtModel model)
+        public Result<string> MalzemeTalepEt(MalzemeTalepEtModel model)
         {
-            var request = _requestHelper.Post<Result<bool>>(
+            var request = _requestHelper.Post<Result<string>>(
                 LocalPortlar.IYSService + "/api/MalzemeTalepGenelBilgiler/MalzemeTalepEt", 
                 model);
             

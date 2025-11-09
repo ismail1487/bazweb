@@ -475,7 +475,7 @@ namespace BazWebApp.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("/panel/MalzemeTalepEt")]
-        public Result<bool> MalzemeTalepEt([FromBody] MalzemeTalepEtModel model)
+        public Result<string> MalzemeTalepEt([FromBody] MalzemeTalepEtModel model)
         {
             var result = _iysService.MalzemeTalepEt(model);
             return result;
