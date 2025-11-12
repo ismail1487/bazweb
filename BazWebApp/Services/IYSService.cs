@@ -110,7 +110,26 @@ namespace BazWebApp.Services
         public int? ProjeKodu { get; set; }
         public List<int> TalepSurecStatuIDs { get; set; }
         public string SearchText { get; set; }
-        public bool MalzemeTalepEtGetir { get; set; }
+        public bool MalzemeTalepEtGetir { get; set; } = false;
+        public bool SadeceEkTalepleriGetir { get; set; } = false;
+    }
+
+    /// <summary>
+    /// Toplu SAT Bilgisi Güncelleme Model
+    /// </summary>
+    public class TopluSATBilgisiGuncelleModel
+    {
+        public List<SATBilgisiItem> Items { get; set; }
+    }
+
+    /// <summary>
+    /// SAT Bilgisi Item
+    /// </summary>
+    public class SATBilgisiItem
+    {
+        public int MalzemeTalebiEssizID { get; set; }
+        public string BuTalebiKarsilayanSATSeriNo { get; set; }
+        public string BuTalebiKarsilayanSATSiraNo { get; set; }
     }
 
     /// <summary>
@@ -258,7 +277,14 @@ namespace BazWebApp.Services
         /// <param name="model"></param>
         /// <returns></returns>
         public Result<List<MalzemeTalepVM>> MalzemeTalepleriniGetir(MalzemeTalepFilterModel model);
-        
+
+        /// <summary>
+        /// Toplu SAT Bilgisi Günceller.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public Result<string> TopluSATBilgisiGuncelle(TopluSATBilgisiGuncelleModel model);
+
         /// <summary>
         /// Süreç Statüleri Bildirim Tiplerini Getirir.
         /// </summary>
@@ -445,13 +471,23 @@ namespace BazWebApp.Services
                 projeKodu = projeKodu,
                 talepSurecStatuIDs = statuIDs,
                 searchText = model.SearchText ?? "",
-                malzemeTalepEtGetir = malzemeTalepEtGetir
+                malzemeTalepEtGetir = malzemeTalepEtGetir,
+                sadeceEkTalepleriGetir = model.SadeceEkTalepleriGetir
             };
             
             var request = _requestHelper.Post<Result<List<MalzemeTalepVM>>>(
-                LocalPortlar.IYSService + "/api/MalzemeTalepGenelBilgiler/MalzemeTalepleriniGetir", 
+                LocalPortlar.IYSService + "/api/MalzemeTalepGenelBilgiler/MalzemeTalepleriniGetir",
                 requestData);
-            
+
+            return request.Result;
+        }
+
+        public Result<string> TopluSATBilgisiGuncelle(TopluSATBilgisiGuncelleModel model)
+        {
+            var request = _requestHelper.Post<Result<string>>(
+                LocalPortlar.IYSService + "/api/MalzemeTalepGenelBilgiler/TopluSATBilgisiGuncelle",
+                model);
+
             return request.Result;
         }
 

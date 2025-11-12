@@ -9,6 +9,7 @@ let isLoadingDepoHazirlama = false;
 let isLoadingUretimMalKabul = false;
 let isLoadingKaliteKontrol = false;
 let isLoadingDepoKabul = false;
+let isLoadingImalatEk = false;
 
 // İlk yükleme kontrolü
 window.isInitialLoad = false;
@@ -508,7 +509,108 @@ function initializeDataTables() {
             }
         ]
     });
-    
+
+    // İmalat Ek Talepler Tablosu
+    if ($.fn.DataTable.isDataTable('#imalatEkTaleplerTable')) {
+        $('#imalatEkTaleplerTable').DataTable().destroy();
+    }
+
+    window.imalatEkTaleplerTable = $('#imalatEkTaleplerTable').DataTable({
+        "language": {
+            "lengthMenu": "Sayfada _MENU_ kayıt göster",
+            "zeroRecords": "Eşleşen kayıt bulunamadı",
+            "info": "Toplam _TOTAL_ kayıttan _START_ - _END_ arası gösteriliyor",
+            "infoEmpty": "Gösterilecek kayıt yok",
+            "infoFiltered": "(_MAX_ kayıt içerisinden filtrelendi)",
+            "search": "Ara:",
+            "paginate": {
+                "first": "İlk",
+                "last": "Son",
+                "next": "Sonraki",
+                "previous": "Önceki"
+            }
+        },
+        "dom": "<'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-7'i><'col-sm-12 col-md-5 text-right'p>>",
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "pageLength": 10,
+        "order": [[8, "desc"]], // Kayıt tarihine göre sırala
+        "data": [], // Başlangıçta boş veri
+        "columns": [
+            {
+                "data": "malzemeTalep.projeKodu"
+            },
+            {
+                "data": "malzemeTalep.malzemeKodu"
+            },
+            {
+                "data": "malzemeTalep.malzemeIsmi"
+            },
+            {
+                "data": "kalanMiktar",
+                "render": function (data, type, row) {
+                    return data ? data.toLocaleString('tr-TR') : '-';
+                }
+            },
+            {
+                "data": null,
+                "orderable": false,
+                "render": function (data, type, row) {
+                    const currentValue = row.malzemeTalep.buTalebiKarsilayanSATSeriNo || '';
+                    return `<input type="text" class="form-control form-control-sm sat-seri-input"
+                                   data-id="${row.malzemeTalebiEssizID}"
+                                   value="${currentValue}"
+                                   placeholder="Seri No"
+                                   style="width: 100px; padding: 2px 5px; font-size: 13px;" />`;
+                }
+            },
+            {
+                "data": null,
+                "orderable": false,
+                "render": function (data, type, row) {
+                    const currentValue = row.malzemeTalep.buTalebiKarsilayanSATSiraNo || '';
+                    return `<input type="text" class="form-control form-control-sm sat-sira-input"
+                                   data-id="${row.malzemeTalebiEssizID}"
+                                   value="${currentValue}"
+                                   placeholder="Sıra No"
+                                   style="width: 100px; padding: 2px 5px; font-size: 13px;" />`;
+                }
+            },
+            {
+                "data": "malzemeTalep.aciklama",
+                "render": function (data, type, row) {
+                    return data || '-';
+                }
+            },
+            {
+                "data": "malzemeTalep.satCariHesap",
+                "render": function (data, type, row) {
+                    return data || '-';
+                }
+            },
+            {
+                "data": "malzemeTalep.kayitTarihi",
+                "render": function (data, type, row) {
+                    if (!data) return '-';
+                    const date = new Date(data);
+                    return date.toLocaleDateString('tr-TR') + ' ' + date.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+                }
+            },
+            {
+                "data": null,
+                "orderable": false,
+                "render": function (data, type, row) {
+                    return `
+                        <button class="btn btn-sm btn-info btn-detay" data-id="${row.malzemeTalep.malzemeTalebiEssizID}" data-type="imalat-ek" title="Detay">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    `;
+                }
+            }
+        ]
+    });
+
     // Aktif tab'ın tablosunu düzelt
     setTimeout(function() {
         if (window.malzemeTalepTable) {
@@ -561,6 +663,14 @@ function initializeEventHandlers() {
         }
     });
 
+    // İmalat Ek Proje filtresi değişikliği
+    $('#imalatEkProjeFilter').on('change', function () {
+        // İlk yükleme sırasında change event'ini engelle
+        if (!window.isInitialLoad) {
+            refreshImalatEkTaleplerTable();
+        }
+    });
+
     // Malzeme arama input
     $('#malzemeSearchInput').on('keyup', function () {
         window.malzemeTalepTable.search($(this).val()).draw();
@@ -584,6 +694,11 @@ function initializeEventHandlers() {
     // Depo Kabul arama input
     $('#depoKabulSearchInput').on('keyup', function () {
         window.depoKabulTable.search($(this).val()).draw();
+    });
+
+    // İmalat Ek arama input
+    $('#imalatEkSearchInput').on('keyup', function () {
+        window.imalatEkTaleplerTable.search($(this).val()).draw();
     });
 
     // Yeni Talep butonu
@@ -620,6 +735,15 @@ function initializeEventHandlers() {
 
     $('#btnExcelAktarDepoKabul').on('click', function () {
         exportToExcel('depo-kabul');
+    });
+
+    $('#btnExcelAktarImalat').on('click', function () {
+        exportToExcel('imalat-ek');
+    });
+
+    // İmalat Ek Kaydet butonu
+    $('#btnKaydetImalatEk').on('click', function () {
+        kaydetImalatEkTalepler();
     });
 
     // Hazırlandı butonu
@@ -825,6 +949,12 @@ function initializeEventHandlers() {
         window.depoKabulTable.page.len(length).draw();
     });
 
+    // Custom page length değişikliği - İmalat Ek
+    $('#imalatEkPageLength').on('change', function () {
+        const length = parseInt($(this).val());
+        window.imalatEkTaleplerTable.page.len(length).draw();
+    });
+
     // Detay butonu
     $(document).on('click', '.btn-detay', function () {
         const id = $(this).data('id');
@@ -948,6 +1078,12 @@ function initializeSelect2() {
         placeholder: 'Tümü',
         allowClear: false
     });
+
+    $('#imalatEkProjeFilter').select2({
+        theme: 'bootstrap4',
+        placeholder: 'Tümü',
+        allowClear: false
+    });
 }
 
 /**
@@ -965,6 +1101,7 @@ function loadProjeList() {
                 const uretimSelect = $('#uretimProjeFilter');
                 const kaliteSelect = $('#kaliteProjeFilter');
                 const depoKabulSelect = $('#depoKabulProjeFilter');
+                const imalatEkSelect = $('#imalatEkProjeFilter');
                 
                 // API'den gelen tüm verileri ekle (Tümü dahil)
                 response.value.forEach(function (proje) {
@@ -1016,14 +1153,24 @@ function loadProjeList() {
                         proje.tabloID === 0
                     );
                     depoKabulSelect.append(depoKabulOption);
+
+                    // İmalat Ek Talepler için
+                    const imalatEkOption = new Option(
+                        optionText,
+                        proje.projeKodu, // Value olarak projeKodu kullan
+                        proje.tabloID === 0, // Tümü seçili olsun
+                        proje.tabloID === 0
+                    );
+                    imalatEkSelect.append(imalatEkOption);
                 });
-                
+
                 // Select2'yi güncelle ama change event'ini tetikleme
                 select.trigger('change.select2');
                 depoSelect.trigger('change.select2');
                 uretimSelect.trigger('change.select2');
                 kaliteSelect.trigger('change.select2');
                 depoKabulSelect.trigger('change.select2');
+                imalatEkSelect.trigger('change.select2');
                 
                 // İlk yükleme tamamlandı, şimdi verileri çek
                 if (window.isInitialLoad) {
@@ -1105,6 +1252,12 @@ function handleTabChange(tabId) {
                 window.depoKabulTable.columns.adjust().draw();
             }
             refreshDepoKabulTable();
+            break;
+        case '#imalatEkTaleplerTabContent':
+            if (window.imalatEkTaleplerTable) {
+                window.imalatEkTaleplerTable.columns.adjust().draw();
+            }
+            refreshImalatEkTaleplerTable();
             break;
         default:
     }
@@ -1749,6 +1902,204 @@ function refreshDepoKabulTable() {
 }
 
 /**
+ * İmalat Ek Talepler tablosunu yenileme
+ */
+function refreshImalatEkTaleplerTable() {
+    // Çift istek önleme kontrolü
+    if (isLoadingImalatEk) {
+        console.log('İmalat Ek Talepler verileri zaten yükleniyor...');
+        return;
+    }
+
+    // Loading durumunu aktif et
+    isLoadingImalatEk = true;
+
+    // Spinner'ı göster, tabloyu gizle
+    $('#imalatEkSpinner').show();
+    $('#imalatEkTaleplerTable').hide();
+
+    // Filtre değerlerini al
+    const projeKoduValue = parseInt($('#imalatEkProjeFilter').val()) || 0;
+
+    // İmalat Ek Talepler için parametreler
+    // talepSurecStatuIDs: [] (boş)
+    // malzemeTalepEtGetir: false
+    // sadeceEkTalepleriGetir: true
+    const requestData = {
+        projeKodu: projeKoduValue === 0 ? 0 : projeKoduValue, // Tümü için 0, seçiliyse projeKodu gönder
+        talepSurecStatuIDs: [], // İmalat Ek için boş
+        searchText: "",
+        malzemeTalepEtGetir: false,
+        sadeceEkTalepleriGetir: true // İmalat Ek için her zaman true
+    };
+
+    // API'ye POST isteği gönder
+    $.ajax({
+        url: '/panel/MalzemeTalepleriniGetir',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(requestData),
+        success: function (response) {
+            if (response.isSuccess && response.value) {
+                // DataTable'ı güncelle
+                if (window.imalatEkTaleplerTable) {
+                    window.imalatEkTaleplerTable.clear();
+                    window.imalatEkTaleplerTable.rows.add(response.value);
+                    window.imalatEkTaleplerTable.draw();
+                } else {
+                    console.error('window.imalatEkTaleplerTable bulunamadı!');
+                }
+            } else {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Uyarı',
+                    text: 'Veri bulunamadı!'
+                });
+            }
+        },
+        error: function (error) {
+            console.error('İmalat Ek Talepler listesi yüklenirken hata:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Hata',
+                text: 'İmalat Ek Talepler listesi yüklenirken bir hata oluştu!'
+            });
+        },
+        complete: function () {
+            // Loading durumunu pasif et
+            isLoadingImalatEk = false;
+
+            // Spinner'ı gizle, tabloyu göster
+            $('#imalatEkSpinner').hide();
+            $('#imalatEkTaleplerTable').show();
+        }
+    });
+}
+
+/**
+ * İmalat Ek Talepler SAT bilgilerini kaydet
+ */
+function kaydetImalatEkTalepler() {
+    // Tablodaki tüm SAT Seri ve Sıra No inputlarını topla
+    const items = [];
+
+    $('#imalatEkTaleplerTable tbody tr').each(function () {
+        const row = window.imalatEkTaleplerTable.row(this);
+        const rowData = row.data();
+
+        if (rowData) {
+            const seriInput = $(this).find('.sat-seri-input');
+            const siraInput = $(this).find('.sat-sira-input');
+
+            const malzemeTalebiEssizID = rowData.malzemeTalebiEssizID;
+            const seriNo = seriInput.val() || null;
+            const siraNo = siraInput.val() || null;
+
+            items.push({
+                malzemeTalebiEssizID: malzemeTalebiEssizID,
+                buTalebiKarsilayanSATSeriNo: seriNo,
+                buTalebiKarsilayanSATSiraNo: siraNo
+            });
+        }
+    });
+
+    if (items.length === 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Uyarı',
+            text: 'Kaydedilecek veri bulunamadı!'
+        });
+        return;
+    }
+
+    // Kullanıcıya onay sorusu sor
+    Swal.fire({
+        title: 'Emin misiniz?',
+        text: 'SAT bilgilerini güncellemek istediğinizden emin misiniz?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Evet, Güncelle',
+        cancelButtonText: 'İptal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // API'ye POST isteği gönder
+            $.ajax({
+                url: '/panel/TopluSATBilgisiGuncelle',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ items: items }),
+                success: function (response) {
+                    console.log('TopluSATBilgisiGuncelle Response:', response);
+
+                    if (response.isSuccess) {
+                        // Servisten gelen mesajı göster (value string olarak dönüyor)
+                        const successMessage = response.value || 'SAT bilgileri başarıyla güncellendi!';
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Başarılı',
+                            text: successMessage,
+                            confirmButtonColor: '#007bff'
+                        }).then(() => {
+                            // Tabloyu yenile
+                            refreshImalatEkTaleplerTable();
+                        });
+                    } else {
+                        // Hata durumunda servisten gelen mesajı göster
+                        let errorMessage = 'Güncelleme sırasında bir hata oluştu!';
+
+                        if (response.value && typeof response.value === 'string') {
+                            errorMessage = response.value;
+                        } else if (response.errors && response.errors.length > 0) {
+                            errorMessage = response.errors.join(', ');
+                        }
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Hata',
+                            text: errorMessage,
+                            confirmButtonColor: '#dc3545'
+                        });
+                    }
+                },
+                error: function (error) {
+                    console.error('SAT bilgileri güncellenirken hata:', error);
+
+                    let errorMessage = 'SAT bilgileri güncellenirken bir hata oluştu!';
+
+                    // Servisten string mesaj dönebilir
+                    if (error.responseJSON) {
+                        if (error.responseJSON.value && typeof error.responseJSON.value === 'string') {
+                            errorMessage = error.responseJSON.value;
+                        } else if (error.responseJSON.errors && error.responseJSON.errors.length > 0) {
+                            errorMessage = error.responseJSON.errors.join(', ');
+                        }
+                    } else if (error.responseText) {
+                        try {
+                            const errorData = JSON.parse(error.responseText);
+                            if (errorData.value) {
+                                errorMessage = errorData.value;
+                            }
+                        } catch (e) {
+                            errorMessage = error.responseText;
+                        }
+                    }
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata',
+                        text: errorMessage,
+                        confirmButtonColor: '#dc3545'
+                    });
+                }
+            });
+        }
+    });
+}
+
+/**
  * Excel'e aktarma
  */
 function exportToExcel(type) {
@@ -1764,6 +2115,8 @@ function exportToExcel(type) {
             table = window.kaliteKontrolTable;
         } else if (type === 'depo-kabul') {
             table = window.depoKabulTable;
+        } else if (type === 'imalat-ek') {
+            table = window.imalatEkTaleplerTable;
         }
         
         if (!table) {
@@ -1826,8 +2179,41 @@ function exportToExcel(type) {
                     olusturmaTarihi
                 ]);
             });
+        } else if (type === 'imalat-ek') {
+            // İmalat Ek Talepler için başlık satırı
+            excelData.push([
+                'Proje Kodu',
+                'Malzeme Kodu',
+                'Malzeme İsmi',
+                'Kalan Miktar',
+                'SAT Seri No',
+                'SAT Sıra No',
+                'Açıklama',
+                'SAT Cari Hesap',
+                'Kayıt Tarihi'
+            ]);
+
+            // Veri satırları
+            data.forEach(item => {
+                const kayitTarihi = item.malzemeTalep?.kayitTarihi
+                    ? new Date(item.malzemeTalep.kayitTarihi).toLocaleDateString('tr-TR') + ' ' +
+                      new Date(item.malzemeTalep.kayitTarihi).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })
+                    : '';
+
+                excelData.push([
+                    item.malzemeTalep?.projeKodu || '',
+                    item.malzemeTalep?.malzemeKodu || '',
+                    item.malzemeTalep?.malzemeIsmi || '',
+                    item.kalanMiktar || 0,
+                    item.malzemeTalep?.buTalebiKarsilayanSATSeriNo || '',
+                    item.malzemeTalep?.buTalebiKarsilayanSATSiraNo || '',
+                    item.malzemeTalep?.aciklama || '',
+                    item.malzemeTalep?.satCariHesap || '',
+                    kayitTarihi
+                ]);
+            });
         } else {
-            // Depo Hazır Edim için başlık satırı
+            // Diğer tipler için başlık satırı
             excelData.push([
                 'SAT Seri No',
                 'SAT Sıra No',
@@ -1893,6 +2279,8 @@ function exportToExcel(type) {
             sheetName = 'Üretim Mal Kabul';
         } else if (type === 'kalite') {
             sheetName = 'Kalite Kontrol';
+        } else if (type === 'imalat-ek') {
+            sheetName = 'İmalat Ek Talepler';
         }
         XLSX.utils.book_append_sheet(wb, ws, sheetName);
 
@@ -1909,6 +2297,8 @@ function exportToExcel(type) {
             fileName = `Uretim_Mal_Kabul_${dateStr}_${timeStr}.xlsx`;
         } else if (type === 'kalite') {
             fileName = `Kalite_Kontrol_${dateStr}_${timeStr}.xlsx`;
+        } else if (type === 'imalat-ek') {
+            fileName = `Imalat_Ek_Talepler_${dateStr}_${timeStr}.xlsx`;
         }
 
         // Excel dosyasını indir
@@ -2089,6 +2479,43 @@ function showDetay(id, type) {
                         <p><strong>Talep Edilen Miktar:</strong> ${malzeme.malzemeOrijinalTalepEdilenMiktar?.toLocaleString('tr-TR') || '-'}</p>
                         <p><strong>Sevk Edilen Miktar:</strong> ${rowData.toplamSevkEdilenMiktar?.toLocaleString('tr-TR') || '-'}</p>
                         <p><strong>Kalan Miktar:</strong> ${rowData.kalanMiktar?.toLocaleString('tr-TR') || '-'}</p>
+                    </div>
+                </div>
+            `);
+            $('#detayModal').modal('show');
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Hata',
+                text: 'Kayıt bulunamadı!'
+            });
+        }
+    } else if (type === 'imalat-ek') {
+        // İmalat Ek Talepler tablosundan ilgili satırı bul
+        const table = window.imalatEkTaleplerTable;
+        const rowData = table.rows().data().toArray().find(row => row.malzemeTalep.malzemeTalebiEssizID === id);
+
+        if (rowData) {
+            const malzeme = rowData.malzemeTalep;
+            const kayitTarihi = malzeme.kayitTarihi ? new Date(malzeme.kayitTarihi).toLocaleString('tr-TR') : '-';
+
+            $('#detayModalLabel').html(`<i class="fas fa-info-circle mr-2"></i>İmalat Ek Talep Detayı`);
+            $('#detayModalIcerik').html(`
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Proje Kodu:</strong> ${malzeme.projeKodu || '-'}</p>
+                        <p><strong>Malzeme Kodu:</strong> ${malzeme.malzemeKodu || '-'}</p>
+                        <p><strong>Malzeme Adı:</strong> ${malzeme.malzemeIsmi || '-'}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>SAT Seri No:</strong> ${malzeme.buTalebiKarsilayanSATSeriNo || '-'}</p>
+                        <p><strong>SAT Sıra No:</strong> ${malzeme.buTalebiKarsilayanSATSiraNo || '-'}</p>
+                        <p><strong>Kayıt Tarihi:</strong> ${kayitTarihi}</p>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <p><strong>Kalan Miktar:</strong> ${rowData.kalanMiktar?.toLocaleString('tr-TR') || '-'}</p>
+                        <p><strong>SAT Cari Hesap:</strong> ${malzeme.satCariHesap || '-'}</p>
+                        <p><strong>Açıklama:</strong> ${malzeme.aciklama || '-'}</p>
                     </div>
                 </div>
             `);

@@ -456,6 +456,19 @@ namespace BazWebApp.Controllers
         }
 
         /// <summary>
+        /// Toplu SAT Bilgisi Güncelleme
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("/panel/TopluSATBilgisiGuncelle")]
+        public Result<string> TopluSATBilgisiGuncelle([FromBody] TopluSATBilgisiGuncelleModel model)
+        {
+            var result = _iysService.TopluSATBilgisiGuncelle(model);
+            return result;
+        }
+
+        /// <summary>
         /// Süreç Statüleri Bildirim Tiplerini getiren metod
         /// </summary>
         /// <param name="tabloID"></param>
