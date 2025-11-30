@@ -495,15 +495,15 @@ namespace BazWebApp.Controllers
         }
 
         /// <summary>
-        /// Malzemeleri hazırla metodu
+        /// Toplu malzemeleri hazırla metodu
         /// </summary>
-        /// <param name="malzemeTalepSurecTakipID">Malzeme talep süreç takip ID</param>
+        /// <param name="model">Toplu malzemeleri hazırla modeli</param>
         /// <returns></returns>
         [HttpPost]
-        [Route("/panel/MalzemeleriHazirla/{malzemeTalepSurecTakipID}")]
-        public Result<bool> MalzemeleriHazirla(int malzemeTalepSurecTakipID)
+        [Route("/panel/TopluMalzemeleriHazirla")]
+        public Result<string> TopluMalzemeleriHazirla([FromBody] TopluMalzemeleriHazirlaModel model)
         {
-            var result = _iysService.MalzemeleriHazirla(malzemeTalepSurecTakipID);
+            var result = _iysService.TopluMalzemeleriHazirla(model);
             return result;
         }
 
@@ -530,6 +530,19 @@ namespace BazWebApp.Controllers
         public Result<bool> MalKabulEt(int malzemeTalepSurecTakipID)
         {
             var result = _iysService.MalKabulEt(malzemeTalepSurecTakipID);
+            return result;
+        }
+
+        /// <summary>
+        /// Toplu mal kabul et API metodu
+        /// </summary>
+        /// <param name="model">Toplu mal kabul modeli</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("/panel/TopluMalKabulEt")]
+        public Result<string> TopluMalKabulEt([FromBody] TopluMalKabulEtModel model)
+        {
+            var result = _iysService.TopluMalKabulEt(model.MalzemeTalepSurecTakipIDler);
             return result;
         }
 

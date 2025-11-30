@@ -36,6 +36,9 @@ $(document).ready(function () {
 
     // İlk verileri yükle
     loadInitialData();
+    
+    // URL'den aktif tab'ı yükle
+    loadActiveTabFromUrl();
 });
 
 /**
@@ -165,7 +168,7 @@ function initializeDataTables() {
         "lengthChange": false,
         "autoWidth": false,
         "pageLength": 10,
-        "order": [[9, "desc"]], // Oluşturma tarihine göre sırala
+        "order": [[11, "desc"]], // Talep tarihine göre sırala (kolon sayısı arttı)
         "data": [], // Başlangıçta boş veri
         "columns": [
             {
@@ -175,16 +178,35 @@ function initializeDataTables() {
                     return `<input type="checkbox" class="depo-row-checkbox" data-id="${row.malzemeTalebiEssizID}" data-surecid="${row.malzemeTalepSurecTakipID}" />`;
                 }
             },
+            { "data": "sevkID", "render": function (data) { return data || '-'; } },
             { "data": "malzemeTalep.projeKodu" },
             { "data": "malzemeTalep.malzemeKodu" },
             { "data": "malzemeTalep.malzemeIsmi" },
-            { "data": "kalanMiktar", "render": function (data) { return data.toLocaleString('tr-TR'); } },
             { "data": "talepEdilenMiktar", "render": function (data) { return data ? data.toLocaleString('tr-TR') : '-'; } },
-            { "data": "malzemeTalep.aciklama" },
-            { "data": "malzemeTalep.satCariHesap" },
-            { "data": "malzemeTalep.kayitTarihi", "render": function (data) { if (!data) return '-'; const date = new Date(data); return date.toLocaleDateString('tr-TR') + ' ' + date.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }); } },
+            { 
+                "data": "hazirlanabilecekMiktar", 
+                "render": function (data) { 
+                    return data ? data.toLocaleString('tr-TR') : '0'; 
+                } 
+            },
+            {
+                "data": null,
+                "orderable": false,
+                "render": function (data, type, row) {
+                    const hazirlanabilecekMiktar = Math.floor(row.hazirlanabilecekMiktar || 0);
+                    return `<input type="number" class="form-control form-control-sm hazirlanan-miktar-input"
+                                   data-surecid="${row.malzemeTalepSurecTakipID}"
+                                   data-max="${hazirlanabilecekMiktar}"
+                                   value="${hazirlanabilecekMiktar}"
+                                   min="0"
+                                   step="1"
+                                   style="width: 100px; padding: 2px 5px; font-size: 13px;" />`;
+                }
+            },
+            { "data": "malzemeTalep.aciklama", "render": function (data) { return data || '-'; } },
+            { "data": "malzemeTalep.satCariHesap", "render": function (data) { return data || '-'; } },
+            { "data": "malzemeTalep.satOlusturmaTarihi", "render": function (data) { if (!data) return '-'; const date = new Date(data); return date.toLocaleDateString('tr-TR') + ' ' + date.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }); } },
             { "data": "surecOlusturmaTarihi", "render": function (data) { if (!data) return '-'; const date = new Date(data); return date.toLocaleDateString('tr-TR') + ' ' + date.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }); } },
-            { "data": "sevkID" },
             {
                 "data": null,
                 "orderable": false,
@@ -224,7 +246,7 @@ function initializeDataTables() {
         "lengthChange": false,
         "autoWidth": false,
         "pageLength": 10,
-        "order": [[9, "desc"]], // Oluşturma tarihine göre sırala
+        "order": [[8, "desc"]], // Teslim tarihine göre sırala (desc)
         "data": [], // Başlangıçta boş veri
         "rowCallback": function(row, data) {
             // paramTalepSurecStatuID === 7 ise satırı kahverengi yap
@@ -249,6 +271,18 @@ function initializeDataTables() {
                 }
             },
             {
+                "data": "sevkID",
+                "render": function (data) {
+                    return data || '-';
+                }
+            },
+            {
+                "data": "hazirId",
+                "render": function (data) {
+                    return data || '-';
+                }
+            },
+            {
                 "data": null,
                 "render": function (data, type, row) {
                     return `${row.malzemeTalep.satSeriNo}/${row.malzemeTalep.satSiraNo}`;
@@ -264,31 +298,13 @@ function initializeDataTables() {
                 "data": "malzemeTalep.malzemeIsmi"
             },
             {
-                "data": "malzemeTalep.malzemeOrijinalTalepEdilenMiktar",
+                "data": "islenenMiktar",
                 "render": function (data, type, row) {
-                    return data.toLocaleString('tr-TR');
+                    return data ? data.toLocaleString('tr-TR') : '0';
                 }
             },
             {
-                "data": "talepEdilenMiktar",
-                "render": function (data, type, row) {
-                    return data ? data.toLocaleString('tr-TR') : '-';
-                }
-            },
-            {
-                "data": "toplamSevkEdilenMiktar",
-                "render": function (data, type, row) {
-                    return data.toLocaleString('tr-TR');
-                }
-            },
-            {
-                "data": "kalanMiktar",
-                "render": function (data, type, row) {
-                    return data.toLocaleString('tr-TR');
-                }
-            },
-            {
-                "data": "malzemeTalep.satOlusturmaTarihi",
+                "data": "surecOlusturmaTarihi",
                 "render": function (data, type, row) {
                     if (!data) return '-';
                     const date = new Date(data);
@@ -430,7 +446,7 @@ function initializeDataTables() {
         "lengthChange": false,
         "autoWidth": false,
         "pageLength": 10,
-        "order": [[9, "desc"]], // Oluşturma tarihine göre sırala
+        "order": [[8, "desc"]], // Onay tarihine göre sırala (desc)
         "data": [], // Başlangıçta boş veri
         "columns": [
             {
@@ -438,6 +454,18 @@ function initializeDataTables() {
                 "orderable": false,
                 "render": function (data, type, row) {
                     return `<input type="checkbox" class="depo-kabul-row-checkbox" data-id="${row.malzemeTalebiEssizID}" data-surecid="${row.malzemeTalepSurecTakipID}" />`;
+                }
+            },
+            {
+                "data": "sevkID",
+                "render": function (data) {
+                    return data || '-';
+                }
+            },
+            {
+                "data": "onayId",
+                "render": function (data) {
+                    return data || '-';
                 }
             },
             {
@@ -465,31 +493,13 @@ function initializeDataTables() {
                 }
             },
             {
-                "data": "malzemeTalep.malzemeOrijinalTalepEdilenMiktar",
+                "data": "islenenMiktar",
                 "render": function (data, type, row) {
-                    return data || '0';
+                    return data ? data.toLocaleString('tr-TR') : '0';
                 }
             },
             {
-                "data": "talepEdilenMiktar",
-                "render": function (data, type, row) {
-                    return data ? data.toLocaleString('tr-TR') : '-';
-                }
-            },
-            {
-                "data": "toplamSevkEdilenMiktar",
-                "render": function (data, type, row) {
-                    return data || '0';
-                }
-            },
-            {
-                "data": "kalanMiktar",
-                "render": function (data, type, row) {
-                    return data || '0';
-                }
-            },
-            {
-                "data": "malzemeTalep.satOlusturmaTarihi",
+                "data": "surecOlusturmaTarihi",
                 "render": function (data, type, row) {
                     if (!data) return '-';
                     const date = new Date(data);
@@ -774,6 +784,14 @@ function initializeEventHandlers() {
     // Tab değişikliği olayları
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         const targetTab = $(e.target).attr("href");
+        
+        // URL'e hash ekle (sayfa yenilendiğinde aynı tab açılsın)
+        if (history.pushState) {
+            history.pushState(null, null, targetTab);
+        } else {
+            window.location.hash = targetTab;
+        }
+        
         handleTabChange(targetTab);
     });
 
@@ -887,20 +905,26 @@ function initializeEventHandlers() {
         updateSelectAllCheckbox();
     });
 
-    // Depo checkbox'ları değiştiğinde - sadece 1 tane seçilebilir
-    $(document).on('change', '.depo-row-checkbox', function () {
-        if ($(this).is(':checked')) {
-            // Diğer tüm checkbox'ları kaldır
-            $('.depo-row-checkbox').not(this).prop('checked', false);
-        }
+    // Tümünü seç checkbox'ı - Depo Hazırlama tablosu
+    $('#selectAllDepoHazirlama').on('change', function () {
+        const isChecked = $(this).is(':checked');
+        $('.depo-row-checkbox').prop('checked', isChecked);
     });
 
-    // Üretim checkbox'ları değiştiğinde - sadece 1 tane seçilebilir
+    // Depo checkbox'ları değiştiğinde - tümünü seç durumunu güncelle
+    $(document).on('change', '.depo-row-checkbox', function () {
+        updateSelectAllDepoCheckbox();
+    });
+
+    // Tümünü seç checkbox'ı - Üretim Mal Kabul tablosu
+    $('#selectAllUretimMalKabul').on('change', function () {
+        const isChecked = $(this).is(':checked');
+        $('.uretim-row-checkbox').prop('checked', isChecked);
+    });
+
+    // Üretim checkbox'ları değiştiğinde - tümünü seç durumunu güncelle
     $(document).on('change', '.uretim-row-checkbox', function () {
-        if ($(this).is(':checked')) {
-            // Diğer tüm checkbox'ları kaldır
-            $('.uretim-row-checkbox').not(this).prop('checked', false);
-        }
+        updateSelectAllUretimCheckbox();
     });
 
     // Kalite kontrol checkbox'ları değiştiğinde - sadece 1 tane seçilebilir
@@ -1017,16 +1041,16 @@ function initializeEventHandlers() {
 function updateSelectAllCheckbox() {
     let eligibleCount = 0; // Seçilebilir satır sayısı (kalan = talep)
     let selectedEligibleCount = 0; // Seçilebilir satırlardan seçili olanlar
-    
+
     $('.row-checkbox').each(function() {
         const row = $(this).closest('tr');
         const talepMiktarInput = row.find('.talep-miktar-input');
-        
+
         if (talepMiktarInput.length === 0) return; // Input yoksa atla
-        
+
         const talepMiktar = parseInt(talepMiktarInput.val()) || 0;
         const kalanMiktar = parseInt(talepMiktarInput.data('max')) || 0;
-        
+
         // Sadece kalan miktar = talep edilen miktar olan satırları say
         if (talepMiktar === kalanMiktar && kalanMiktar > 0) {
             eligibleCount++;
@@ -1035,14 +1059,34 @@ function updateSelectAllCheckbox() {
             }
         }
     });
-    
+
     // Tümünü seç checkbox'ını güncelle:
     // - Seçilebilir satır yoksa → kaldır
     // - Seçilebilir satırların hepsi seçili → işaretle
     // - Seçilebilir satırlardan biri bile seçili değil → kaldır
     const shouldBeChecked = eligibleCount > 0 && selectedEligibleCount === eligibleCount;
-    
+
     $('#selectAllMalzemeTalep').prop('checked', shouldBeChecked);
+}
+
+/**
+ * Depo Hazırlama Tümünü seç checkbox'ını güncelle
+ */
+function updateSelectAllDepoCheckbox() {
+    const totalCheckboxes = $('.depo-row-checkbox').length;
+    const checkedCheckboxes = $('.depo-row-checkbox:checked').length;
+
+    $('#selectAllDepoHazirlama').prop('checked', totalCheckboxes > 0 && totalCheckboxes === checkedCheckboxes);
+}
+
+/**
+ * Üretim Mal Kabul Tümünü seç checkbox'ını güncelle
+ */
+function updateSelectAllUretimCheckbox() {
+    const totalCheckboxes = $('.uretim-row-checkbox').length;
+    const checkedCheckboxes = $('.uretim-row-checkbox:checked').length;
+
+    $('#selectAllUretimMalKabul').prop('checked', totalCheckboxes > 0 && totalCheckboxes === checkedCheckboxes);
 }
 
 /**
@@ -2179,6 +2223,110 @@ function exportToExcel(type) {
                     olusturmaTarihi
                 ]);
             });
+        } else if (type === 'depo') {
+            // Depo Hazır Edim için başlık satırı
+            excelData.push([
+                'Sevk ID',
+                'Proje Kodu',
+                'Malzeme Kodu',
+                'Malzeme İsmi',
+                'Talep Edilen Miktar',
+                'Hazırlanabilecek Miktar',
+                'Açıklama',
+                'SAT Cari Hesap',
+                'SAT Tarihi',
+                'Talep Tarihi'
+            ]);
+
+            // Veri satırları
+            data.forEach(item => {
+                const satTarihi = item.malzemeTalep?.satOlusturmaTarihi
+                    ? new Date(item.malzemeTalep.satOlusturmaTarihi).toLocaleDateString('tr-TR') + ' ' +
+                      new Date(item.malzemeTalep.satOlusturmaTarihi).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })
+                    : '';
+                
+                const talepTarihi = item.surecOlusturmaTarihi
+                    ? new Date(item.surecOlusturmaTarihi).toLocaleDateString('tr-TR') + ' ' +
+                      new Date(item.surecOlusturmaTarihi).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })
+                    : '';
+
+                excelData.push([
+                    item.sevkID || '',
+                    item.malzemeTalep?.projeKodu || '',
+                    item.malzemeTalep?.malzemeKodu || '',
+                    item.malzemeTalep?.malzemeIsmi || '',
+                    item.talepEdilenMiktar || 0,
+                    item.hazirlanabilecekMiktar || 0,
+                    item.malzemeTalep?.aciklama || '',
+                    item.malzemeTalep?.satCariHesap || '',
+                    satTarihi,
+                    talepTarihi
+                ]);
+            });
+        } else if (type === 'uretim') {
+            // Üretim Mal Kabul için başlık satırı
+            excelData.push([
+                'Sevk ID',
+                'Hazır ID',
+                'SAT Seri/Sıra',
+                'Proje Kodu',
+                'Malzeme Kodu',
+                'Malzeme İsmi',
+                'Miktar',
+                'Teslim Tarihi'
+            ]);
+
+            // Veri satırları
+            data.forEach(item => {
+                const satSeriSira = `${item.malzemeTalep?.satSeriNo || ''}/${item.malzemeTalep?.satSiraNo || ''}`;
+                const teslimTarihi = item.surecOlusturmaTarihi
+                    ? new Date(item.surecOlusturmaTarihi).toLocaleDateString('tr-TR') + ' ' +
+                      new Date(item.surecOlusturmaTarihi).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })
+                    : '';
+
+                excelData.push([
+                    item.sevkID || '',
+                    item.hazirId || '',
+                    satSeriSira,
+                    item.malzemeTalep?.projeKodu || '',
+                    item.malzemeTalep?.malzemeKodu || '',
+                    item.malzemeTalep?.malzemeIsmi || '',
+                    item.islenenMiktar || 0,
+                    teslimTarihi
+                ]);
+            });
+        } else if (type === 'depo-kabul') {
+            // Depo Kabul için başlık satırı
+            excelData.push([
+                'Sevk ID',
+                'Onay ID',
+                'SAT Seri/Sıra',
+                'Proje Kodu',
+                'Malzeme Kodu',
+                'Malzeme İsmi',
+                'Onaylanan Miktar',
+                'Onay Tarihi'
+            ]);
+
+            // Veri satırları
+            data.forEach(item => {
+                const satSeriSira = `${item.malzemeTalep?.satSeriNo || ''}/${item.malzemeTalep?.satSiraNo || ''}`;
+                const onayTarihi = item.surecOlusturmaTarihi
+                    ? new Date(item.surecOlusturmaTarihi).toLocaleDateString('tr-TR') + ' ' +
+                      new Date(item.surecOlusturmaTarihi).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })
+                    : '';
+
+                excelData.push([
+                    item.sevkID || '',
+                    item.onayId || '',
+                    satSeriSira,
+                    item.malzemeTalep?.projeKodu || '',
+                    item.malzemeTalep?.malzemeKodu || '',
+                    item.malzemeTalep?.malzemeIsmi || '',
+                    item.islenenMiktar || 0,
+                    onayTarihi
+                ]);
+            });
         } else if (type === 'imalat-ek') {
             // İmalat Ek Talepler için başlık satırı
             excelData.push([
@@ -2213,7 +2361,7 @@ function exportToExcel(type) {
                 ]);
             });
         } else {
-            // Diğer tipler için başlık satırı
+            // Kalite Kontrol ve diğer tipler için başlık satırı
             excelData.push([
                 'SAT Seri No',
                 'SAT Sıra No',
@@ -2254,19 +2402,70 @@ function exportToExcel(type) {
         const wb = XLSX.utils.book_new();
         const ws = XLSX.utils.aoa_to_sheet(excelData);
 
-        // Sütun genişliklerini ayarla
-        const colWidths = [
-            { wch: 15 },  // SAT Seri No
-            { wch: 15 },  // SAT Sıra No
-            { wch: 20 },  // Malzeme Talep Kodu
-            { wch: 15 },  // Proje Kodu
-            { wch: 15 },  // Malzeme Kodu
-            { wch: 40 },  // Malzeme İsmi
-            { wch: 18 },  // Talep Edilen Miktar
-            { wch: 18 },  // Sevk Edilen Miktar
-            { wch: 15 },  // Kalan Miktar
-            { wch: 20 }   // Oluşturma Tarihi
-        ];
+        // Sütun genişliklerini ayarla (tip bazlı)
+        let colWidths;
+        if (type === 'depo') {
+            colWidths = [
+                { wch: 15 },  // Sevk ID
+                { wch: 15 },  // Proje Kodu
+                { wch: 20 },  // Malzeme Kodu
+                { wch: 40 },  // Malzeme İsmi
+                { wch: 20 },  // Talep Edilen Miktar
+                { wch: 22 },  // Hazırlanabilecek Miktar
+                { wch: 30 },  // Açıklama
+                { wch: 25 },  // SAT Cari Hesap
+                { wch: 20 },  // SAT Tarihi
+                { wch: 20 }   // Talep Tarihi
+            ];
+        } else if (type === 'uretim') {
+            colWidths = [
+                { wch: 15 },  // Sevk ID
+                { wch: 15 },  // Hazır ID
+                { wch: 20 },  // SAT Seri/Sıra
+                { wch: 15 },  // Proje Kodu
+                { wch: 20 },  // Malzeme Kodu
+                { wch: 40 },  // Malzeme İsmi
+                { wch: 15 },  // Miktar
+                { wch: 20 }   // Oluşturma Tarihi
+            ];
+        } else if (type === 'depo-kabul') {
+            colWidths = [
+                { wch: 15 },  // Sevk ID
+                { wch: 15 },  // Onay ID
+                { wch: 20 },  // SAT Seri/Sıra
+                { wch: 15 },  // Proje Kodu
+                { wch: 20 },  // Malzeme Kodu
+                { wch: 40 },  // Malzeme İsmi
+                { wch: 18 },  // Onaylanan Miktar
+                { wch: 20 }   // Oluşturma Tarihi
+            ];
+        } else if (type === 'imalat-ek') {
+            colWidths = [
+                { wch: 15 },  // Proje Kodu
+                { wch: 20 },  // Malzeme Kodu
+                { wch: 40 },  // Malzeme İsmi
+                { wch: 15 },  // Kalan Miktar
+                { wch: 15 },  // SAT Seri No
+                { wch: 15 },  // SAT Sıra No
+                { wch: 30 },  // Açıklama
+                { wch: 25 },  // SAT Cari Hesap
+                { wch: 20 }   // Kayıt Tarihi
+            ];
+        } else {
+            // Malzeme ve Kalite Kontrol için
+            colWidths = [
+                { wch: 15 },  // SAT Seri No
+                { wch: 15 },  // SAT Sıra No
+                { wch: 20 },  // Malzeme Talep Kodu
+                { wch: 15 },  // Proje Kodu
+                { wch: 15 },  // Malzeme Kodu
+                { wch: 40 },  // Malzeme İsmi
+                { wch: 18 },  // Talep Edilen Miktar
+                { wch: 18 },  // Sevk Edilen Miktar
+                { wch: 15 },  // Kalan Miktar
+                { wch: 20 }   // Oluşturma Tarihi
+            ];
+        }
         ws['!cols'] = colWidths;
 
         // Worksheet'i workbook'a ekle
@@ -2279,6 +2478,8 @@ function exportToExcel(type) {
             sheetName = 'Üretim Mal Kabul';
         } else if (type === 'kalite') {
             sheetName = 'Kalite Kontrol';
+        } else if (type === 'depo-kabul') {
+            sheetName = 'Depo Kabul';
         } else if (type === 'imalat-ek') {
             sheetName = 'İmalat Ek Talepler';
         }
@@ -2297,6 +2498,8 @@ function exportToExcel(type) {
             fileName = `Uretim_Mal_Kabul_${dateStr}_${timeStr}.xlsx`;
         } else if (type === 'kalite') {
             fileName = `Kalite_Kontrol_${dateStr}_${timeStr}.xlsx`;
+        } else if (type === 'depo-kabul') {
+            fileName = `Depo_Kabul_${dateStr}_${timeStr}.xlsx`;
         } else if (type === 'imalat-ek') {
             fileName = `Imalat_Ek_Talepler_${dateStr}_${timeStr}.xlsx`;
         }
@@ -2407,7 +2610,8 @@ function showDetay(id, type) {
         
         if (rowData) {
             const malzeme = rowData.malzemeTalep;
-            const tarih = malzeme.satOlusturmaTarihi ? new Date(malzeme.satOlusturmaTarihi).toLocaleString('tr-TR') : '-';
+            const satTarihi = malzeme.satOlusturmaTarihi ? new Date(malzeme.satOlusturmaTarihi).toLocaleString('tr-TR') : '-';
+            const teslimTarihi = rowData.surecOlusturmaTarihi ? new Date(rowData.surecOlusturmaTarihi).toLocaleString('tr-TR') : '-';
             
             // İade edilmiş kayıt için ek bilgiler
             let iadeDetayHtml = '';
@@ -2428,9 +2632,12 @@ function showDetay(id, type) {
             $('#detayModalIcerik').html(`
                 <div class="row">
                     <div class="col-md-6">
+                        <p><strong>Sevk ID:</strong> ${rowData.sevkID || '-'}</p>
+                        <p><strong>Hazır ID:</strong> ${rowData.hazirId || '-'}</p>
                         <p><strong>SAT Seri No:</strong> ${malzeme.satSeriNo || '-'}</p>
                         <p><strong>SAT Sıra No:</strong> ${malzeme.satSiraNo || '-'}</p>
-                        <p><strong>Oluşturma Tarihi:</strong> ${tarih}</p>
+                        <p><strong>SAT Oluşturma Tarihi:</strong> ${satTarihi}</p>
+                        <p><strong>Teslim Tarihi:</strong> ${teslimTarihi}</p>
                     </div>
                     <div class="col-md-6">
                         <p><strong>Proje Kodu:</strong> ${malzeme.projeKodu || '-'}</p>
@@ -2438,7 +2645,9 @@ function showDetay(id, type) {
                         <p><strong>Malzeme Adı:</strong> ${malzeme.malzemeIsmi || '-'}</p>
                     </div>
                     <div class="col-12 mt-3">
-                        <p><strong>Talep Edilen Miktar:</strong> ${malzeme.malzemeOrijinalTalepEdilenMiktar?.toLocaleString('tr-TR') || '-'}</p>
+                        <p><strong>Orijinal Miktar:</strong> ${malzeme.malzemeOrijinalTalepEdilenMiktar?.toLocaleString('tr-TR') || '-'}</p>
+                        <p><strong>İşlenen Miktar:</strong> ${rowData.islenenMiktar?.toLocaleString('tr-TR') || '0'}</p>
+                        <p><strong>Talep Edilen Miktar:</strong> ${rowData.talepEdilenMiktar?.toLocaleString('tr-TR') || '-'}</p>
                         <p><strong>Sevk Edilen Miktar:</strong> ${rowData.toplamSevkEdilenMiktar?.toLocaleString('tr-TR') || '-'}</p>
                         <p><strong>Kalan Miktar:</strong> ${rowData.kalanMiktar?.toLocaleString('tr-TR') || '-'}</p>
                     </div>
@@ -2527,6 +2736,49 @@ function showDetay(id, type) {
                 text: 'Kayıt bulunamadı!'
             });
         }
+    } else if (type === 'depo-kabul') {
+        // Depo Kabul tablosundan ilgili satırı bul
+        const table = window.depoKabulTable;
+        const rowData = table.rows().data().toArray().find(row => row.malzemeTalep.malzemeTalebiEssizID === id);
+        
+        if (rowData) {
+            const malzeme = rowData.malzemeTalep;
+            const satTarihi = malzeme.satOlusturmaTarihi ? new Date(malzeme.satOlusturmaTarihi).toLocaleString('tr-TR') : '-';
+            const onayTarihi = rowData.surecOlusturmaTarihi ? new Date(rowData.surecOlusturmaTarihi).toLocaleString('tr-TR') : '-';
+            
+            $('#detayModalLabel').html(`<i class="fas fa-info-circle mr-2"></i>Depo Kabul Detayı`);
+            $('#detayModalIcerik').html(`
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Sevk ID:</strong> ${rowData.sevkID || '-'}</p>
+                        <p><strong>Onay ID:</strong> ${rowData.onayId || '-'}</p>
+                        <p><strong>SAT Seri No:</strong> ${malzeme.satSeriNo || '-'}</p>
+                        <p><strong>SAT Sıra No:</strong> ${malzeme.satSiraNo || '-'}</p>
+                        <p><strong>SAT Oluşturma Tarihi:</strong> ${satTarihi}</p>
+                        <p><strong>Onay Tarihi:</strong> ${onayTarihi}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Proje Kodu:</strong> ${malzeme.projeKodu || '-'}</p>
+                        <p><strong>Malzeme Kodu:</strong> ${malzeme.malzemeKodu || '-'}</p>
+                        <p><strong>Malzeme Adı:</strong> ${malzeme.malzemeIsmi || '-'}</p>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <p><strong>Orijinal Miktar:</strong> ${malzeme.malzemeOrijinalTalepEdilenMiktar?.toLocaleString('tr-TR') || '-'}</p>
+                        <p><strong>Onaylanan Miktar:</strong> ${rowData.islenenMiktar?.toLocaleString('tr-TR') || '0'}</p>
+                        <p><strong>Talep Edilen Miktar:</strong> ${rowData.talepEdilenMiktar?.toLocaleString('tr-TR') || '-'}</p>
+                        <p><strong>Sevk Edilen Miktar:</strong> ${rowData.toplamSevkEdilenMiktar?.toLocaleString('tr-TR') || '-'}</p>
+                        <p><strong>Kalan Miktar:</strong> ${rowData.kalanMiktar?.toLocaleString('tr-TR') || '-'}</p>
+                    </div>
+                </div>
+            `);
+            $('#detayModal').modal('show');
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Hata',
+                text: 'Kayıt bulunamadı!'
+            });
+        }
     } else {
         Swal.fire({
             icon: 'error',
@@ -2596,32 +2848,65 @@ function deleteKayit(id, type) {
 function handleHazirlandi() {
     // Seçili checkbox'ları bul
     const selectedCheckboxes = $('.depo-row-checkbox:checked');
-    
+
     if (selectedCheckboxes.length === 0) {
         Swal.fire({
             icon: 'warning',
             title: 'Uyarı',
-            text: 'Lütfen bir kayıt seçiniz!'
+            text: 'Lütfen en az bir kayıt seçiniz!'
         });
         return;
     }
 
-    if (selectedCheckboxes.length > 1) {
+    // Her seçili satır için hazırlanan miktarı topla
+    const items = [];
+    let hasError = false;
+    let invalidMiktarCount = 0;
+
+    selectedCheckboxes.each(function() {
+        const malzemeTalepSurecTakipID = $(this).data('surecid');
+        const row = $(this).closest('tr');
+        const hazirlananMiktarInput = row.find('.hazirlanan-miktar-input');
+        const hazirlananMiktar = parseInt(hazirlananMiktarInput.val()) || 0;
+        const hazirlanabilecekMiktar = parseInt(hazirlananMiktarInput.data('max')) || 0;
+
+        // Hazırlanan miktar kontrolü
+        if (!hazirlananMiktar || hazirlananMiktar <= 0) {
+            invalidMiktarCount++;
+        } else if (hazirlananMiktar > hazirlanabilecekMiktar) {
+            invalidMiktarCount++;
+        }
+
+        items.push({
+            malzemeTalepSurecTakipID: malzemeTalepSurecTakipID,
+            hazirlananMiktar: hazirlananMiktar
+        });
+    });
+
+    // Geçersiz miktar varsa uyarı göster
+    if (invalidMiktarCount > 0) {
         Swal.fire({
             icon: 'warning',
             title: 'Uyarı',
-            text: 'Lütfen sadece bir kayıt seçiniz!'
+            text: `${invalidMiktarCount} kayıtta geçersiz veya hazırlanabilecek miktarı aşan değer bulunmaktadır. Lütfen kontrol ediniz!`
         });
         return;
     }
 
-    // Seçili Süreç ID'yi al
-    const selectedSurecId = selectedCheckboxes.first().data('surecid');
+    // Request data hazırla
+    const requestData = {
+        items: items
+    };
+
+    // Onay mesajını oluştur
+    const confirmMessage = selectedCheckboxes.length === 1
+        ? 'Bu kaydı hazırlandı olarak işaretlemek istediğinizden emin misiniz?'
+        : `${selectedCheckboxes.length} kaydı hazırlandı olarak işaretlemek istediğinizden emin misiniz?`;
 
     // Onay sor
     Swal.fire({
         title: 'Emin misiniz?',
-        text: `Bu kaydı hazırlandı olarak işaretlemek istediğinizden emin misiniz?`,
+        text: confirmMessage,
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: '#ff5f00',
@@ -2632,44 +2917,64 @@ function handleHazirlandi() {
         if (result.isConfirmed) {
             // API'ye POST isteği gönder
             $.ajax({
-                url: `/panel/MalzemeleriHazirla/${selectedSurecId}`,
+                url: '/panel/TopluMalzemeleriHazirla',
                 type: 'POST',
                 contentType: 'application/json',
+                data: JSON.stringify(requestData),
                 success: function(response) {
+                    console.log('TopluMalzemeleriHazirla Response:', response);
+
                     if (response.isSuccess) {
+                        // Servisten gelen mesajı göster (value string olarak dönüyor)
+                        const successMessage = response.value || 'Kayıtlar başarıyla hazırlandı olarak işaretlendi!';
+
                         Swal.fire({
                             icon: 'success',
                             title: 'Başarılı',
-                            text: 'Kayıt hazırlandı olarak işaretlendi!',
+                            text: successMessage,
                             confirmButtonColor: '#007bff'
                         }).then(() => {
                             // Checkbox'ları temizle
                             $('.depo-row-checkbox').prop('checked', false);
-                            
+                            $('#selectAllDepoHazirlama').prop('checked', false);
+
                             // Tabloyu yenile
                             refreshDepoHazirlamaTable();
                         });
                     } else {
+                        // Hata durumunda servisten gelen mesajı göster
+                        let errorMessage = 'İşlem başarısız!';
+
+                        if (response.value && typeof response.value === 'string') {
+                            errorMessage = response.value;
+                        } else if (response.errors && response.errors.length > 0) {
+                            errorMessage = response.errors.join(', ');
+                        }
+
                         Swal.fire({
                             icon: 'error',
                             title: 'Hata',
-                            text: response.errors && response.errors.length > 0 
-                                ? response.errors.join(', ') 
-                                : 'İşlem başarısız!',
+                            text: errorMessage,
                             confirmButtonColor: '#dc3545'
                         });
                     }
                 },
                 error: function(error) {
                     console.error('Hazırlandı İşlemi - Error Response:', error);
-                    
+
                     let errorMessage = 'İşlem gerçekleştirilemedi!';
-                    if (error.responseJSON && error.responseJSON.errors && error.responseJSON.errors.length > 0) {
-                        errorMessage = error.responseJSON.errors.join(', ');
+
+                    // Servisten string mesaj dönebilir
+                    if (error.responseJSON) {
+                        if (error.responseJSON.value && typeof error.responseJSON.value === 'string') {
+                            errorMessage = error.responseJSON.value;
+                        } else if (error.responseJSON.errors && error.responseJSON.errors.length > 0) {
+                            errorMessage = error.responseJSON.errors.join(', ');
+                        }
                     } else if (error.responseText) {
                         errorMessage = error.responseText;
                     }
-                    
+
                     Swal.fire({
                         icon: 'error',
                         title: 'Hata',
@@ -2693,27 +2998,26 @@ function handleMalKabul() {
         Swal.fire({
             icon: 'warning',
             title: 'Uyarı',
-            text: 'Lütfen bir kayıt seçiniz!'
+            text: 'Lütfen en az bir kayıt seçiniz!'
         });
         return;
     }
 
-    if (selectedCheckboxes.length > 1) {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Uyarı',
-            text: 'Lütfen sadece bir kayıt seçiniz!'
-        });
-        return;
-    }
+    // Seçili Süreç ID'lerini topla
+    const selectedSurecIds = [];
+    selectedCheckboxes.each(function() {
+        selectedSurecIds.push($(this).data('surecid'));
+    });
 
-    // Seçili Süreç ID'yi al
-    const selectedSurecId = selectedCheckboxes.first().data('surecid');
+    // Onay mesajını oluştur
+    const confirmMessage = selectedCheckboxes.length === 1
+        ? 'Bu kaydı mal kabul olarak işaretlemek istediğinizden emin misiniz?'
+        : `${selectedCheckboxes.length} kaydı mal kabul olarak işaretlemek istediğinizden emin misiniz?`;
 
     // Onay sor
     Swal.fire({
         title: 'Emin misiniz?',
-        text: `Bu kaydı mal kabul olarak işaretlemek istediğinizden emin misiniz?`,
+        text: confirmMessage,
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: '#007bff',
@@ -2724,38 +3028,74 @@ function handleMalKabul() {
         if (result.isConfirmed) {
             // API çağrısı yap
             $.ajax({
-                url: `/api/MalzemeTalepGenelBilgiler/MalKabulEt/${selectedSurecId}`,
+                url: '/panel/TopluMalKabulEt',
                 type: 'POST',
                 contentType: 'application/json',
+                data: JSON.stringify({ malzemeTalepSurecTakipIDler: selectedSurecIds }),
                 success: function (response) {
-                    if (response && response.isSuccess) {
+                    console.log('TopluMalKabulEt Response:', response);
+                    
+                    if (response.isSuccess) {
+                        // Servisten gelen mesajı göster
+                        const successMessage = response.value || 'Kayıtlar başarıyla mal kabul olarak işaretlendi!';
+                        
                         Swal.fire({
                             icon: 'success',
                             title: 'Başarılı',
-                            text: 'Kayıt mal kabul olarak işaretlendi!',
+                            text: successMessage,
                             confirmButtonColor: '#007bff'
                         }).then(() => {
                             // Checkbox'ları temizle
                             $('.uretim-row-checkbox').prop('checked', false);
+                            $('#selectAllUretimMalKabul').prop('checked', false);
                             
                             // Tabloyu yenile
                             refreshUretimMalKabulTable();
                         });
                     } else {
+                        // Hata durumunda servisten gelen mesajı göster
+                        let errorMessage = 'Mal kabul işlemi sırasında bir hata oluştu!';
+                        
+                        if (response.message && typeof response.message === 'string') {
+                            errorMessage = response.message;
+                        } else if (response.errors && response.errors.length > 0) {
+                            errorMessage = response.errors.join(', ');
+                        }
+                        
                         Swal.fire({
                             icon: 'error',
                             title: 'Hata',
-                            text: response?.message || 'Mal kabul işlemi sırasında bir hata oluştu!',
+                            text: errorMessage,
                             confirmButtonColor: '#dc3545'
                         });
                     }
                 },
                 error: function (xhr, status, error) {
                     console.error('Mal Kabul API Hatası:', error);
+                    
+                    let errorMessage = 'Mal kabul işlemi sırasında bir hata oluştu!';
+                    
+                    if (xhr.responseJSON) {
+                        if (xhr.responseJSON.message && typeof xhr.responseJSON.message === 'string') {
+                            errorMessage = xhr.responseJSON.message;
+                        } else if (xhr.responseJSON.errors && xhr.responseJSON.errors.length > 0) {
+                            errorMessage = xhr.responseJSON.errors.join(', ');
+                        }
+                    } else if (xhr.responseText) {
+                        try {
+                            const errorData = JSON.parse(xhr.responseText);
+                            if (errorData.message) {
+                                errorMessage = errorData.message;
+                            }
+                        } catch (e) {
+                            errorMessage = xhr.responseText;
+                        }
+                    }
+                    
                     Swal.fire({
                         icon: 'error',
                         title: 'Hata',
-                        text: 'Mal kabul işlemi sırasında bir hata oluştu!',
+                        text: errorMessage,
                         confirmButtonColor: '#dc3545'
                     });
                 }
@@ -2780,11 +3120,32 @@ function handleIadeEt() {
         return;
     }
 
+    // Birden fazla seçiliyse uyarı göster ve sadece ilkini kullan
     if (selectedCheckboxes.length > 1) {
         Swal.fire({
             icon: 'warning',
             title: 'Uyarı',
-            text: 'Lütfen sadece bir kayıt seçiniz!'
+            text: 'İade işlemi için sadece bir kayıt seçilebilir. İlk seçili kayıt kullanılacaktır.',
+            confirmButtonText: 'Tamam'
+        }).then(() => {
+            // Sadece ilk checkbox'ı seçili bırak, diğerlerini kaldır
+            selectedCheckboxes.not(':first').prop('checked', false);
+            $('#selectAllUretimMalKabul').prop('checked', false);
+            
+            // İlk kayıt için işleme devam et
+            const selectedSurecId = selectedCheckboxes.first().data('surecid');
+            
+            // Modal'a Süreç ID'yi set et
+            $('#iadeMalzemeTalepSurecTakipID').val(selectedSurecId);
+            
+            // Bildirim tipleri dropdown'ını yükle
+            loadBildirimTipleri();
+            
+            // Formu temizle
+            $('#iadeEtNot').val('');
+            
+            // Modal'ı aç
+            $('#iadeEtModal').modal('show');
         });
         return;
     }
@@ -3153,3 +3514,35 @@ function handleKaliteMalKabul() {
         }
     });
 }
+
+/**
+ * URL'den aktif tab'ı yükle
+ */
+function loadActiveTabFromUrl() {
+    // URL'deki hash'i al
+    let hash = window.location.hash;
+    
+    // Hash varsa ve geçerli bir tab ise
+    if (hash) {
+        // Tab'ın var olup olmadığını kontrol et
+        const tabExists = $('a[href="' + hash + '"]').length > 0;
+        
+        if (tabExists) {
+            // İlgili tab'ı aktif et
+            $('a[href="' + hash + '"]').tab('show');
+        } else {
+            // Geçersiz hash ise varsayılan tab'ı aç
+            $('a[href="#malzemeTalepTabContent"]').tab('show');
+        }
+    } else {
+        // Hash yoksa varsayılan tab'ı aç (Malzeme Talep Et)
+        $('a[href="#malzemeTalepTabContent"]').tab('show');
+    }
+}
+
+/**
+ * Browser'ın geri/ileri butonları için
+ */
+$(window).on('popstate', function() {
+    loadActiveTabFromUrl();
+});
