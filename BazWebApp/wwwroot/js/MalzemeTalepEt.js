@@ -14,7 +14,13 @@ let isLoadingImalatEk = false;
 // İlk yükleme kontrolü
 window.isInitialLoad = false;
 
+// Departman listesi cache
+let departmanListesi = [];
+
 $(document).ready(function () {
+    // Departman listesini yükle
+    loadDepartmanList();
+    
     // Sayfa yüklendiğinde hemen spinner'ı göster
     $('#malzemeTalepSpinner').show();
     $('#malzemeTalepTable').hide();
@@ -1255,6 +1261,34 @@ function loadStatuList() {
 }
 
 /**
+ * Departman listesini yükle
+ */
+function loadDepartmanList() {
+    $.ajax({
+        url: '/panel/GetOrganizasyonBirimleri',
+        type: 'GET',
+        data: { kurumId: 2, tipId: 1 },
+        success: function(response) {
+            if (response.isSuccess && response.value) {
+                departmanListesi = response.value;
+                console.log('Departman listesi yüklendi:', departmanListesi);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Departman listesi yüklenirken hata:', error);
+        }
+    });
+}
+
+/**
+ * Departman ID'ye göre departman adını getir
+ */
+function getDepartmanAdi(departmanID) {
+    const departman = departmanListesi.find(d => d.tabloId === departmanID);
+    return departman ? departman.tanim : 'Bilinmeyen Departman';
+}
+
+/**
  * İlk verileri yükleme
  */
 function loadInitialData() {
@@ -1377,11 +1411,69 @@ function yeniTalepEkle() {
         return;
     }
     
-    // Request data hazırla
-    const requestData = {
-        talepItems: items
-    };
+    // Departman seçimi için popup göster
+    showDepartmanSecimPopup(items, projeGroups, overRequestedItems);
+}
+
+/**
+ * Departman seçim popup'unu göster
+ */
+function showDepartmanSecimPopup(items, projeGroups, overRequestedItems) {
+    // Departman listesini HTML olarak hazırla
+    let departmanOptionsHtml = '<option value="">Departman Seçiniz</option>';
+    departmanListesi.forEach(function(departman) {
+        departmanOptionsHtml += `<option value="${departman.tabloId}">${departman.tanim}</option>`;
+    });
     
+    Swal.fire({
+        title: 'Departman Seçimi',
+        html: `
+            <div class="form-group text-left" style="margin-bottom: 15px;">
+                <label for="departmanSelect" style="display: block; margin-bottom: 8px; font-weight: normal;">Talep Eden Departman:</label>
+                <select id="departmanSelect" class="form-control" style="width: 100%; padding: 8px;">
+                    ${departmanOptionsHtml}
+                </select>
+                <small class="form-text text-muted" style="display: block; margin-top: 5px;">Tüm malzemeler bu departman adına talep edilecektir.</small>
+            </div>
+        `,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Devam Et',
+        cancelButtonText: 'İptal',
+        confirmButtonColor: '#007bff',
+        cancelButtonColor: '#6c757d',
+        width: '500px',
+        preConfirm: () => {
+            const departmanId = document.getElementById('departmanSelect').value;
+            if (!departmanId) {
+                Swal.showValidationMessage('Lütfen bir departman seçiniz!');
+                return false;
+            }
+            return parseInt(departmanId);
+        }
+    }).then((result) => {
+        if (result.isConfirmed && result.value) {
+            // Seçilen departman ID'sini tüm item'lara ekle
+            const departmanId = result.value;
+            items.forEach(function(item) {
+                item.malzemeSevkTalebiYapanDepartmanID = departmanId;
+            });
+            
+            // Request data hazırla
+            const requestData = {
+                talepItems: items
+            };
+            
+            // Onay popup'ını göster
+            showTalepOnayPopup(requestData, projeGroups, overRequestedItems);
+        }
+    });
+}
+
+/**
+ * Talep onay popup'unu göster ve API çağrısı yap
+ */
+function showTalepOnayPopup(requestData, projeGroups, overRequestedItems) {
     // Onay mesajını oluştur
     let confirmMessage = '';
     const projeKeys = Object.keys(projeGroups);
@@ -2575,6 +2667,14 @@ function showDetay(id, type) {
             const malzeme = rowData.malzemeTalep;
             const tarih = malzeme.satOlusturmaTarihi ? new Date(malzeme.satOlusturmaTarihi).toLocaleString('tr-TR') : '-';
             
+            // Departman bilgisini al (rowData'nın içinde, malzemeTalep'in içinde değil)
+            let departmanBilgisi = '-';
+            if (rowData.departmanSevkiyatlari && rowData.departmanSevkiyatlari.length > 0) {
+                const departmanId = rowData.departmanSevkiyatlari[0].departmanID;
+                const departmanAdi = getDepartmanAdi(departmanId);
+                departmanBilgisi = `${departmanAdi} (ID: ${departmanId})`;
+            }
+            
             $('#detayModalLabel').html(`<i class="fas fa-info-circle mr-2"></i>Depo Hazırlama Detayı`);
             $('#detayModalIcerik').html(`
                 <div class="row">
@@ -2592,6 +2692,7 @@ function showDetay(id, type) {
                         <p><strong>Talep Edilen Miktar:</strong> ${malzeme.malzemeOrijinalTalepEdilenMiktar?.toLocaleString('tr-TR') || '-'}</p>
                         <p><strong>Sevk Edilen Miktar:</strong> ${rowData.toplamSevkEdilenMiktar?.toLocaleString('tr-TR') || '-'}</p>
                         <p><strong>Kalan Miktar:</strong> ${rowData.kalanMiktar?.toLocaleString('tr-TR') || '-'}</p>
+                        <p><strong>Departman:</strong> ${departmanBilgisi}</p>
                     </div>
                 </div>
             `);
@@ -2612,6 +2713,14 @@ function showDetay(id, type) {
             const malzeme = rowData.malzemeTalep;
             const satTarihi = malzeme.satOlusturmaTarihi ? new Date(malzeme.satOlusturmaTarihi).toLocaleString('tr-TR') : '-';
             const teslimTarihi = rowData.surecOlusturmaTarihi ? new Date(rowData.surecOlusturmaTarihi).toLocaleString('tr-TR') : '-';
+            
+            // Departman bilgisini al
+            let departmanBilgisi = '-';
+            if (rowData.departmanSevkiyatlari && rowData.departmanSevkiyatlari.length > 0) {
+                const departmanId = rowData.departmanSevkiyatlari[0].departmanID;
+                const departmanAdi = getDepartmanAdi(departmanId);
+                departmanBilgisi = `${departmanAdi} (ID: ${departmanId})`;
+            }
             
             // İade edilmiş kayıt için ek bilgiler
             let iadeDetayHtml = '';
@@ -2650,6 +2759,7 @@ function showDetay(id, type) {
                         <p><strong>Talep Edilen Miktar:</strong> ${rowData.talepEdilenMiktar?.toLocaleString('tr-TR') || '-'}</p>
                         <p><strong>Sevk Edilen Miktar:</strong> ${rowData.toplamSevkEdilenMiktar?.toLocaleString('tr-TR') || '-'}</p>
                         <p><strong>Kalan Miktar:</strong> ${rowData.kalanMiktar?.toLocaleString('tr-TR') || '-'}</p>
+                        <p><strong>Departman:</strong> ${departmanBilgisi}</p>
                     </div>
                     ${iadeDetayHtml}
                 </div>
@@ -2671,6 +2781,14 @@ function showDetay(id, type) {
             const malzeme = rowData.malzemeTalep;
             const tarih = malzeme.satOlusturmaTarihi ? new Date(malzeme.satOlusturmaTarihi).toLocaleString('tr-TR') : '-';
             
+            // Departman bilgisini al
+            let departmanBilgisi = '-';
+            if (rowData.departmanSevkiyatlari && rowData.departmanSevkiyatlari.length > 0) {
+                const departmanId = rowData.departmanSevkiyatlari[0].departmanID;
+                const departmanAdi = getDepartmanAdi(departmanId);
+                departmanBilgisi = `${departmanAdi} (ID: ${departmanId})`;
+            }
+            
             $('#detayModalLabel').html(`<i class="fas fa-info-circle mr-2"></i>Kalite Kontrol Detayı`);
             $('#detayModalIcerik').html(`
                 <div class="row">
@@ -2688,6 +2806,7 @@ function showDetay(id, type) {
                         <p><strong>Talep Edilen Miktar:</strong> ${malzeme.malzemeOrijinalTalepEdilenMiktar?.toLocaleString('tr-TR') || '-'}</p>
                         <p><strong>Sevk Edilen Miktar:</strong> ${rowData.toplamSevkEdilenMiktar?.toLocaleString('tr-TR') || '-'}</p>
                         <p><strong>Kalan Miktar:</strong> ${rowData.kalanMiktar?.toLocaleString('tr-TR') || '-'}</p>
+                        <p><strong>Departman:</strong> ${departmanBilgisi}</p>
                     </div>
                 </div>
             `);
@@ -2708,6 +2827,14 @@ function showDetay(id, type) {
             const malzeme = rowData.malzemeTalep;
             const kayitTarihi = malzeme.kayitTarihi ? new Date(malzeme.kayitTarihi).toLocaleString('tr-TR') : '-';
 
+            // Departman bilgisini al
+            let departmanBilgisi = '-';
+            if (rowData.departmanSevkiyatlari && rowData.departmanSevkiyatlari.length > 0) {
+                const departmanId = rowData.departmanSevkiyatlari[0].departmanID;
+                const departmanAdi = getDepartmanAdi(departmanId);
+                departmanBilgisi = `${departmanAdi} (ID: ${departmanId})`;
+            }
+
             $('#detayModalLabel').html(`<i class="fas fa-info-circle mr-2"></i>İmalat Ek Talep Detayı`);
             $('#detayModalIcerik').html(`
                 <div class="row">
@@ -2725,6 +2852,7 @@ function showDetay(id, type) {
                         <p><strong>Kalan Miktar:</strong> ${rowData.kalanMiktar?.toLocaleString('tr-TR') || '-'}</p>
                         <p><strong>SAT Cari Hesap:</strong> ${malzeme.satCariHesap || '-'}</p>
                         <p><strong>Açıklama:</strong> ${malzeme.aciklama || '-'}</p>
+                        <p><strong>Departman:</strong> ${departmanBilgisi}</p>
                     </div>
                 </div>
             `);
@@ -2745,6 +2873,14 @@ function showDetay(id, type) {
             const malzeme = rowData.malzemeTalep;
             const satTarihi = malzeme.satOlusturmaTarihi ? new Date(malzeme.satOlusturmaTarihi).toLocaleString('tr-TR') : '-';
             const onayTarihi = rowData.surecOlusturmaTarihi ? new Date(rowData.surecOlusturmaTarihi).toLocaleString('tr-TR') : '-';
+            
+            // Departman bilgisini al
+            let departmanBilgisi = '-';
+            if (rowData.departmanSevkiyatlari && rowData.departmanSevkiyatlari.length > 0) {
+                const departmanId = rowData.departmanSevkiyatlari[0].departmanID;
+                const departmanAdi = getDepartmanAdi(departmanId);
+                departmanBilgisi = `${departmanAdi} (ID: ${departmanId})`;
+            }
             
             $('#detayModalLabel').html(`<i class="fas fa-info-circle mr-2"></i>Depo Kabul Detayı`);
             $('#detayModalIcerik').html(`
@@ -2768,6 +2904,7 @@ function showDetay(id, type) {
                         <p><strong>Talep Edilen Miktar:</strong> ${rowData.talepEdilenMiktar?.toLocaleString('tr-TR') || '-'}</p>
                         <p><strong>Sevk Edilen Miktar:</strong> ${rowData.toplamSevkEdilenMiktar?.toLocaleString('tr-TR') || '-'}</p>
                         <p><strong>Kalan Miktar:</strong> ${rowData.kalanMiktar?.toLocaleString('tr-TR') || '-'}</p>
+                        <p><strong>Departman:</strong> ${departmanBilgisi}</p>
                     </div>
                 </div>
             `);

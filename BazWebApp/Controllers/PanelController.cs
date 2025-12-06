@@ -482,6 +482,20 @@ namespace BazWebApp.Controllers
         }
 
         /// <summary>
+        /// Organizasyon birimlerini getiren metod
+        /// </summary>
+        /// <param name="kurumId">Kurum ID (default: 10)</param>
+        /// <param name="tipId">Tip ID (default: 1)</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("/panel/GetOrganizasyonBirimleri")]
+        public Result<List<OrganizasyonBirimVM>> GetOrganizasyonBirimleri(int kurumId = 2, int tipId = 1)
+        {
+            var result = _kurumService.GetOrganizasyonBirimleriByKurumIdAndTipId(kurumId, tipId);
+            return result;
+        }
+
+        /// <summary>
         /// Malzeme talep et metodu
         /// </summary>
         /// <param name="model"></param>

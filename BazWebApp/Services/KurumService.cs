@@ -16,6 +16,21 @@ using static BazWebApp.Controllers.PanelController;
 namespace BazWebApp.Services
 {
     /// <summary>
+    /// Organizasyon Birimi View Model
+    /// </summary>
+    public class OrganizasyonBirimVM
+    {
+        public int KurumId { get; set; }
+        public int TabloId { get; set; }
+        public int UstId { get; set; }
+        public string Tanim { get; set; }
+        public int TipId { get; set; }
+        public string Koordinat { get; set; }
+        public int IlgiliKurumID { get; set; }
+        public List<OrganizasyonBirimVM> AltItems { get; set; }
+    }
+
+    /// <summary>
     /// Kurum Servisi için oluşturulmuş Interface'dir.
     /// </summary>
     public interface IKurumService
@@ -98,6 +113,14 @@ namespace BazWebApp.Services
         /// </summary>
         /// <returns></returns>
         Result<List<Baz.Model.Entity.ViewModel.HedefKitleField>> GetTargetGroupFields();
+
+        /// <summary>
+        /// Kurum ID ve Tip ID'ye göre organizasyon birimlerini getirme metodu
+        /// </summary>
+        /// <param name="kurumId">Kurum ID</param>
+        /// <param name="tipId">Tip ID (default: 1)</param>
+        /// <returns></returns>
+        Result<List<OrganizasyonBirimVM>> GetOrganizasyonBirimleriByKurumIdAndTipId(int kurumId, int tipId = 1);
 
         /// <summary>
         /// Kurum müşteri temsilcisi getirme metodu
@@ -332,7 +355,8 @@ namespace BazWebApp.Services
         public Result<List<SistemSayfalari>> SistemSayfalariGetir()
         {
             var x = _requestHelper.Get<Result<List<SistemSayfalari>>>(url + "/api/YetkiMerkezi/SistemSayfalariGetir/");
-            return x.Result;
+            var a = x.Result;
+            return a;
         }
 
         /// <summary>
@@ -803,6 +827,19 @@ namespace BazWebApp.Services
             {
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Kurum ID ve Tip ID'ye göre organizasyon birimlerini getirme metodu
+        /// </summary>
+        /// <param name="kurumId">Kurum ID</param>
+        /// <param name="tipId">Tip ID (default: 1)</param>
+        /// <returns></returns>
+        public Result<List<OrganizasyonBirimVM>> GetOrganizasyonBirimleriByKurumIdAndTipId(int kurumId, int tipId = 1)
+        {
+            var result = _requestHelper.Get<Result<List<OrganizasyonBirimVM>>>(
+                LocalPortlar.KurumService + $"/api/OrganizasyonBirim/GetByKurumIdAndTipId/{kurumId}?tipId={tipId}");
+            return result.Result;
         }
     }
 }

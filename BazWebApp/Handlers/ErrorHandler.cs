@@ -39,13 +39,21 @@ namespace BazWebApp.Handlers
             try
             {
                 await _next(context);
-                if (context.Response.StatusCode != 200)
-                    logger.LogError("Error {0} {1}", context.Response.StatusCode, context.Request.Host.Value);
-                //handle HTTP codes
+                
+                //handle HTTP codes - sadece gerçek hata kodları
                 switch (context.Response.StatusCode)
                 {
                     case 404:
+                        logger.LogWarning("Page not found: {0} {1}", context.Response.StatusCode, context.Request.Path);
                         HandlePageNotFound(context);
+                        break;
+
+                    case 500:
+                    case 501:
+                    case 502:
+                    case 503:
+                    case 504:
+                        logger.LogError("Server error: {0} {1}", context.Response.StatusCode, context.Request.Path);
                         break;
 
                     case 418:
@@ -59,7 +67,7 @@ namespace BazWebApp.Handlers
             }
             catch (Exception e)
             {
-                logger.LogError("Error {0} {1}", context.Response.StatusCode, context.Request.Host.Value);
+                logger.LogError(e, "Unhandled exception occurred. Path: {0}, Host: {1}", context.Request.Path, context.Request.Host.Value);
                 //Handle uncaught global exceptions as 500 Error
                 HandleException(context);
             }

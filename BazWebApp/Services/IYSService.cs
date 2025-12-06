@@ -85,8 +85,20 @@ namespace BazWebApp.Services
     /// </summary>
     public class MalzemeTalepEtItem
     {
+        /// <summary>
+        /// Malzeme talebi essiz ID
+        /// </summary>
         public int MalzemeTalebiEssizID { get; set; }
+        
+        /// <summary>
+        /// Sevk edilen miktar
+        /// </summary>
         public int SevkEdilenMiktar { get; set; }
+        
+        /// <summary>
+        /// Malzeme sevk talebi yapan departman ID
+        /// </summary>
+        public int MalzemeSevkTalebiYapanDepartmanID { get; set; }
     }
 
     /// <summary>
@@ -158,6 +170,27 @@ namespace BazWebApp.Services
     {
         public int MalzemeTalepSurecTakipID { get; set; }
         public int HazirlananMiktar { get; set; }
+    }
+
+    /// <summary>
+    /// Departman Sevkiyat Item
+    /// </summary>
+    public class DepartmanSevkiyatItem
+    {
+        /// <summary>
+        /// Departman ID
+        /// </summary>
+        public int DepartmanID { get; set; }
+        
+        /// <summary>
+        /// Talep edilen miktar
+        /// </summary>
+        public int TalepEdilenMiktar { get; set; }
+        
+        /// <summary>
+        /// Sevk zamanı
+        /// </summary>
+        public DateTime? SevkZamani { get; set; }
     }
 
     /// <summary>
@@ -259,6 +292,11 @@ namespace BazWebApp.Services
         /// Sevk ID bazında kayıt sayısı
         /// </summary>
         public int SevkIDBazindaKayitSayisi { get; set; }
+        
+        /// <summary>
+        /// Departman sevkiyatları listesi
+        /// </summary>
+        public List<DepartmanSevkiyatItem> DepartmanSevkiyatlari { get; set; }
     }
 
     /// <summary>
