@@ -255,16 +255,25 @@ function initializeDataTables() {
         "order": [[8, "desc"]], // Teslim tarihine göre sırala (desc)
         "data": [], // Başlangıçta boş veri
         "rowCallback": function(row, data) {
-            // paramTalepSurecStatuID === 7 ise satırı kahverengi yap
+            // paramTalepSurecStatuID === 7 ise kırmızı, onayId varsa yeşil yap
             if (data.paramTalepSurecStatuID === 7) {
                 $(row).addClass('iade-edilmis-satir');
-                $(row).attr('style', 'background-color: #d4a574 !important; color: #5a3825 !important;');
+                $(row).removeClass('onaylandi-satir');
+                $(row).attr('style', 'background-color: #f8d7da !important; color: #721c24 !important;');
                 $(row).find('td').css({
-                    'background-color': '#d4a574',
-                    'color': '#5a3825'
+                    'background-color': '#f8d7da',
+                    'color': '#721c24'
+                });
+            } else if (data.onayId != null && data.onayId !== '') {
+                $(row).addClass('onaylandi-satir');
+                $(row).removeClass('iade-edilmis-satir');
+                $(row).attr('style', 'background-color: #d4edda !important; color: #155724 !important;');
+                $(row).find('td').css({
+                    'background-color': '#d4edda',
+                    'color': '#155724'
                 });
             } else {
-                $(row).removeClass('iade-edilmis-satir');
+                $(row).removeClass('onaylandi-satir iade-edilmis-satir');
                 $(row).removeAttr('style');
             }
         },
@@ -501,6 +510,19 @@ function initializeDataTables() {
                 }
             },
             {
+                "data": "paramTalepSurecStatuID",
+                "orderable": false,
+                "render": function (data, type, row) {
+                    if (data === 8) {
+                        return '<span class="badge badge-success">Kabul Edildi</span>';
+                    } else if (data === 7) {
+                        return '<span class="badge badge-danger">Red Edildi</span>';
+                    } else {
+                        return '<span class="badge badge-secondary">Bekliyor</span>';
+                    }
+                }
+            },
+            {
                 "data": null,
                 "orderable": false,
                 "render": function (data, type, row) {
@@ -511,7 +533,27 @@ function initializeDataTables() {
                     `;
                 }
             }
-        ]
+        ],
+        "rowCallback": function(row, data) {
+            // Satır renklendirme
+            if (data.paramTalepSurecStatuID === 8) {
+                $(row).css({
+                    'background-color': '#d4edda',
+                    'color': '#155724'
+                });
+            } else if (data.paramTalepSurecStatuID === 7) {
+                $(row).css({
+                    'background-color': '#f8d7da',
+                    'color': '#721c24'
+                });
+            }
+            
+            // Checkbox kontrol - sadece statü 6 olanlar seçilebilir
+            const checkbox = $(row).find('.depo-kabul-row-checkbox');
+            if (data.paramTalepSurecStatuID === 7 || data.paramTalepSurecStatuID === 8) {
+                checkbox.prop('disabled', true);
+            }
+        }
     });
 
     // İmalat Ek Talepler Tablosu
@@ -741,6 +783,16 @@ function initializeEventHandlers() {
         exportToExcel('depo-kabul');
     });
 
+    // Depo Kabul butonu
+    $('#btnDepoKabul').on('click', function () {
+        handleDepoKabul();
+    });
+
+    // Depo Red butonu
+    $('#btnDepoRed').on('click', function () {
+        handleDepoRed();
+    });
+
     $('#btnExcelAktarImalat').on('click', function () {
         exportToExcel('imalat-ek');
     });
@@ -916,9 +968,21 @@ function initializeEventHandlers() {
         $('.uretim-row-checkbox').prop('checked', isChecked);
     });
 
+    // Tümünü seç checkbox'ı - Depo Kabul tablosu
+    $('#selectAllDepoKabul').on('change', function () {
+        const isChecked = $(this).is(':checked');
+        // Sadece aktif (disabled olmayan) checkbox'ları seç
+        $('.depo-kabul-row-checkbox:not(:disabled)').prop('checked', isChecked);
+    });
+
     // Üretim checkbox'ları değiştiğinde - tümünü seç durumunu güncelle
     $(document).on('change', '.uretim-row-checkbox', function () {
         updateSelectAllUretimCheckbox();
+    });
+
+    // Depo Kabul checkbox'ları değiştiğinde - tümünü seç durumunu güncelle
+    $(document).on('change', '.depo-kabul-row-checkbox', function () {
+        updateSelectAllDepoKabulCheckbox();
     });
 
     // Kalite kontrol checkbox'ları değiştiğinde - sadece 1 tane seçilebilir
@@ -1081,6 +1145,16 @@ function updateSelectAllUretimCheckbox() {
     const checkedCheckboxes = $('.uretim-row-checkbox:checked').length;
 
     $('#selectAllUretimMalKabul').prop('checked', totalCheckboxes > 0 && totalCheckboxes === checkedCheckboxes);
+}
+
+/**
+ * Depo Kabul Tümünü seç checkbox'ını güncelle
+ */
+function updateSelectAllDepoKabulCheckbox() {
+    const totalActiveCheckboxes = $('.depo-kabul-row-checkbox:not(:disabled)').length;
+    const checkedCheckboxes = $('.depo-kabul-row-checkbox:checked').length;
+
+    $('#selectAllDepoKabul').prop('checked', totalActiveCheckboxes > 0 && totalActiveCheckboxes === checkedCheckboxes);
 }
 
 /**
@@ -1973,11 +2047,11 @@ function refreshDepoKabulTable() {
     const projeKoduValue = parseInt($('#depoKabulProjeFilter').val()) || 0;
     
     // Depo Kabul için sabit parametreler
-    // talepSurecStatuIDs: [6] (Depo Kabul statüsü)
+    // talepSurecStatuIDs: [6, 7, 8] (Depo Kabul, Red Edildi, Kabul Edildi statüleri)
     // malzemeTalepEtGetir: false
     const requestData = {
         projeKodu: projeKoduValue === 0 ? 0 : projeKoduValue, // Tümü için 0, seçiliyse projeKodu gönder
-        talepSurecStatuIDs: [6], // Depo Kabul için her zaman 6
+        talepSurecStatuIDs: [6, 8], // Depo Kabul için 6, 7 ve 8
         searchText: "",
         malzemeTalepEtGetir: false // Depo kabul için her zaman false
     };
@@ -3245,6 +3319,25 @@ function handleIadeEt() {
         return;
     }
 
+    // Sadece yeşil (onaylanmış) satırların iade edilebileceğini kontrol et
+    let hasInvalidSelection = false;
+    selectedCheckboxes.each(function() {
+        const row = $(this).closest('tr');
+        if (!row.hasClass('onaylandi-satir')) {
+            hasInvalidSelection = true;
+            return false; // break the loop
+        }
+    });
+
+    if (hasInvalidSelection) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Hata',
+            text: 'Sadece onaylanmış (yeşil) kayıtlar iade edilebilir!'
+        });
+        return;
+    }
+
     // Birden fazla seçiliyse uyarı göster ve sadece ilkini kullan
     if (selectedCheckboxes.length > 1) {
         Swal.fire({
@@ -3632,6 +3725,208 @@ function handleKaliteMalKabul() {
                         icon: 'error',
                         title: 'Hata',
                         text: 'Mal kabul işlemi sırasında bir hata oluştu!',
+                        confirmButtonColor: '#dc3545'
+                    });
+                }
+            });
+        }
+    });
+}
+
+/**
+ * Depo Kabul butonu işlemi
+ */
+function handleDepoKabul() {
+    // Seçili checkbox'ları bul
+    const selectedCheckboxes = $('.depo-kabul-row-checkbox:checked');
+    
+    if (selectedCheckboxes.length === 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Uyarı',
+            text: 'Lütfen en az bir kayıt seçiniz!'
+        });
+        return;
+    }
+
+    // Seçili Süreç ID'lerini topla
+    const selectedSurecIds = [];
+    selectedCheckboxes.each(function() {
+        selectedSurecIds.push($(this).data('surecid'));
+    });
+
+    // Onay mesajını oluştur
+    const confirmMessage = selectedCheckboxes.length === 1
+        ? 'Bu kaydı kabul etmek istediğinizden emin misiniz?'
+        : `${selectedCheckboxes.length} kaydı kabul etmek istediğinizden emin misiniz?`;
+
+    // Onay sor
+    Swal.fire({
+        title: 'Emin misiniz?',
+        text: confirmMessage,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Evet, Kabul Et',
+        cancelButtonText: 'İptal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // API çağrısı yap
+            $.ajax({
+                url: '/panel/TopluDepoKabul',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ malzemeTalepSurecTakipIDler: selectedSurecIds }),
+                success: function (response) {
+                    console.log('TopluDepoKabul Response:', response);
+                    
+                    if (response.isSuccess) {
+                        const successMessage = response.value || 'Kayıtlar başarıyla kabul edildi!';
+                        
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Başarılı',
+                            text: successMessage,
+                            confirmButtonColor: '#28a745'
+                        }).then(() => {
+                            // Checkbox'ları temizle
+                            $('.depo-kabul-row-checkbox').prop('checked', false);
+                            $('#selectAllDepoKabul').prop('checked', false);
+                            
+                            // Tabloyu yenile
+                            refreshDepoKabulTable();
+                        });
+                    } else {
+                        let errorMessage = 'Kabul işlemi sırasında bir hata oluştu!';
+                        
+                        if (response.message && typeof response.message === 'string') {
+                            errorMessage = response.message;
+                        } else if (response.errors && response.errors.length > 0) {
+                            errorMessage = response.errors.join(', ');
+                        }
+                        
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Hata',
+                            text: errorMessage,
+                            confirmButtonColor: '#dc3545'
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Depo Kabul API Hatası:', error);
+                    
+                    let errorMessage = 'Kabul işlemi sırasında bir hata oluştu!';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    }
+                    
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata',
+                        text: errorMessage,
+                        confirmButtonColor: '#dc3545'
+                    });
+                }
+            });
+        }
+    });
+}
+
+/**
+ * Depo Red butonu işlemi
+ */
+function handleDepoRed() {
+    // Seçili checkbox'ları bul
+    const selectedCheckboxes = $('.depo-kabul-row-checkbox:checked');
+    
+    if (selectedCheckboxes.length === 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Uyarı',
+            text: 'Lütfen en az bir kayıt seçiniz!'
+        });
+        return;
+    }
+
+    // Seçili Süreç ID'lerini topla
+    const selectedSurecIds = [];
+    selectedCheckboxes.each(function() {
+        selectedSurecIds.push($(this).data('surecid'));
+    });
+
+    // Onay mesajını oluştur
+    const confirmMessage = selectedCheckboxes.length === 1
+        ? 'Bu kaydı reddetmek istediğinizden emin misiniz?'
+        : `${selectedCheckboxes.length} kaydı reddetmek istediğinizden emin misiniz?`;
+
+    // Onay sor
+    Swal.fire({
+        title: 'Emin misiniz?',
+        text: confirmMessage,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Evet, Reddet',
+        cancelButtonText: 'İptal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // API çağrısı yap
+            $.ajax({
+                url: '/panel/TopluDepoRed',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ malzemeTalepSurecTakipIDler: selectedSurecIds }),
+                success: function (response) {
+                    console.log('TopluDepoRed Response:', response);
+                    
+                    if (response.isSuccess) {
+                        const successMessage = response.value || 'Kayıtlar başarıyla reddedildi!';
+                        
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Başarılı',
+                            text: successMessage,
+                            confirmButtonColor: '#28a745'
+                        }).then(() => {
+                            // Checkbox'ları temizle
+                            $('.depo-kabul-row-checkbox').prop('checked', false);
+                            $('#selectAllDepoKabul').prop('checked', false);
+                            
+                            // Tabloyu yenile
+                            refreshDepoKabulTable();
+                        });
+                    } else {
+                        let errorMessage = 'Red işlemi sırasında bir hata oluştu!';
+                        
+                        if (response.message && typeof response.message === 'string') {
+                            errorMessage = response.message;
+                        } else if (response.errors && response.errors.length > 0) {
+                            errorMessage = response.errors.join(', ');
+                        }
+                        
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Hata',
+                            text: errorMessage,
+                            confirmButtonColor: '#dc3545'
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Depo Red API Hatası:', error);
+                    
+                    let errorMessage = 'Red işlemi sırasında bir hata oluştu!';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    }
+                    
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata',
+                        text: errorMessage,
                         confirmButtonColor: '#dc3545'
                     });
                 }

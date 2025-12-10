@@ -574,6 +574,32 @@ namespace BazWebApp.Controllers
         }
 
         /// <summary>
+        /// Toplu depo kabul et API metodu
+        /// </summary>
+        /// <param name="model">Toplu depo kabul modeli</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("/panel/TopluDepoKabul")]
+        public Result<string> TopluDepoKabul([FromBody] TopluMalKabulEtModel model)
+        {
+            var result = _iysService.TopluDepoKabul(model.MalzemeTalepSurecTakipIDler);
+            return result;
+        }
+
+        /// <summary>
+        /// Toplu depo red et API metodu
+        /// </summary>
+        /// <param name="model">Toplu depo red modeli</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("/panel/TopluDepoRed")]
+        public Result<string> TopluDepoRed([FromBody] TopluMalKabulEtModel model)
+        {
+            var result = _iysService.TopluDepoRed(model.MalzemeTalepSurecTakipIDler);
+            return result;
+        }
+
+        /// <summary>
         /// Süreç statüleri bildirim tipleri API metodu
         /// </summary>
         /// <param name="model"></param>

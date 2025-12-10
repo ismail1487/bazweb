@@ -434,6 +434,20 @@ namespace BazWebApp.Services
         /// <param name="model"></param>
         /// <returns></returns>
         public Result<bool> HasarliOlarakIsaretle(MalzemeIadeEtModel model);
+        
+        /// <summary>
+        /// Toplu Depo Kabul.
+        /// </summary>
+        /// <param name="malzemeTalepSurecTakipIDler">Depo kabul edilecek süreç takip ID'leri</param>
+        /// <returns></returns>
+        public Result<string> TopluDepoKabul(List<int> malzemeTalepSurecTakipIDler);
+        
+        /// <summary>
+        /// Toplu Depo Red.
+        /// </summary>
+        /// <param name="malzemeTalepSurecTakipIDler">Depo red edilecek süreç takip ID'leri</param>
+        /// <returns></returns>
+        public Result<string> TopluDepoRed(List<int> malzemeTalepSurecTakipIDler);
     }
     public class  IYSService : IIYSService
     {
@@ -682,6 +696,44 @@ namespace BazWebApp.Services
             var request = _requestHelper.Post<Result<bool>>(
                 LocalPortlar.IYSService + "/api/MalzemeTalepGenelBilgiler/HasarliOlarakIsaretle", 
                 model);
+            
+            return request.Result;
+        }
+
+        /// <summary>
+        /// Toplu depo kabul işlemi
+        /// </summary>
+        /// <param name="malzemeTalepSurecTakipIDler">Depo kabul edilecek süreç takip ID'leri</param>
+        /// <returns></returns>
+        public Result<string> TopluDepoKabul(List<int> malzemeTalepSurecTakipIDler)
+        {
+            var requestData = new
+            {
+                malzemeTalepSurecTakipIDler = malzemeTalepSurecTakipIDler
+            };
+            
+            var request = _requestHelper.Post<Result<string>>(
+                LocalPortlar.IYSService + "/api/MalzemeTalepGenelBilgiler/TopluDepoKabul", 
+                requestData);
+            
+            return request.Result;
+        }
+
+        /// <summary>
+        /// Toplu depo red işlemi
+        /// </summary>
+        /// <param name="malzemeTalepSurecTakipIDler">Depo red edilecek süreç takip ID'leri</param>
+        /// <returns></returns>
+        public Result<string> TopluDepoRed(List<int> malzemeTalepSurecTakipIDler)
+        {
+            var requestData = new
+            {
+                malzemeTalepSurecTakipIDler = malzemeTalepSurecTakipIDler
+            };
+            
+            var request = _requestHelper.Post<Result<string>>(
+                LocalPortlar.IYSService + "/api/MalzemeTalepGenelBilgiler/TopluDepoRed", 
+                requestData);
             
             return request.Result;
         }
