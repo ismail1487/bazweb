@@ -410,15 +410,16 @@
     color: #5a3825 !important;
 }
 
-/* Tablo Satır Yüksekliği - Excel 14.25 Standart */
+/* Tablo Satır Yüksekliği - Kompakt */
 table.dataTable tbody tr,
 #malzemeTalepTable tbody tr,
 #depoHazirlamaTable tbody tr,
 #uretimMalKabulTable tbody tr,
 #kaliteKontrolTable tbody tr,
-#depoKabulTable tbody tr {
-    height: 19px !important;
-    max-height: 19px !important;
+#depoKabulTable tbody tr,
+#imalatEkTaleplerTable tbody tr {
+    height: 20px !important;
+    max-height: 20px !important;
 }
 
 table.dataTable tbody td,
@@ -426,11 +427,13 @@ table.dataTable tbody td,
 #depoHazirlamaTable tbody td,
 #uretimMalKabulTable tbody td,
 #kaliteKontrolTable tbody td,
-#depoKabulTable tbody td {
-    padding: 2px 8px !important;
-    line-height: 15px !important;
+#depoKabulTable tbody td,
+#imalatEkTaleplerTable tbody td {
+    padding: 0px 6px !important;
+    line-height: 20px !important;
     vertical-align: middle !important;
-    font-size: 13px !important;
+    font-size: 11px !important;
+    height: 20px !important;
 }
 
 table.dataTable thead th,
@@ -438,9 +441,11 @@ table.dataTable thead th,
 #depoHazirlamaTable thead th,
 #uretimMalKabulTable thead th,
 #kaliteKontrolTable thead th,
-#depoKabulTable thead th {
-    padding: 4px 8px !important;
-    line-height: 15px !important;
+#depoKabulTable thead th,
+#imalatEkTaleplerTable thead th {
+    padding: 3px 6px !important;
+    line-height: 14px !important;
     vertical-align: middle !important;
-    font-size: 13px !important;
+    font-size: 11px !important;
+    height: 20px !important;
 }

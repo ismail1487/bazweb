@@ -356,7 +356,7 @@ function initializeDataTables() {
         "lengthChange": false,
         "autoWidth": false,
         "pageLength": 10,
-        "order": [[9, "desc"]], // Oluşturma tarihine göre sırala
+        "order": [[7, "desc"]], // Teslim tarihine göre sırala
         "data": [], // Başlangıçta boş veri
         "columns": [
             {
@@ -364,6 +364,12 @@ function initializeDataTables() {
                 "orderable": false,
                 "render": function (data, type, row) {
                     return `<input type="checkbox" class="kalite-row-checkbox" data-id="${row.malzemeTalebiEssizID}" data-surecid="${row.malzemeTalepSurecTakipID}" />`;
+                }
+            },
+            {
+                "data": "sevkID",
+                "render": function (data) {
+                    return data || '-';
                 }
             },
             {
@@ -382,31 +388,13 @@ function initializeDataTables() {
                 "data": "malzemeTalep.malzemeIsmi"
             },
             {
-                "data": "malzemeTalep.malzemeOrijinalTalepEdilenMiktar",
+                "data": "islenenMiktar",
                 "render": function (data, type, row) {
-                    return data.toLocaleString('tr-TR');
+                    return data ? data.toLocaleString('tr-TR') : '0';
                 }
             },
             {
-                "data": "talepEdilenMiktar",
-                "render": function (data, type, row) {
-                    return data ? data.toLocaleString('tr-TR') : '-';
-                }
-            },
-            {
-                "data": "toplamSevkEdilenMiktar",
-                "render": function (data, type, row) {
-                    return data.toLocaleString('tr-TR');
-                }
-            },
-            {
-                "data": "kalanMiktar",
-                "render": function (data, type, row) {
-                    return data.toLocaleString('tr-TR');
-                }
-            },
-            {
-                "data": "malzemeTalep.satOlusturmaTarihi",
+                "data": "surecOlusturmaTarihi",
                 "render": function (data, type, row) {
                     if (!data) return '-';
                     const date = new Date(data);
