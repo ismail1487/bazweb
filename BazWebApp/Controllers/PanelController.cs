@@ -509,6 +509,66 @@ namespace BazWebApp.Controllers
         }
 
         /// <summary>
+        /// Malzeme talep et son işlemi geri alma metodu
+        /// Kullanıcının en son yaptığı talep işlemini otomatik bulup geri alır
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("/panel/MalzemeTalepEtSonIslemGeriAl")]
+        public Result<string> MalzemeTalepEtSonIslemGeriAl()
+        {
+            var result = _iysService.MalzemeTalepEtSonIslemGeriAl();
+            return result;
+        }
+
+        /// <summary>
+        /// Depo hazırlama son işlemi geri alma metodu
+        /// Kullanıcının en son yaptığı hazırlama işlemini otomatik bulup geri alır
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("/panel/DepoHazirlamaSonIslemGeriAl")]
+        public Result<string> DepoHazirlamaSonIslemGeriAl()
+        {
+            var result = _iysService.DepoHazirlamaSonIslemGeriAl();
+            return result;
+        }
+
+        /// <summary>
+        /// Üretim mal kabul son işlemi geri alma metodu
+        /// Kullanıcının en son yaptığı mal kabul/iade işlemini otomatik bulup geri alır
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("/panel/UretimMalKabulSonIslemGeriAl")]
+        public Result<string> UretimMalKabulSonIslemGeriAl()
+        {
+            var result = _iysService.UretimMalKabulSonIslemGeriAl();
+            return result;
+        }
+
+        /// <summary>
+        /// Kalite kontrol son işlemi geri alma metodu
+        /// Kullanıcının en son yaptığı kalite onay/hasarlı işlemini otomatik bulup geri alır
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("/panel/KaliteKontrolSonIslemGeriAl")]
+        public Result<string> KaliteKontrolSonIslemGeriAl()
+        {
+            var result = _iysService.KaliteKontrolSonIslemGeriAl();
+            return result;
+        }
+
+        [HttpPost]
+        [Route("/panel/DepoKararSonIslemGeriAl")]
+        public Result<string> DepoKararSonIslemGeriAl()
+        {
+            var result = _iysService.DepoKararSonIslemGeriAl();
+            return result;
+        }
+
+        /// <summary>
         /// Toplu malzemeleri hazırla metodu
         /// </summary>
         /// <param name="model">Toplu malzemeleri hazırla modeli</param>

@@ -91,11 +91,14 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6 text-right" style="padding-top: 32px;">
-                                    <button type="button" class="btn add-buttons" id="btnYeniTalep" style="height: 38px; margin-right: 4px;">
-                                        <i class="fas fa-plus mr-2"></i>Talep Et
-                                    </button>
-                                    <button type="button" class="btn btn-success" id="btnExcelAktarMalzeme" style="height: 38px; margin-right: 4px;">
+                                    <button type="button" class="btn btn-success ml-2" id="btnExcelAktarMalzeme" style="height: 38px;">
                                         <i class="fas fa-file-excel mr-2"></i>Excel'e Aktar
+                                    </button>
+                                    <button type="button" class="btn add-buttons ml-2" id="btnYeniTalep" style="height: 38px;">
+                                        <i class="fas fa-plus mr-2"></i>Yeni Talep
+                                    </button>
+                                    <button type="button" class="btn btn-info ml-2" id="btnSonIslemGeriAl" style="height: 38px;" title="Son İşlemi Geri Al">
+                                        <i class="fas fa-undo"></i>
                                     </button>
                                 </div>
                             </div>
@@ -162,11 +165,14 @@
                                     </select>
                                 </div>
                                 <div class="col-md-8 text-right" style="padding-top: 32px;">
-                                    <button type="button" class="btn btn-success" id="btnExcelAktarDepo" style="height: 38px; margin-right: 4px;">
+                                    <button type="button" class="btn btn-success" id="btnExcelAktarDepo" style="height: 38px;">
                                         <i class="fas fa-file-excel mr-2"></i>Excel'e Aktar
                                     </button>
-                                    <button type="button" class="btn btn-primary" id="btnHazirlandi" style="height: 38px; margin-right: 4px;">
+                                    <button type="button" class="btn btn-primary ml-2" id="btnHazirlandi" style="height: 38px;">
                                         <i class="fas fa-check-circle mr-2"></i>Hazırlandı
+                                    </button>
+                                    <button type="button" class="btn btn-info ml-2" id="btnDepoHazirlamaSonIslemGeriAl" style="height: 38px; width: 38px; padding: 0;" title="Son İşlemi Geri Al">
+                                        <i class="fas fa-undo"></i>
                                     </button>
                                 </div>
                             </div>
@@ -238,14 +244,17 @@
                                     </select>
                                 </div>
                                 <div class="col-md-8 text-right" style="padding-top: 32px;">
-                                    <button type="button" class="btn btn-success" id="btnExcelAktarUretim" style="height: 38px; margin-right: 4px;">
+                                    <button type="button" class="btn btn-success" id="btnExcelAktarUretim" style="height: 38px;">
                                         <i class="fas fa-file-excel mr-2"></i>Excel'e Aktar
                                     </button>
-                                    <button type="button" class="btn btn-primary" id="btnMalKabul" style="height: 38px; margin-right: 4px;">
+                                    <button type="button" class="btn btn-primary ml-2" id="btnMalKabul" style="height: 38px;">
                                         <i class="fas fa-check mr-2"></i>Onay
                                     </button>
-                                    <button type="button" class="btn btn-danger" id="btnIadeEt" style="height: 38px; margin-right: 4px;">
+                                    <button type="button" class="btn btn-danger ml-2" id="btnIadeEt" style="height: 38px;">
                                         <i class="fas fa-undo mr-2"></i>İade Et
+                                    </button>
+                                    <button type="button" class="btn btn-info ml-2" id="btnUretimMalKabulSonIslemGeriAl" style="height: 38px; width: 38px; padding: 0;" title="Son İşlemi Geri Al">
+                                        <i class="fas fa-undo"></i>
                                     </button>
                                 </div>
                             </div>
@@ -314,14 +323,17 @@
                                     </select>
                                 </div>
                                 <div class="col-md-8 text-right" style="padding-top: 32px;">
-                                    <button type="button" class="btn btn-success" id="btnExcelAktarKalite" style="height: 38px; margin-right: 4px;">
+                                    <button type="button" class="btn btn-success" id="btnExcelAktarKalite" style="height: 38px;">
                                         <i class="fas fa-file-excel mr-2"></i>Excel'e Aktar
                                     </button>
-                                    <button type="button" class="btn btn-primary" id="btnKaliteMalKabul" style="height: 38px; margin-right: 4px;">
+                                    <button type="button" class="btn btn-primary ml-2" id="btnKaliteMalKabul" style="height: 38px;">
                                         <i class="fas fa-check mr-2"></i>OK
                                     </button>
-                                    <button type="button" class="btn btn-danger" id="btnHasarli" style="height: 38px;">
+                                    <button type="button" class="btn btn-danger ml-2" id="btnHasarli" style="height: 38px;">
                                         <i class="fas fa-exclamation-triangle mr-2"></i>Red
+                                    </button>
+                                    <button type="button" class="btn btn-info ml-2" id="btnKaliteKontrolSonIslemGeriAl" style="height: 38px; width: 38px; padding: 0;" title="Son İşlemi Geri Al">
+                                        <i class="fas fa-undo"></i>
                                     </button>
                                 </div>
                             </div>
@@ -399,6 +411,9 @@
                                     </button>
                                     <button type="button" class="btn btn-danger ml-2" id="btnDepoRed" style="height: 38px;">
                                         <i class="fas fa-times mr-2"></i>Red
+                                    </button>
+                                    <button type="button" class="btn btn-info ml-2" id="btnDepoKararGeriAl" style="height: 38px; width: 38px; padding: 0;" title="Son İşlemi Geri Al">
+                                        <i class="fas fa-undo"></i>
                                     </button>
                                 </div>
                             </div>
@@ -656,14 +671,6 @@
             <div class="modal-body">
                 <form id="hasarliForm">
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="hasarliSurecStatuBildirimTipiID">Bildirim Tipi <span class="text-danger">*</span></label>
-                                <select class="form-control select2" id="hasarliSurecStatuBildirimTipiID" style="width: 100%;" required>
-                                    <option value="">Seçiniz</option>
-                                </select>
-                            </div>
-                        </div>
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="hasarliNot">Not <span class="text-danger">*</span></label>

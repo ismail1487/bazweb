@@ -448,6 +448,36 @@ namespace BazWebApp.Services
         /// <param name="malzemeTalepSurecTakipIDler">Depo red edilecek süreç takip ID'leri</param>
         /// <returns></returns>
         public Result<string> TopluDepoRed(List<int> malzemeTalepSurecTakipIDler);
+        
+        /// <summary>
+        /// Malzeme Talep Et Son İşlem Geri Al.
+        /// </summary>
+        /// <returns></returns>
+        public Result<string> MalzemeTalepEtSonIslemGeriAl();
+        
+        /// <summary>
+        /// Depo Hazırlama Son İşlem Geri Al.
+        /// </summary>
+        /// <returns></returns>
+        public Result<string> DepoHazirlamaSonIslemGeriAl();
+        
+        /// <summary>
+        /// Üretim Mal Kabul Son İşlem Geri Al.
+        /// </summary>
+        /// <returns></returns>
+        public Result<string> UretimMalKabulSonIslemGeriAl();
+        
+        /// <summary>
+        /// Kalite Kontrol Son İşlem Geri Al.
+        /// </summary>
+        /// <returns></returns>
+        public Result<string> KaliteKontrolSonIslemGeriAl();
+        
+        /// <summary>
+        /// Depo Karar Son İşlem Geri Al.
+        /// </summary>
+        /// <returns></returns>
+        public Result<string> DepoKararSonIslemGeriAl();
     }
     public class  IYSService : IIYSService
     {
@@ -734,6 +764,71 @@ namespace BazWebApp.Services
             var request = _requestHelper.Post<Result<string>>(
                 LocalPortlar.IYSService + "/api/MalzemeTalepGenelBilgiler/TopluDepoRed", 
                 requestData);
+            
+            return request.Result;
+        }
+
+        /// <summary>
+        /// Malzeme talep et son işlem geri al
+        /// </summary>
+        /// <returns></returns>
+        public Result<string> MalzemeTalepEtSonIslemGeriAl()
+        {
+            var request = _requestHelper.Post<Result<string>>(
+                LocalPortlar.IYSService + "/api/MalzemeTalepGenelBilgiler/MalzemeTalepEtSonIslemGeriAl",
+                new { });
+            
+            return request.Result;
+        }
+
+        /// <summary>
+        /// Depo hazırlama son işlem geri al
+        /// </summary>
+        /// <returns></returns>
+        public Result<string> DepoHazirlamaSonIslemGeriAl()
+        {
+            var request = _requestHelper.Post<Result<string>>(
+                LocalPortlar.IYSService + "/api/MalzemeTalepGenelBilgiler/DepoHazirlamaSonIslemGeriAl",
+                new { });
+            
+            return request.Result;
+        }
+
+        /// <summary>
+        /// Üretim mal kabul son işlem geri al
+        /// </summary>
+        /// <returns></returns>
+        public Result<string> UretimMalKabulSonIslemGeriAl()
+        {
+            var request = _requestHelper.Post<Result<string>>(
+                LocalPortlar.IYSService + "/api/MalzemeTalepGenelBilgiler/UretimMalKabulSonIslemGeriAl",
+                new { });
+            
+            return request.Result;
+        }
+
+        /// <summary>
+        /// Kalite kontrol son işlem geri al
+        /// </summary>
+        /// <returns></returns>
+        public Result<string> KaliteKontrolSonIslemGeriAl()
+        {
+            var request = _requestHelper.Post<Result<string>>(
+                LocalPortlar.IYSService + "/api/MalzemeTalepGenelBilgiler/KaliteKontrolSonIslemGeriAl",
+                new { });
+            
+            return request.Result;
+        }
+
+        /// <summary>
+        /// Depo karar son işlem geri al
+        /// </summary>
+        /// <returns></returns>
+        public Result<string> DepoKararSonIslemGeriAl()
+        {
+            var request = _requestHelper.Post<Result<string>>(
+                LocalPortlar.IYSService + "/api/MalzemeTalepGenelBilgiler/DepoKararSonIslemGeriAl",
+                new { });
             
             return request.Result;
         }

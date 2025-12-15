@@ -793,6 +793,11 @@ function initializeEventHandlers() {
         handleDepoRed();
     });
 
+    // Depo Karar Geri Al butonu
+    $('#btnDepoKararGeriAl').on('click', function () {
+        handleDepoKararGeriAl();
+    });
+
     $('#btnExcelAktarImalat').on('click', function () {
         exportToExcel('imalat-ek');
     });
@@ -800,6 +805,26 @@ function initializeEventHandlers() {
     // İmalat Ek Kaydet butonu
     $('#btnKaydetImalatEk').on('click', function () {
         kaydetImalatEkTalepler();
+    });
+
+    // Son İşlemi Geri Al butonu
+    $('#btnSonIslemGeriAl').on('click', function () {
+        handleSonIslemGeriAl();
+    });
+
+    // Depo Hazırlama Son İşlemi Geri Al butonu
+    $('#btnDepoHazirlamaSonIslemGeriAl').on('click', function () {
+        handleDepoHazirlamaSonIslemGeriAl();
+    });
+
+    // Üretim Mal Kabul Son İşlemi Geri Al butonu
+    $('#btnUretimMalKabulSonIslemGeriAl').on('click', function () {
+        handleUretimMalKabulSonIslemGeriAl();
+    });
+
+    // Kalite Kontrol Son İşlemi Geri Al butonu
+    $('#btnKaliteKontrolSonIslemGeriAl').on('click', function () {
+        handleKaliteKontrolSonIslemGeriAl();
     });
 
     // Hazırlandı butonu
@@ -3042,6 +3067,298 @@ function deleteKayit(id, type) {
 }
 
 /**
+ * Son İşlemi Geri Al butonu işlemi
+ */
+function handleSonIslemGeriAl() {
+    // Onay mesajı göster
+    Swal.fire({
+        title: 'Emin misiniz?',
+        text: 'Son işlemi geri almak istediğinizden emin misiniz?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#f39c12',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Evet, Geri Al',
+        cancelButtonText: 'İptal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // API çağrısı yap
+            $.ajax({
+                url: '/panel/MalzemeTalepEtSonIslemGeriAl',
+                type: 'POST',
+                contentType: 'application/json',
+                success: function (response) {
+                    console.log('Son İşlem Geri Al Response:', response);
+                    
+                    if (response.isSuccess) {
+                        const successMessage = response.value || 'Son işlem başarıyla geri alındı!';
+                        
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Başarılı',
+                            text: successMessage,
+                            confirmButtonColor: '#28a745'
+                        }).then(() => {
+                            // Malzeme Talep tablosunu yenile
+                            refreshMalzemeTalepTable();
+                        });
+                    } else {
+                        let errorMessage = 'Geri alma işlemi sırasında bir hata oluştu!';
+                        
+                        if (response.message && typeof response.message === 'string') {
+                            errorMessage = response.message;
+                        } else if (response.errors && response.errors.length > 0) {
+                            errorMessage = response.errors.join(', ');
+                        }
+                        
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Hata',
+                            text: errorMessage,
+                            confirmButtonColor: '#dc3545'
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Son İşlem Geri Al API Hatası:', error);
+                    
+                    let errorMessage = 'Geri alma işlemi sırasında bir hata oluştu!';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    }
+                    
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata',
+                        text: errorMessage,
+                        confirmButtonColor: '#dc3545'
+                    });
+                }
+            });
+        }
+    });
+}
+
+/**
+ * Depo Hazırlama Son İşlemi Geri Al
+ */
+function handleDepoHazirlamaSonIslemGeriAl() {
+    // Onay mesajı göster
+    Swal.fire({
+        title: 'Emin misiniz?',
+        text: 'Son hazırlama işlemini geri almak istediğinizden emin misiniz?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#f39c12',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Evet, Geri Al',
+        cancelButtonText: 'İptal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // API çağrısı yap
+            $.ajax({
+                url: '/panel/DepoHazirlamaSonIslemGeriAl',
+                type: 'POST',
+                contentType: 'application/json',
+                success: function (response) {
+                    console.log('Depo Hazırlama Son İşlem Geri Al Response:', response);
+                    
+                    if (response.isSuccess) {
+                        const successMessage = response.value || 'Son hazırlama işlemi başarıyla geri alındı!';
+                        
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Başarılı',
+                            text: successMessage,
+                            confirmButtonColor: '#28a745'
+                        }).then(() => {
+                            // Depo Hazırlama tablosunu yenile
+                            refreshDepoHazirlamaTable();
+                        });
+                    } else {
+                        let errorMessage = 'Geri alma işlemi sırasında bir hata oluştu!';
+                        
+                        if (response.message && typeof response.message === 'string') {
+                            errorMessage = response.message;
+                        } else if (response.errors && response.errors.length > 0) {
+                            errorMessage = response.errors.join(', ');
+                        }
+                        
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Hata',
+                            text: errorMessage,
+                            confirmButtonColor: '#dc3545'
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Depo Hazırlama Geri Al API Hatası:', error);
+                    
+                    let errorMessage = 'Geri alma işlemi sırasında bir hata oluştu!';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    }
+                    
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata',
+                        text: errorMessage,
+                        confirmButtonColor: '#dc3545'
+                    });
+                }
+            });
+        }
+    });
+}
+
+/**
+ * Üretim Mal Kabul Son İşlemi Geri Al
+ */
+function handleUretimMalKabulSonIslemGeriAl() {
+    // Onay mesajı göster
+    Swal.fire({
+        title: 'Emin misiniz?',
+        text: 'Son mal kabul/iade işlemini geri almak istediğinizden emin misiniz?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#f39c12',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Evet, Geri Al',
+        cancelButtonText: 'İptal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // API çağrısı yap
+            $.ajax({
+                url: '/panel/UretimMalKabulSonIslemGeriAl',
+                type: 'POST',
+                contentType: 'application/json',
+                success: function (response) {
+                    console.log('Üretim Mal Kabul Son İşlem Geri Al Response:', response);
+                    
+                    if (response.isSuccess) {
+                        const successMessage = response.value || 'Son mal kabul/iade işlemi başarıyla geri alındı!';
+                        
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Başarılı',
+                            text: successMessage,
+                            confirmButtonColor: '#28a745'
+                        }).then(() => {
+                            // Üretim Mal Kabul tablosunu yenile
+                            refreshUretimMalKabulTable();
+                        });
+                    } else {
+                        let errorMessage = 'Geri alma işlemi sırasında bir hata oluştu!';
+                        
+                        if (response.message && typeof response.message === 'string') {
+                            errorMessage = response.message;
+                        } else if (response.errors && response.errors.length > 0) {
+                            errorMessage = response.errors.join(', ');
+                        }
+                        
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Hata',
+                            text: errorMessage,
+                            confirmButtonColor: '#dc3545'
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Üretim Mal Kabul Geri Al API Hatası:', error);
+                    
+                    let errorMessage = 'Geri alma işlemi sırasında bir hata oluştu!';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    }
+                    
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata',
+                        text: errorMessage,
+                        confirmButtonColor: '#dc3545'
+                    });
+                }
+            });
+        }
+    });
+}
+
+/**
+ * Kalite Kontrol Son İşlemi Geri Al
+ */
+function handleKaliteKontrolSonIslemGeriAl() {
+    // Onay mesajı göster
+    Swal.fire({
+        title: 'Emin misiniz?',
+        text: 'Son kalite onay/hasarlı işlemini geri almak istediğinizden emin misiniz?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#f39c12',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Evet, Geri Al',
+        cancelButtonText: 'İptal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // API çağrısı yap
+            $.ajax({
+                url: '/panel/KaliteKontrolSonIslemGeriAl',
+                type: 'POST',
+                contentType: 'application/json',
+                success: function (response) {
+                    console.log('Kalite Kontrol Son İşlem Geri Al Response:', response);
+                    
+                    if (response.isSuccess) {
+                        const successMessage = response.value || 'Son kalite onay/hasarlı işlemi başarıyla geri alındı!';
+                        
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Başarılı',
+                            text: successMessage,
+                            confirmButtonColor: '#28a745'
+                        }).then(() => {
+                            // Kalite Kontrol tablosunu yenile
+                            refreshKaliteKontrolTable();
+                        });
+                    } else {
+                        let errorMessage = 'Geri alma işlemi sırasında bir hata oluştu!';
+                        
+                        if (response.message && typeof response.message === 'string') {
+                            errorMessage = response.message;
+                        } else if (response.errors && response.errors.length > 0) {
+                            errorMessage = response.errors.join(', ');
+                        }
+                        
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Hata',
+                            text: errorMessage,
+                            confirmButtonColor: '#dc3545'
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Kalite Kontrol Geri Al API Hatası:', error);
+                    
+                    let errorMessage = 'Geri alma işlemi sırasında bir hata oluştu!';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    }
+                    
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata',
+                        text: errorMessage,
+                        confirmButtonColor: '#dc3545'
+                    });
+                }
+            });
+        }
+    });
+}
+
+/**
  * Hazırlandı butonu işlemi
  */
 function handleHazirlandi() {
@@ -3522,9 +3839,6 @@ function handleHasarli() {
     // Modal'a Süreç ID'yi set et
     $('#hasarliMalzemeTalepSurecTakipID').val(selectedSurecId);
     
-    // Bildirim tipleri dropdown'ını yükle
-    loadHasarliBildirimTipleri();
-    
     // Formu temizle
     $('#hasarliNot').val('');
     
@@ -3532,60 +3846,14 @@ function handleHasarli() {
     $('#hasarliModal').modal('show');
 }
 
-// Hasarlı işlemi için bildirim tiplerini yükle
-function loadHasarliBildirimTipleri() {
-    $.ajax({
-        url: '/panel/SurecStatuleriBildirimTipleriList/4',
-        method: 'GET',
-        dataType: 'json',
-        success: function(response) {
-            console.log('Hasarlı Bildirim Tipleri Response:', response);
-            
-            const dropdown = $('#hasarliSurecStatuBildirimTipiID');
-            dropdown.empty();
-            dropdown.append('<option value="">Seçiniz</option>');
-            
-            if (response.isSuccess && response.value && response.value.length > 0) {
-                response.value.forEach(function(item) {
-                    dropdown.append(`<option value="${item.tabloID}">${item.bildirimTipiTanimlama}</option>`);
-                });
-            }
-            
-            // Select2'yi yeniden initialize et
-            if (dropdown.data('select2')) {
-                dropdown.select2('destroy');
-            }
-            dropdown.select2({
-                dropdownParent: $('#hasarliModal')
-            });
-        },
-        error: function(xhr, status, error) {
-            console.error('Bildirim tipleri yüklenirken hata:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Hata',
-                text: 'Bildirim tipleri yüklenirken hata oluştu!'
-            });
-        }
-    });
-}
+// Hasarlı işlemi için bildirim tipleri yükleme fonksiyonu kaldırıldı
 
 // Hasarlı modal kaydet buton eventi
 $(document).on('click', '#btnHasarliKaydet', function() {
     const malzemeTalepSurecTakipID = $('#hasarliMalzemeTalepSurecTakipID').val();
-    const surecStatuBildirimTipiID = $('#hasarliSurecStatuBildirimTipiID').val();
     const surecStatuGirilenNot = $('#hasarliNot').val().trim();
     
     // Form validasyonu
-    if (!surecStatuBildirimTipiID) {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Uyarı',
-            text: 'Lütfen bildirim tipini seçiniz!'
-        });
-        return;
-    }
-    
     if (!surecStatuGirilenNot) {
         Swal.fire({
             icon: 'warning',
@@ -3605,7 +3873,6 @@ $(document).on('click', '#btnHasarliKaydet', function() {
         },
         data: JSON.stringify({
             malzemeTalepSurecTakipID: malzemeTalepSurecTakipID,
-            surecStatuBildirimTipiID: surecStatuBildirimTipiID,
             surecStatuGirilenNot: surecStatuGirilenNot
         }),
         success: function(response) {
@@ -3919,6 +4186,79 @@ function handleDepoRed() {
                     console.error('Depo Red API Hatası:', error);
                     
                     let errorMessage = 'Red işlemi sırasında bir hata oluştu!';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    }
+                    
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata',
+                        text: errorMessage,
+                        confirmButtonColor: '#dc3545'
+                    });
+                }
+            });
+        }
+    });
+}
+
+/**
+ * Depo Karar Geri Al butonu işlemi
+ */
+function handleDepoKararGeriAl() {
+    // Onay sor
+    Swal.fire({
+        title: 'Emin misiniz?',
+        text: 'En son yaptığınız depo kabul/red işlemi geri alınacak. Devam etmek istiyor musunuz?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ffc107',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Evet, Geri Al',
+        cancelButtonText: 'İptal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // API çağrısı yap
+            $.ajax({
+                url: '/panel/DepoKararSonIslemGeriAl',
+                type: 'POST',
+                contentType: 'application/json',
+                success: function (response) {
+                    console.log('DepoKararSonIslemGeriAl Response:', response);
+                    
+                    if (response.isSuccess) {
+                        const successMessage = response.value || 'İşlem başarıyla geri alındı!';
+                        
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Başarılı',
+                            text: successMessage,
+                            confirmButtonColor: '#28a745'
+                        }).then(() => {
+                            // Tabloyu yenile
+                            refreshDepoKabulTable();
+                        });
+                    } else {
+                        let errorMessage = 'Geri alma işlemi sırasında bir hata oluştu!';
+                        
+                        if (response.message && typeof response.message === 'string') {
+                            errorMessage = response.message;
+                        } else if (response.errors && response.errors.length > 0) {
+                            errorMessage = response.errors.join(', ');
+                        }
+                        
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Hata',
+                            text: errorMessage,
+                            confirmButtonColor: '#dc3545'
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Depo Karar Geri Al API Hatası:', error);
+                    
+                    let errorMessage = 'Geri alma işlemi sırasında bir hata oluştu!';
                     if (xhr.responseJSON && xhr.responseJSON.message) {
                         errorMessage = xhr.responseJSON.message;
                     }

@@ -410,6 +410,18 @@
     color: #5a3825 !important;
 }
 
+/* Son İşlemi Geri Al Buton Hover Efekti */
+.btn-info[title="Son İşlemi Geri Al"] {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.btn-info[title="Son İşlemi Geri Al"]:hover {
+    background-color: #117a8b;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(23, 162, 184, 0.3);
+}
+
 /* Tablo Satır Yüksekliği - Kompakt */
 table.dataTable tbody tr,
 #malzemeTalepTable tbody tr,
