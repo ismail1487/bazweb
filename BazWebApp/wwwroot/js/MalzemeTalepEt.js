@@ -1760,7 +1760,7 @@ function refreshMalzemeTalepTable() {
     $('#malzemeTalepTable').hide();
     
     // Filtre değerlerini al
-    const projeKoduValue = parseInt($('#projeFilter').val()) || 0;
+    const projeKoduValue = $('#projeFilter').val();
     const statuIDValue = parseInt($('#statuFilter').val()) || 0;
     
     // Statü ID'lerini belirle
@@ -1850,7 +1850,7 @@ function refreshDepoHazirlamaTable() {
     $('#depoHazirlamaTable').hide();
     
     // Filtre değerlerini al
-    const projeKoduValue = parseInt($('#depoProjeFilter').val()) || 0;
+    const projeKoduValue = $('#depoProjeFilter').val();
     
     // Depo için sabit parametreler
     // talepSurecStatuIDs: [3] (Depo Hazırlama statüsü)
@@ -1923,7 +1923,7 @@ function refreshUretimMalKabulTable() {
     $('#uretimMalKabulTable').hide();
     
     // Filtre değerlerini al
-    const projeKoduValue = parseInt($('#uretimProjeFilter').val()) || 0;
+    const projeKoduValue = $('#uretimProjeFilter').val();
     
     // Üretim Mal Kabul için sabit parametreler
     // talepSurecStatuIDs: [4, 7] (Üretim Mal Kabul ve İade Edilen)
@@ -1996,7 +1996,7 @@ function refreshKaliteKontrolTable() {
     $('#kaliteKontrolTable').hide();
     
     // Filtre değerlerini al
-    const projeKoduValue = parseInt($('#kaliteProjeFilter').val()) || 0;
+    const projeKoduValue = $('#kaliteProjeFilter').val();
     
     // Kalite Kontrol için sabit parametreler
     // talepSurecStatuIDs: [5] (Kalite Kontrol statüsü)
@@ -2069,7 +2069,7 @@ function refreshDepoKabulTable() {
     $('#depoKabulTable').hide();
     
     // Filtre değerlerini al
-    const projeKoduValue = parseInt($('#depoKabulProjeFilter').val()) || 0;
+    const projeKoduValue = $('#depoKabulProjeFilter').val();
     
     // Depo Kabul için sabit parametreler
     // talepSurecStatuIDs: [6, 7, 8] (Depo Kabul, Red Edildi, Kabul Edildi statüleri)
@@ -2142,7 +2142,7 @@ function refreshImalatEkTaleplerTable() {
     $('#imalatEkTaleplerTable').hide();
 
     // Filtre değerlerini al
-    const projeKoduValue = parseInt($('#imalatEkProjeFilter').val()) || 0;
+    const projeKoduValue = $('#imalatEkProjeFilter').val();
 
     // İmalat Ek Talepler için parametreler
     // talepSurecStatuIDs: [] (boş)

@@ -15,7 +15,7 @@ namespace BazWebApp.Services
     public class ProjeGenelBilgilerVM
     {
         public string ProjeAdi { get; set; }
-        public int ProjeKodu { get; set; }
+        public string ProjeKodu { get; set; }
         public int TabloID { get; set; }
         public int DilID { get; set; }
         public int KurumID { get; set; }
@@ -88,12 +88,12 @@ namespace BazWebApp.Services
         /// <summary>
         /// Malzeme talebi essiz ID
         /// </summary>
-        public int MalzemeTalebiEssizID { get; set; }
+        public Guid MalzemeTalebiEssizID { get; set; }
         
         /// <summary>
         /// Sevk edilen miktar
         /// </summary>
-        public int SevkEdilenMiktar { get; set; }
+        public float SevkEdilenMiktar { get; set; }
         
         /// <summary>
         /// Malzeme sevk talebi yapan departman ID
@@ -130,7 +130,7 @@ namespace BazWebApp.Services
     /// </summary>
     public class MalzemeTalepFilterModel
     {
-        public int? ProjeKodu { get; set; }
+        public string? ProjeKodu { get; set; }
         public List<int> TalepSurecStatuIDs { get; set; }
         public string SearchText { get; set; }
         public bool MalzemeTalepEtGetir { get; set; } = false;
@@ -150,7 +150,7 @@ namespace BazWebApp.Services
     /// </summary>
     public class SATBilgisiItem
     {
-        public int MalzemeTalebiEssizID { get; set; }
+        public Guid MalzemeTalebiEssizID { get; set; }
         public string BuTalebiKarsilayanSATSeriNo { get; set; }
         public string BuTalebiKarsilayanSATSiraNo { get; set; }
     }
@@ -169,7 +169,7 @@ namespace BazWebApp.Services
     public class MalzemeleriHazirlaItem
     {
         public int MalzemeTalepSurecTakipID { get; set; }
-        public int HazirlananMiktar { get; set; }
+        public float HazirlananMiktar { get; set; }
     }
 
     /// <summary>
@@ -211,7 +211,7 @@ namespace BazWebApp.Services
         /// <summary>
         /// Ana malzeme talep ID
         /// </summary>
-        public int MalzemeTalebiEssizID { get; set; }
+        public Guid MalzemeTalebiEssizID { get; set; }
         
         /// <summary>
         /// Malzeme talep detay bilgileri
@@ -221,32 +221,32 @@ namespace BazWebApp.Services
         /// <summary>
         /// Bu süreç için talep edilen miktar
         /// </summary>
-        public int TalepEdilenMiktar { get; set; }
+        public float TalepEdilenMiktar { get; set; }
         
         /// <summary>
         /// Bu kaydın miktarı
         /// </summary>
-        public int BuKaydinMiktari { get; set; }
+        public float BuKaydinMiktari { get; set; }
         
         /// <summary>
         /// İşlenen miktar
         /// </summary>
-        public int IslenenMiktar { get; set; }
+        public float IslenenMiktar { get; set; }
         
         /// <summary>
         /// Hazırlanabilecek miktar
         /// </summary>
-        public int HazirlanabilecekMiktar { get; set; }
+        public float HazirlanabilecekMiktar { get; set; }
         
         /// <summary>
         /// Toplam sevk edilen miktar
         /// </summary>
-        public int ToplamSevkEdilenMiktar { get; set; }
+        public float ToplamSevkEdilenMiktar { get; set; }
         
         /// <summary>
         /// Kalan miktar
         /// </summary>
-        public int KalanMiktar { get; set; }
+        public float KalanMiktar { get; set; }
         
         /// <summary>
         /// Talep süreç statü ID
@@ -316,7 +316,7 @@ namespace BazWebApp.Services
         public string SatSiraNo { get; set; }
         public string SatCariHesap { get; set; }
         public string Aciklama { get; set; }
-        public int MalzemeOrijinalTalepEdilenMiktar { get; set; }
+        public float MalzemeOrijinalTalepEdilenMiktar { get; set; }
         public int BaglantiliMalzemeTalebiEssizID { get; set; }
         public string BuTalebiKarsilayanSATSeriNo { get; set; }
         public string BuTalebiKarsilayanSATSiraNo { get; set; }
@@ -336,6 +336,8 @@ namespace BazWebApp.Services
         public string PasiflikTarihi { get; set; }
         public int? SilenKisiID { get; set; }
         public string SilinmeTarihi { get; set; }
+        public Guid? MalzemeTalebiEssizGuid { get; set; }
+        public Guid? BaglantiliMalzemeTalebiEssizGuid { get; set; }
     }
 
     /// <summary>
@@ -544,7 +546,7 @@ namespace BazWebApp.Services
                 var tumüOption = new ProjeGenelBilgilerVM
                 {
                     ProjeAdi = "Tümü",
-                    ProjeKodu = 0,
+                    ProjeKodu = "",
                     TabloID = 0,
                     DilID = 0,
                     KurumID = 0,
@@ -592,7 +594,7 @@ namespace BazWebApp.Services
         public Result<List<MalzemeTalepVM>> MalzemeTalepleriniGetir(MalzemeTalepFilterModel model)
         {
             // Proje kodu Tümü seçiliyse null gönder
-            int? projeKodu = (model.ProjeKodu == 0) ? null : model.ProjeKodu;
+            string? projeKodu = (model.ProjeKodu == "") ? null : model.ProjeKodu;
             
             // Statü kontrolü
             List<int> statuIDs = new List<int>();
@@ -626,7 +628,6 @@ namespace BazWebApp.Services
                 malzemeTalepEtGetir = malzemeTalepEtGetir,
                 sadeceEkTalepleriGetir = model.SadeceEkTalepleriGetir
             };
-            
             var request = _requestHelper.Post<Result<List<MalzemeTalepVM>>>(
                 LocalPortlar.IYSService + "/api/MalzemeTalepGenelBilgiler/MalzemeTalepleriniGetir",
                 requestData);
@@ -708,7 +709,6 @@ namespace BazWebApp.Services
             {
                 malzemeTalepSurecTakipIDler = malzemeTalepSurecTakipIDler
             };
-            
             var request = _requestHelper.Post<Result<string>>(
                 LocalPortlar.IYSService + "/api/MalzemeTalepGenelBilgiler/TopluMalKabulEt", 
                 requestData);
@@ -741,7 +741,6 @@ namespace BazWebApp.Services
             {
                 malzemeTalepSurecTakipIDler = malzemeTalepSurecTakipIDler
             };
-            
             var request = _requestHelper.Post<Result<string>>(
                 LocalPortlar.IYSService + "/api/MalzemeTalepGenelBilgiler/TopluDepoKabul", 
                 requestData);
@@ -760,7 +759,6 @@ namespace BazWebApp.Services
             {
                 malzemeTalepSurecTakipIDler = malzemeTalepSurecTakipIDler
             };
-            
             var request = _requestHelper.Post<Result<string>>(
                 LocalPortlar.IYSService + "/api/MalzemeTalepGenelBilgiler/TopluDepoRed", 
                 requestData);
