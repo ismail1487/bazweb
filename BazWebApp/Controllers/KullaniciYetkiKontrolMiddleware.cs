@@ -40,13 +40,6 @@ namespace BazWebApp.Controllers
                 var bazCookieService = scope.ServiceProvider.GetRequiredService<IBazCookieService>();
                 var sharedSession = scope.ServiceProvider.GetRequiredService<ISharedSession>();
 
-                // **Cache mekanizması**: sayfa listesini cache’den al, eğer yoksa getir
-                if (!_cache.TryGetValue("SayfaListesi", out List<string> sayfaListesi))
-                {
-                    sayfaListesi = kurumService.SistemSayfalariGetir().Value.Select(item => item.SayfaUrl).ToList();
-                    _cache.Set("SayfaListesi", sayfaListesi, TimeSpan.FromMinutes(10)); // 10 dakika cache’de tut
-                }
-
                 var currentPath = context.Request.Path;
 
                 var endpoint = context.GetEndpoint();
@@ -56,12 +49,34 @@ namespace BazWebApp.Controllers
                     return;
                 }
 
+                // **Cache mekanizması**: sayfa listesini cache'den al, eğer yoksa getir
+                if (!_cache.TryGetValue("SayfaListesi", out List<string> sayfaListesi))
+                {
+                    sayfaListesi = kurumService.SistemSayfalariGetir().Value.Select(item => item.SayfaUrl).ToList();
+                    _cache.Set("SayfaListesi", sayfaListesi, TimeSpan.FromMinutes(10)); // 10 dakika cache'de tut
+                }
+
                 if (sayfaListesi.Contains(currentPath))
                 {
                     var cookie = await bazCookieService.GetCookie();
+
+                    // Cookie null ise (kullanıcı giriş yapmamış), yetki kontrolünü atla
+                    if (cookie == null)
+                    {
+                        await _next(context);
+                        return;
+                    }
+
                     var session = await sharedSession.Get<KullaniciSession>(cookie.SessionId);
 
-                    // Kullanıcı yetkilerini cache’den getir (eğer daha önce alınmışsa)
+                    // Session null ise, yetki kontrolünü atla
+                    if (session == null || session.KullaniciYetkiListesi == null)
+                    {
+                        await _next(context);
+                        return;
+                    }
+
+                    // Kullanıcı yetkilerini cache'den getir (eğer daha önce alınmışsa)
                     string cacheKey = $"Yetkiler_{cookie.SessionId}";
                     if (!_cache.TryGetValue(cacheKey, out List<string> yetkiListesi))
                     {

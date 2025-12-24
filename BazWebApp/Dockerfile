@@ -7,14 +7,17 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-RUN apt-get update && apt-get install -y curl
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt-get install -y nodejs
-COPY ["BazWebApp/BazWebApp.csproj", "BazWebApp/"]
-RUN dotnet restore "BazWebApp/BazWebApp.csproj" -s http://172.16.31.10/NugetServer/nuget -s https://api.nuget.org/v3/index.json
-COPY . .
-WORKDIR "/src/BazWebApp"
-RUN npm install
+# Fix Debian Buster EOL repositories and install Node.js for TypeScript compilation
+RUN sed -i 's/deb.debian.org/archive.debian.org/g' /etc/apt/sources.list && \
+    sed -i 's/security.debian.org/archive.debian.org/g' /etc/apt/sources.list && \
+    apt-get update && apt-get install -y curl gnupg && \
+    curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+    apt-get install -y nodejs && rm -rf /var/lib/apt/lists/*
+COPY packages /src/packages
+COPY ["bazweb/BazWebApp/BazWebApp.csproj", "bazweb/BazWebApp/"]
+COPY bazweb/BazWebApp bazweb/BazWebApp
+WORKDIR "/src/bazweb/BazWebApp"
+RUN dotnet restore "BazWebApp.csproj" --source /src/packages  --source https://api.nuget.org/v3/index.json
 RUN dotnet build "BazWebApp.csproj" -c Release -o /app/build
 
 FROM build AS publish
