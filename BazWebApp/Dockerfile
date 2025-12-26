@@ -17,7 +17,7 @@ COPY packages /src/packages
 COPY ["bazweb/BazWebApp/BazWebApp.csproj", "bazweb/BazWebApp/"]
 COPY bazweb/BazWebApp bazweb/BazWebApp
 WORKDIR "/src/bazweb/BazWebApp"
-RUN dotnet restore "BazWebApp.csproj" --source https://nuget.cdn.azure.cn/v3/index.json --source /src/packages
+RUN dotnet restore "BazWebApp.csproj" --source /src/packages --source https://api.nuget.org/v3/index.json --timeout 600
 RUN dotnet build "BazWebApp.csproj" -c Release -o /app/build
 
 FROM build AS publish
